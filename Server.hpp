@@ -1,36 +1,24 @@
 #pragma once
 
 #include <ARC.hpp>
-#include <iostream>
-#include "ClientManager.hpp"
-#include "ChatManager.hpp"
-#include "WorldManager.hpp"
+#include "Client.hpp"
 
 namespace Tortuga
 {
-	class Server : public ARC::TCPServer
+	class Server : public ARC::ManagedTCPServer <Tortuga::Client>
 	{
 		private :			
 			ARC::Thread threadHandle ;
 			ARC::Void thread ( ) ;
 			
-			Tortuga::ClientManager clientManager ;
-			Tortuga::ChatManager chatManager ;
-			Tortuga::WorldManager worldManager ;
-			
 			ARC::Bool running ;
+			
+			ARC::Void onConnect ( ARC::SharedPointer <Client> & client ) ;
+			ARC::Void onDisconnect ( typename ARC::List <ARC::SharedPointer <Client>>::iterator & client ) ;
+			ARC::Void onReceive ( typename ARC::List <ARC::SharedPointer <Client>>::iterator & client ) ;
 
 		public :
 			Server ( ) ;
-			
-			Tortuga::ClientManager & getClientManager ( ) ;
-			const Tortuga::ClientManager & getClientManager ( ) const ;
-			
-			Tortuga::ChatManager & getChatManager ( ) ;
-			const Tortuga::ChatManager & getChatManager ( ) const ;
-			
-			Tortuga::WorldManager & getWorldManager ( ) ;
-			const Tortuga::WorldManager & getWorldManager ( ) const ;
 			
 			ARC::Void setRunning ( const ARC::Bool running ) ;
 			ARC::Bool getRunning ( ) const ;

@@ -1,42 +1,50 @@
-#include "Client.hpp"
 #include "Server.hpp"
-#include <ARC.hpp>
+#include <iostream>
 
 ARC::Void Tortuga::Server::thread ( )
 {
 	while ( this->running )
 	{
-		this->clientManager.update ( ARC::milliseconds ( 20 ) ) ;
-		this->chatManager.update ( ) ;
-		this->worldManager.update ( ) ;
+		ARC::String command ;
+	
+		std::cin >> command ;
+		
+		if ( command == "status" )
+		{
+		}
+		else if ( command == "shutdown" || command == "stop" )
+		{
+			this->running = false ;	
+		}
+		else if ( command == "restart" )
+		{
+			break ;
+		}
 	}
+}
+
+
+ARC::Void Tortuga::Server::onConnect ( ARC::SharedPointer <Client> & client )
+{
+	ARC::ManagedTCPServer <Tortuga::Client>::onConnect ( client ) ;
+	
+	std::cout << "Client connected ( " << client->getRemoteAddress ( ) << ":" << client->getRemotePort ( ) << " )\n" ;
+}
+ARC::Void Tortuga::Server::onDisconnect ( typename ARC::List <ARC::SharedPointer <Client>>::iterator & client )
+{
+	ARC::ManagedTCPServer <Tortuga::Client>::onDisconnect ( client ) ;
+	
+	std::cout << "Client disconnected ( " << ( * client )->getRemoteAddress ( ) << ":" << ( * client )->getRemotePort ( ) << " )\n" ;
+}
+ARC::Void Tortuga::Server::onReceive ( typename ARC::List <ARC::SharedPointer <Client>>::iterator & client )
+{
+	ARC::ManagedTCPServer <Tortuga::Client>::onReceive ( client ) ;
 }
 
 Tortuga::Server::Server ( ) :
 	threadHandle ( & Server::thread , this ) ,
-	clientManager ( * this ) ,
-	chatManager ( * this ) ,
-	worldManager ( * this ) ,
 	running ( true )
 {
-}
-
-Tortuga::ClientManager & Tortuga::Server::getClientManager ( )
-{
-	return this->clientManager ;
-}
-const Tortuga::ClientManager & Tortuga::Server::getClientManager ( ) const
-{
-	return this->clientManager ;
-}
-
-Tortuga::ChatManager & Tortuga::Server::getChatManager ( )
-{
-	return this->chatManager ;
-}
-const Tortuga::ChatManager & Tortuga::Server::getChatManager ( ) const
-{
-	return this->chatManager ;
 }
 
 ARC::Void Tortuga::Server::setRunning ( const ARC::Bool running )
@@ -74,40 +82,19 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 	
 	while ( this->listen ( 25565 ) != ARC::Socket::Done ) ;
 	
-	this->clientManager.initialize ( ) ;
-	this->chatManager.initialize ( ) ;
-	
 	this->threadHandle.launch ( ) ;
 	
 	std::cout << "Server started\n" ; 
 
 	while ( this->running )
 	{
-		ARC::String command ;
-	
-		std::cin >> command ;
-		
-		if ( command == "status" )
-		{
-		}
-		else if ( command == "shutdown" || command == "stop" )
-		{
-			this->running = false ;	
-		}
-		else if ( command == "restart" )
-		{
-			returnValue = ARC::Restart ;
-			break ;
-		}
+		this->update ( ) ;
 	}
 	
 	this->running = false ;
 	
 	this->threadHandle.wait ( ) ;
 	
-	this->chatManager.finalize ( ) ;
-	this->clientManager.finalize ( ) ;
-			
 	std::cout << "Server stopped\n" ;
 	
 	return returnValue ;
