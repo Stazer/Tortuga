@@ -4,7 +4,6 @@
 #include "ChatUser.hpp"
 #include "ChatManager.hpp"
 #include "ClientManager.hpp"
-#include "StatusManager.hpp"
 #include "World.hpp"
 #include <iostream>
 

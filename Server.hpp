@@ -3,7 +3,6 @@
 #include <ARC.hpp>
 #include <iostream>
 #include "ClientManager.hpp"
-#include "StatusManager.hpp"
 #include "ChatManager.hpp"
 #include "WorldManager.hpp"
 
@@ -16,7 +15,6 @@ namespace Tortuga
 			ARC::Void thread ( ) ;
 			
 			Tortuga::ClientManager clientManager ;
-			Tortuga::StatusManager statusManager ;
 			Tortuga::ChatManager chatManager ;
 			Tortuga::WorldManager worldManager ;
 			
@@ -27,9 +25,6 @@ namespace Tortuga
 			
 			Tortuga::ClientManager & getClientManager ( ) ;
 			const Tortuga::ClientManager & getClientManager ( ) const ;
-			
-			Tortuga::StatusManager & getStatusManager ( ) ;
-			const Tortuga::StatusManager & getStatusManager ( ) const ;
 			
 			Tortuga::ChatManager & getChatManager ( ) ;
 			const Tortuga::ChatManager & getChatManager ( ) const ;
