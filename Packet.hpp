@@ -15,6 +15,8 @@ namespace Tortuga
 		public :
 			Packet ( const ARC::Vector <ARC::UnsignedChar> & buffer = ARC::Vector <ARC::UnsignedChar> ( ) ) ;
 		
+			operator ARC::Buffer ( ) const ;
+		
 			ARC::Void sendWith ( Tortuga::Client & client ) ;
 			
 			const ARC::Vector <ARC::UnsignedChar> getBuffer ( ) const ;
@@ -44,31 +46,11 @@ namespace Tortuga
 			ARC::Void writeString ( const ARC::String & value ) ;
 			ARC::Void writeBool ( const ARC::Bool value ) ;
 			
-			Tortuga::Packet write ( const ARC::Tortuga::Packet & packet )
-			{
-				return this->packet.getBuffer ( ) ;
-			}
-			Tortuga::Packet write ( const ARC::Buffer & buffer )
-			{
-				Tortuga::Packet newPacket ;
-	
-				newPacket.writeVariableInt ( buffer.size ( ) ) ;
-	
-				newPacket.buffer.insert ( newPacket.buffer.end ( ) , buffer.begin ( ) , buffer.end ( ) ) ;
-	
-				return newPacket ;
-			}
+			static Tortuga::Packet write ( const Tortuga::Packet & packet ) ;
+			static Tortuga::Packet write ( const ARC::Vector <ARC::UnsignedChar> & buffer ) ;
 			
-			Tortuga::Packet read ( )
-			{
-				
-			}
-			
-			static Tortuga::Packet encode ( const Tortuga::Packet & packet ) ;
-			static Tortuga::Packet encode ( const ARC::Vector <ARC::UnsignedChar> & buffer ) ;
-			
-			static Tortuga::Packet decode ( Tortuga::Packet packet ) ;
-			static Tortuga::Packet decode ( const ARC::Vector <ARC::UnsignedChar> & buffer ) ;
+			static Tortuga::Packet read ( Tortuga::Packet packet ) ;
+			static Tortuga::Packet read ( const ARC::Vector <ARC::UnsignedChar> & buffer ) ;
 			
 			enum OperationCodes
 			{
@@ -139,7 +121,7 @@ namespace Tortuga
 				packet.writeString ( clientLoginSuccessData.uuid ) ;
 				packet.writeString ( clientLoginSuccessData.username ) ;
 				
-				return Tortuga::Packet::encode ( packet ) ;
+				return Tortuga::Packet::write ( packet ) ;
 			}
 			
 			struct ClientJoinGameData
@@ -163,7 +145,7 @@ namespace Tortuga
 				packet.writeChar ( clientJoinGameData.maximalPlayers ) ;
 				packet.writeString ( clientJoinGameData.levelType ) ;
 				
-				return Tortuga::Packet::encode ( packet ) ;
+				return Tortuga::Packet::write ( packet ) ;
 			}		
 			
 			struct ClientKeepAliveData
@@ -181,7 +163,7 @@ namespace Tortuga
 				packet.writeVariableInt ( Tortuga::Packet::ClientKeepAlive ) ;
 				packet.writeInt ( clientKeepAliveData.number ) ;
 				
-				return Tortuga::Packet::encode ( packet ) ;
+				return Tortuga::Packet::write ( packet ) ;
 			}			
 			
 			struct ClientSettingsData
@@ -232,7 +214,7 @@ namespace Tortuga
 				packet.writeVariableInt ( Tortuga::Packet::StatusResponse ) ;
 				packet.writeString ( statusResponseData.response ) ;
 				
-				return Tortuga::Packet::encode ( packet ) ;
+				return Tortuga::Packet::write ( packet ) ;
 			}
 			
 			struct StatusKeepAliveData
@@ -250,7 +232,7 @@ namespace Tortuga
 				packet.writeVariableInt ( Tortuga::Packet::StatusKeepAlive ) ;
 				packet.writeLong ( statusKeepAliveData.time ) ;
 				
-				return Tortuga::Packet::encode ( packet ) ;
+				return Tortuga::Packet::write ( packet ) ;
 			}
 			
 			// World
@@ -269,7 +251,7 @@ namespace Tortuga
 				packet.writeInt ( worldSpawnPositinData.y ) ;
 				packet.writeInt ( worldSpawnPositinData.z ) ;
 				
-				return Tortuga::Packet::encode ( packet ) ;
+				return Tortuga::Packet::write ( packet ) ;
 			}
 			
 			struct WorldTimeUpdateData
@@ -285,7 +267,7 @@ namespace Tortuga
 				packet.writeLong ( worldTimeUpdateData.age ) ;
 				packet.writeLong ( worldTimeUpdateData.time ) ;
 				
-				return Tortuga::Packet::encode ( packet ) ;
+				return Tortuga::Packet::write ( packet ) ;
 			}
 			
 			// Player
@@ -310,7 +292,7 @@ namespace Tortuga
 				packet.writeFloat ( playerPositionAndLookData.pitch ) ;
 				packet.writeBool ( playerPositionAndLookData.onGround ) ;
 				
-				return Tortuga::Packet::encode ( packet ) ;
+				return Tortuga::Packet::write ( packet ) ;
 			}
 			static Tortuga::Packet::PlayerPositionAndLookData readPlayerPositionAndLookPacket ( Tortuga::Packet & packet )
 			{

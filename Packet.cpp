@@ -1,12 +1,15 @@
 #include "Packet.hpp"
 #include "Client.hpp"
 
-#include <iostream>
-
 Tortuga::Packet::Packet ( const ARC::Vector <ARC::UnsignedChar> & buffer ) :
 	buffer ( buffer ) ,
 	position ( 0 )
 {
+}
+
+Tortuga::Packet::operator ARC::Buffer ( ) const
+{
+	return this->buffer ;
 }
 
 ARC::Void Tortuga::Packet::sendWith ( Tortuga::Client & client )
@@ -179,11 +182,11 @@ ARC::Bool Tortuga::Packet::readBool ( )
 	return this->readChar ( ) == false ;
 }
 
-Tortuga::Packet Tortuga::Packet::encode ( const Tortuga::Packet & packet )
+Tortuga::Packet Tortuga::Packet::write ( const Tortuga::Packet & packet )
 {
-	return Tortuga::Packet::encode ( packet.getBuffer ( ) ) ;
+	return Tortuga::Packet::write ( packet.getBuffer ( ) ) ;
 }
-Tortuga::Packet Tortuga::Packet::encode ( const ARC::Vector <ARC::UnsignedChar> & buffer )
+Tortuga::Packet Tortuga::Packet::write ( const ARC::Vector <ARC::UnsignedChar> & buffer )
 {
 	Tortuga::Packet newPacket ;
 	
@@ -194,7 +197,7 @@ Tortuga::Packet Tortuga::Packet::encode ( const ARC::Vector <ARC::UnsignedChar> 
 	return newPacket ;
 }
 
-Tortuga::Packet Tortuga::Packet::decode ( Tortuga::Packet packet )
+Tortuga::Packet Tortuga::Packet::read ( Tortuga::Packet packet )
 {
 	const ARC::UnsignedInt packetSize = packet.readVariableInt ( ) ;
 	
@@ -207,7 +210,7 @@ Tortuga::Packet Tortuga::Packet::decode ( Tortuga::Packet packet )
 	
 	return packet ;
 }
-Tortuga::Packet Tortuga::Packet::decode ( const ARC::Vector <ARC::UnsignedChar> & buffer )
+Tortuga::Packet Tortuga::Packet::read ( const ARC::Vector <ARC::UnsignedChar> & buffer )
 {
-	return Tortuga::Packet::decode ( Tortuga::Packet ( buffer ) ) ;
+	return Tortuga::Packet::read ( Tortuga::Packet ( buffer ) ) ;
 }

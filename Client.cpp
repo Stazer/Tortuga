@@ -56,7 +56,7 @@ const Tortuga::Player & Tortuga::Client::getPlayer ( ) const
 
 ARC::Void Tortuga::Client::update ( )
 {
-	do
+	/*do
 	{
 		Tortuga::Packet receivedPacket = Tortuga::Packet::decode ( this->getBuffer ( ) ) ;
 		
@@ -185,7 +185,7 @@ ARC::Void Tortuga::Client::update ( )
 					Tortuga::Player::readPlayerPositionAndLookPacket ( * this , receivedPacket ) ;
 				
 					break ;
-				}*/
+				}***
 				default :
 				{
 					std::cout << "<Error> unknown operationcode, packetOpcode: " << packetOpcode << "\n" ;
@@ -193,5 +193,5 @@ ARC::Void Tortuga::Client::update ( )
 				}
 			}
 		}
-	} while ( this->getBuffer ( ).size ( ) > 0 ) ;
+	} while ( this->getBuffer ( ).size ( ) > 0 ) ;*/
 }
