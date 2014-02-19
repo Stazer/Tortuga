@@ -7,6 +7,11 @@
 #include "World.hpp"
 #include <iostream>
 
+ARC::Void Tortuga::Client::onReceive ( )
+{
+	
+}
+
 Tortuga::Client::Client ( ) :
 	type ( Tortuga::Client::None )
 {

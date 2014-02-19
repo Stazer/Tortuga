@@ -38,7 +38,7 @@ ARC::Void Tortuga::Server::onDisconnect ( typename ARC::List <ARC::SharedPointer
 }
 ARC::Void Tortuga::Server::onReceive ( typename ARC::List <ARC::SharedPointer <Client>>::iterator & client )
 {
-	ARC::ManagedTCPServer <Tortuga::Client>::onReceive ( client ) ;
+	ARC::ManagedTCPServer <Tortuga::Client>::onReceive ( client ) ;	
 }
 
 Tortuga::Server::Server ( ) :

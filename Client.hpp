@@ -29,6 +29,8 @@ namespace Tortuga
 			Tortuga::ClientSettings clientSettings ;
 			
 			Tortuga::Player player ;
+			
+			ARC::Void onReceive ( ) ;
 		
 		public :
 			Client ( ) ;
