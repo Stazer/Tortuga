@@ -22,8 +22,6 @@ namespace Tortuga
 			} ;
 	
 		private :
-			Tortuga::ClientManager & clientManager ;
-			
 			Type type ;
 			
 			ARC::SharedPointer <Tortuga::ChatUser> chatUser ;
@@ -33,10 +31,7 @@ namespace Tortuga
 			Tortuga::Player player ;
 		
 		public :
-			Client ( Tortuga::ClientManager & clientManager ) ;
-			
-			Tortuga::ClientManager & getClientManager ( ) ;
-			const Tortuga::ClientManager & getClientManager ( ) const ;
+			Client ( ) ;
 			
 			ARC::Void setClientSettings ( const Tortuga::ClientSettings & clientSettings ) ;
 			Tortuga::ClientSettings & getClientSettings ( ) ;

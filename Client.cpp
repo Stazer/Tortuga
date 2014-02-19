@@ -7,19 +7,9 @@
 #include "World.hpp"
 #include <iostream>
 
-Tortuga::Client::Client ( Tortuga::ClientManager & clientManager ) :
-	clientManager ( clientManager ) ,
+Tortuga::Client::Client ( ) :
 	type ( Tortuga::Client::None )
 {
-}
-
-Tortuga::ClientManager & Tortuga::Client::getClientManager ( )
-{
-	return this->clientManager ;
-}
-const Tortuga::ClientManager & Tortuga::Client::getClientManager ( ) const
-{
-	return this->clientManager ;
 }
 
 ARC::Void Tortuga::Client::setClientSettings ( const Tortuga::ClientSettings & clientSettings )
