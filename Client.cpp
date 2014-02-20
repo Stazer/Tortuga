@@ -132,7 +132,7 @@ ARC::Void Tortuga::Client::onReceive ( )
 					
 					break ;
 				}*/
-				case Tortuga::Packet::PlayerPositionAndLook :
+				case Tortuga::Packet::PlayerPositionAndLookToServer :
 				{
 					Tortuga::Packet::readPlayerPositionAndLookPacket ( receivedPacket ) ;
 				

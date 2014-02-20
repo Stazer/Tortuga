@@ -69,8 +69,8 @@ namespace Tortuga
 				StatusKeepAlive = 0x01 ,
 				
 				// Chat
-				ChatMessageServer = 0x02 ,
-				ChatMessageClient = 0x01 ,
+				ChatMessageFromServer = 0x02 ,
+				ChatMessageToServer = 0x01 ,
 				
 				// World
 				WorldSpawnPosition = 0x05 ,
@@ -78,8 +78,12 @@ namespace Tortuga
 				WorldChunkData = 0x21 ,
 				
 				// Player
-				PlayerPositionAndLook = 0x08 ,
-				PlayerAbilities = 0x13
+				PlayerAbilities = 0x13 ,
+				PlayerOnGround = 0x03 ,
+				PlayerPosition = 0x04 ,
+				PlayerLook = 0x05 ,
+				PlayerPositionAndLookFromServer = 0x08 ,
+				PlayerPositionAndLookToServer = 0x06
 			} ;
 						
 			// Client
@@ -280,7 +284,7 @@ namespace Tortuga
 			{
 				Tortuga::Packet packet ;
 				
-				packet.writeVariableInt ( Tortuga::Packet::PlayerPositionAndLook ) ;
+				packet.writeVariableInt ( Tortuga::Packet::PlayerPositionAndLookFromServer ) ;
 				packet.writeDouble ( playerPositionAndLookData.x ) ;
 				packet.writeDouble ( playerPositionAndLookData.y ) ;
 				packet.writeDouble ( playerPositionAndLookData.z ) ;

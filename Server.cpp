@@ -91,8 +91,6 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 		this->update ( ) ;
 	}
 	
-	this->running = false ;
-	
 	this->threadHandle.wait ( ) ;
 	
 	std::cout << "Server stopped\n" ;
