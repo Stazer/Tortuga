@@ -72,10 +72,6 @@ namespace Tortuga
 				ChatMessageServer = 0x02 ,
 				ChatMessageClient = 0x01 ,
 				
-				TimeUpdate = 0x03 ,
-				
-				ChunkData = 0x21 ,
-				
 				// World
 				WorldSpawnPosition = 0x05 ,
 				WorldTimeUpdate = 0x03 ,
