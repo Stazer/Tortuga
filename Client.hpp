@@ -44,7 +44,5 @@ namespace Tortuga
 			
 			Tortuga::Player & getPlayer ( ) ;
 			const Tortuga::Player & getPlayer ( ) const ;
-			
-			ARC::Void update ( ) ;
 	} ;
 }

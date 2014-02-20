@@ -8,50 +8,9 @@
 
 ARC::Void Tortuga::Client::onReceive ( )
 {
-	
-}
-
-Tortuga::Client::Client ( ) :
-	type ( Tortuga::Client::None )
-{
-}
-
-ARC::Void Tortuga::Client::setClientSettings ( const Tortuga::ClientSettings & clientSettings )
-{
-	this->clientSettings = clientSettings ;
-}
-Tortuga::ClientSettings & Tortuga::Client::getClientSettings ( )
-{
-	return this->clientSettings ;
-}
-const Tortuga::ClientSettings & Tortuga::Client::getClientSettings ( ) const
-{
-	return this->clientSettings ;
-}
-
-ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( )
-{
-	return this->chatUser ;
-}
-const ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( ) const
-{
-	return this->chatUser ;
-}
-
-Tortuga::Player & Tortuga::Client::getPlayer ( )
-{
-	return this->player ;
-}
-const Tortuga::Player & Tortuga::Client::getPlayer ( ) const
-{
-	return this->player ;
-}
-
-ARC::Void Tortuga::Client::update ( )
-{
-	/*do
+	do
 	{
-		Tortuga::Packet receivedPacket = Tortuga::Packet::decode ( this->getBuffer ( ) ) ;
+		Tortuga::Packet receivedPacket = Tortuga::Packet::read ( this->getBuffer ( ) ) ;
 		
 		if ( this->getBuffer ( ).size ( ) == 0 || receivedPacket.getBuffer ( ).size ( ) == 0 || this->getBuffer ( ).size ( ) < receivedPacket.getBuffer ( ).size ( ) )
 			break ;
@@ -143,42 +102,42 @@ ARC::Void Tortuga::Client::update ( )
 		{
 			switch ( packetOpcode )
 			{
-				/*case Tortuga::Packet::Client::ClientSettings :
+				/*case Tortuga::Packet::ClientSettings :
 				{
 					Tortuga::ClientSettings::readClientSettingsPacket ( * this , receivedPacket ) ;
 				
 					break ;
-				}
-				case Tortuga::Packet::Client::ChatMessage :
+				}*/
+				/*case Tortuga::Packet::ChatMessageClient :
 				{
 					Tortuga::ChatManager::readChatMessagePacket ( * this , receivedPacket ) ;
 					
 					break ;
 				}
-				case Tortuga::Packet::Client::PlayerOnGround :
+				/*case Tortuga::Packet::PlayerOnGround :
 				{
 					Tortuga::Player::readPlayerOnGroundPacket ( * this , receivedPacket ) ;
 				
 					break ;
 				}
-				case Tortuga::Packet::Client::PlayerPosition :
+				case Tortuga::Packet::PlayerPosition :
 				{	
 					Tortuga::Player::readPlayerPositionPacket ( * this , receivedPacket ) ;
 					
 					break ;
 				}
-				case Tortuga::Packet::Client::PlayerLook :
+				case Tortuga::Packet::PlayerLook :
 				{
 					Tortuga::Player::readPlayerLookPacket ( * this , receivedPacket ) ;
 					
 					break ;
-				}
-				case Tortuga::Packet::Client::PlayerPositionAndLook :
+				}*/
+				case Tortuga::Packet::PlayerPositionAndLook :
 				{
-					Tortuga::Player::readPlayerPositionAndLookPacket ( * this , receivedPacket ) ;
+					Tortuga::Packet::readPlayerPositionAndLookPacket ( receivedPacket ) ;
 				
 					break ;
-				}***
+				}
 				default :
 				{
 					std::cout << "<Error> unknown operationcode, packetOpcode: " << packetOpcode << "\n" ;
@@ -186,5 +145,42 @@ ARC::Void Tortuga::Client::update ( )
 				}
 			}
 		}
-	} while ( this->getBuffer ( ).size ( ) > 0 ) ;*/
+	} while ( this->getBuffer ( ).size ( ) > 0 ) ;
+	
+}
+
+Tortuga::Client::Client ( ) :
+	type ( Tortuga::Client::None )
+{
+}
+
+ARC::Void Tortuga::Client::setClientSettings ( const Tortuga::ClientSettings & clientSettings )
+{
+	this->clientSettings = clientSettings ;
+}
+Tortuga::ClientSettings & Tortuga::Client::getClientSettings ( )
+{
+	return this->clientSettings ;
+}
+const Tortuga::ClientSettings & Tortuga::Client::getClientSettings ( ) const
+{
+	return this->clientSettings ;
+}
+
+ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( )
+{
+	return this->chatUser ;
+}
+const ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( ) const
+{
+	return this->chatUser ;
+}
+
+Tortuga::Player & Tortuga::Client::getPlayer ( )
+{
+	return this->player ;
+}
+const Tortuga::Player & Tortuga::Client::getPlayer ( ) const
+{
+	return this->player ;
 }
