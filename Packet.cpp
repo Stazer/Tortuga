@@ -214,3 +214,173 @@ Tortuga::Packet Tortuga::Packet::read ( const ARC::Vector <ARC::UnsignedChar> & 
 {
 	return Tortuga::Packet::read ( Tortuga::Packet ( buffer ) ) ;
 }
+
+Tortuga::Packet::ClientHandshakeData Tortuga::Packet::readClientHandshakePacket ( Tortuga::Packet & packet )
+{
+	return { packet.readVariableInt ( ) , packet.readString ( ) , packet.readShort ( ) , packet.readVariableInt ( ) } ;
+}
+
+Tortuga::Packet::ClientLoginStartData Tortuga::Packet::readClientLoginStartPacket ( Tortuga::Packet & packet )
+{
+	return { packet.readString ( ) } ;
+}
+
+Tortuga::Packet Tortuga::Packet::writeClientLoginSuccessPacket ( const Tortuga::Packet::ClientLoginSuccessData & clientLoginSuccessData )
+{
+	Tortuga::Packet packet ;
+			
+	packet.writeVariableInt ( Tortuga::Packet::ClientLoginSuccess ) ;				
+	packet.writeString ( clientLoginSuccessData.uuid ) ;
+	packet.writeString ( clientLoginSuccessData.username ) ;
+				
+	return Tortuga::Packet::write ( packet ) ;
+}
+
+Tortuga::Packet Tortuga::Packet::writeClientJoinGamePacket ( const Tortuga::Packet::ClientJoinGameData & clientJoinGameData )
+{
+	Tortuga::Packet packet ;
+				
+	packet.writeVariableInt ( Tortuga::Packet::ClientJoinGame ) ;
+	packet.writeInt ( clientJoinGameData.entityIdentification ) ;
+	packet.writeChar ( clientJoinGameData.gamemode ) ;
+	packet.writeChar ( clientJoinGameData.dimension ) ;
+	packet.writeChar ( clientJoinGameData.difficulty ) ;
+	packet.writeChar ( clientJoinGameData.maximalPlayers ) ;
+	packet.writeString ( clientJoinGameData.levelType ) ;
+				
+	return Tortuga::Packet::write ( packet ) ;
+}
+
+Tortuga::Packet::ClientKeepAliveData Tortuga::Packet::readClientKeepAlivePacket ( Tortuga::Packet & packet )
+{
+	return { packet.readInt ( ) } ;
+}
+Tortuga::Packet Tortuga::Packet::writeClientKeepAlivePacket ( const Tortuga::Packet::ClientKeepAliveData & clientKeepAliveData )
+{
+	Tortuga::Packet packet ;
+				
+	packet.writeVariableInt ( Tortuga::Packet::ClientKeepAlive ) ;
+	packet.writeInt ( clientKeepAliveData.number ) ;
+				
+	return Tortuga::Packet::write ( packet ) ;
+}
+
+Tortuga::Packet::ClientSettingsData Tortuga::Packet::readClientSettingsPacket ( Tortuga::Packet & packet )
+{
+	return { packet.readString ( ) , packet.readChar ( ) , packet.readChar ( ) , packet.readBool ( ) , packet.readChar ( ) , packet.readBool ( ) } ;
+}
+
+Tortuga::Packet Tortuga::Packet::writeClientDisconnectPacket ( const Tortuga::Packet::ClientDisconnectData & clientDisconnectData )
+{
+	Tortuga::Packet packet ;
+				
+	packet.writeVariableInt ( Tortuga::Packet::ClientDisconnect ) ;
+	packet.writeString ( clientDisconnectData.reason ) ;
+				
+	return packet ;
+}
+
+Tortuga::Packet::StatusRequestData Tortuga::Packet::readStatusRequestPacket ( Tortuga::Packet & packet )
+{
+	return Tortuga::Packet::StatusRequestData ( ) ;
+}
+
+Tortuga::Packet Tortuga::Packet::writeStatusResponsePacket ( const Tortuga::Packet::StatusResponseData & statusResponseData )
+{
+	Tortuga::Packet packet ;
+				
+	packet.writeVariableInt ( Tortuga::Packet::StatusResponse ) ;
+	packet.writeString ( statusResponseData.response ) ;
+				
+	return Tortuga::Packet::write ( packet ) ;
+}
+
+Tortuga::Packet::StatusKeepAliveData Tortuga::Packet::readStatusKeepAlivePacket ( Tortuga::Packet & packet )
+{
+	return { packet.readLong ( ) } ;
+}
+
+Tortuga::Packet Tortuga::Packet::writeStatusKeepAlivePacket ( const Tortuga::Packet::StatusKeepAliveData & statusKeepAliveData )
+{
+	Tortuga::Packet packet ;
+				
+	packet.writeVariableInt ( Tortuga::Packet::StatusKeepAlive ) ;
+	packet.writeLong ( statusKeepAliveData.time ) ;
+				
+	return Tortuga::Packet::write ( packet ) ;
+}
+
+Tortuga::Packet Tortuga::Packet::writeWorldSpawnPositionPacket ( const Tortuga::Packet::WorldSpawnPositionData & worldSpawnPositinData )
+{
+	Tortuga::Packet packet ;
+				
+	packet.writeVariableInt ( Tortuga::Packet::WorldSpawnPosition ) ;
+	packet.writeInt ( worldSpawnPositinData.x ) ;
+	packet.writeInt ( worldSpawnPositinData.y ) ;
+	packet.writeInt ( worldSpawnPositinData.z ) ;
+				
+	return Tortuga::Packet::write ( packet ) ;
+}
+
+Tortuga::Packet Tortuga::Packet::writeWorldTimeUpdatePacket ( const Tortuga::Packet::WorldTimeUpdateData & worldTimeUpdateData )
+{
+	Tortuga::Packet packet ;
+				
+	packet.writeVariableInt ( Tortuga::Packet::WorldTimeUpdate ) ;
+	packet.writeLong ( worldTimeUpdateData.age ) ;
+	packet.writeLong ( worldTimeUpdateData.time ) ;
+				
+	return Tortuga::Packet::write ( packet ) ;
+}
+
+Tortuga::Packet Tortuga::Packet::writePlayerPositionAndLookPacket ( const Tortuga::Packet::PlayerPositionAndLookData & playerPositionAndLookData )
+{
+	Tortuga::Packet packet ;
+				
+	packet.writeVariableInt ( Tortuga::Packet::PlayerPositionAndLookFromServer ) ;
+	packet.writeDouble ( playerPositionAndLookData.x ) ;
+	packet.writeDouble ( playerPositionAndLookData.y ) ;
+	packet.writeDouble ( playerPositionAndLookData.z ) ;
+	packet.writeFloat ( playerPositionAndLookData.yaw ) ;
+	packet.writeFloat ( playerPositionAndLookData.pitch ) ;
+	packet.writeBool ( playerPositionAndLookData.onGround ) ;
+				
+	return Tortuga::Packet::write ( packet ) ;
+}
+Tortuga::Packet::PlayerPositionAndLookData Tortuga::Packet::readPlayerPositionAndLookPacket ( Tortuga::Packet & packet )
+{
+	Tortuga::Packet::PlayerPositionAndLookData playerPositionAndLookData ;
+				
+	playerPositionAndLookData.x = packet.readDouble ( ) ;
+	playerPositionAndLookData.y = packet.readDouble ( ) ;
+	packet.readDouble ( ) ; // headY
+	playerPositionAndLookData.z = packet.readDouble ( ) ;
+	playerPositionAndLookData.yaw = packet.readFloat ( ) ;
+	playerPositionAndLookData.pitch = packet.readFloat ( ) ;
+	playerPositionAndLookData.onGround = packet.readBool ( ) ;
+				
+	return playerPositionAndLookData ;
+}
+
+Tortuga::Packet::PlayerOnGroundData Tortuga::Packet::readPlayerOnGroundPacket ( Tortuga::Packet & packet )
+{
+	return { packet.readBool ( ) } ;
+}
+
+Tortuga::Packet::PlayerPositionData Tortuga::Packet::readPlayerPositionPacket ( Tortuga::Packet & packet )
+{
+	Tortuga::Packet::PlayerPositionData playerPositionData ;
+				
+	playerPositionData.x = packet.readDouble ( ) ;
+	playerPositionData.y = packet.readDouble ( ) ;
+	packet.readDouble ( ) ; // headY
+	playerPositionData.y = packet.readDouble ( ) ;
+	playerPositionData.onGround = packet.readBool ( ) ;
+				
+	return playerPositionData ;
+}
+
+Tortuga::Packet::PlayerLookData Tortuga::Packet::readPlayerLookPacket ( Tortuga::Packet & packet )
+{
+	return { packet.readFloat ( ) , packet.readFloat ( ) , packet.readBool ( ) } ;
+}

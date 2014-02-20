@@ -94,35 +94,20 @@ namespace Tortuga
 				ARC::UnsignedShort serverPort ;
 				ARC::UnsignedInt state ;
 			} ;			
-			static Tortuga::Packet::ClientHandshakeData readClientHandshakePacket ( Tortuga::Packet & packet )
-			{
-				return { packet.readVariableInt ( ) , packet.readString ( ) , packet.readShort ( ) , packet.readVariableInt ( ) } ;
-			}
+			static Tortuga::Packet::ClientHandshakeData readClientHandshakePacket ( Tortuga::Packet & packet ) ;
 			
 			struct ClientLoginStartData
 			{
 				ARC::String username ;
 			} ;			
-			static Tortuga::Packet::ClientLoginStartData readClientLoginStartPacket ( Tortuga::Packet & packet )
-			{
-				return { packet.readString ( ) } ;
-			}
+			static Tortuga::Packet::ClientLoginStartData readClientLoginStartPacket ( Tortuga::Packet & packet ) ;
 			
 			struct ClientLoginSuccessData
 			{
 				ARC::String uuid ;
 				ARC::String username ;
 			} ;			
-			static Tortuga::Packet writeClientLoginSuccessPacket ( const Tortuga::Packet::ClientLoginSuccessData & clientLoginSuccessData )
-			{
-				Tortuga::Packet packet ;
-				
-				packet.writeVariableInt ( Tortuga::Packet::ClientLoginSuccess ) ;				
-				packet.writeString ( clientLoginSuccessData.uuid ) ;
-				packet.writeString ( clientLoginSuccessData.username ) ;
-				
-				return Tortuga::Packet::write ( packet ) ;
-			}
+			static Tortuga::Packet writeClientLoginSuccessPacket ( const Tortuga::Packet::ClientLoginSuccessData & clientLoginSuccessData ) ;
 			
 			struct ClientJoinGameData
 			{
@@ -133,38 +118,14 @@ namespace Tortuga
 				ARC::UnsignedChar maximalPlayers ;
 				ARC::String levelType ;
 			} ;
-			static Tortuga::Packet writeClientJoinGamePacket ( const Tortuga::Packet::ClientJoinGameData & clientJoinGameData )
-			{
-				Tortuga::Packet packet ;
-				
-				packet.writeVariableInt ( Tortuga::Packet::ClientJoinGame ) ;
-				packet.writeInt ( clientJoinGameData.entityIdentification ) ;
-				packet.writeChar ( clientJoinGameData.gamemode ) ;
-				packet.writeChar ( clientJoinGameData.dimension ) ;
-				packet.writeChar ( clientJoinGameData.difficulty ) ;
-				packet.writeChar ( clientJoinGameData.maximalPlayers ) ;
-				packet.writeString ( clientJoinGameData.levelType ) ;
-				
-				return Tortuga::Packet::write ( packet ) ;
-			}		
+			static Tortuga::Packet writeClientJoinGamePacket ( const Tortuga::Packet::ClientJoinGameData & clientJoinGameData ) ;
 			
 			struct ClientKeepAliveData
 			{
 				ARC::UnsignedInt number ;
 			} ;
-			static Tortuga::Packet::ClientKeepAliveData readClientKeepAlivePacket ( Tortuga::Packet & packet )
-			{
-				return { packet.readInt ( ) } ;
-			}
-			static Tortuga::Packet writeClientKeepAlivePacket ( const Tortuga::Packet::ClientKeepAliveData & clientKeepAliveData )
-			{
-				Tortuga::Packet packet ;
-				
-				packet.writeVariableInt ( Tortuga::Packet::ClientKeepAlive ) ;
-				packet.writeInt ( clientKeepAliveData.number ) ;
-				
-				return Tortuga::Packet::write ( packet ) ;
-			}			
+			static Tortuga::Packet::ClientKeepAliveData readClientKeepAlivePacket ( Tortuga::Packet & packet ) ;
+			static Tortuga::Packet writeClientKeepAlivePacket ( const Tortuga::Packet::ClientKeepAliveData & clientKeepAliveData ) ;
 			
 			struct ClientSettingsData
 			{
@@ -175,65 +136,32 @@ namespace Tortuga
 				ARC::UnsignedChar difficulty ;
 				ARC::Bool showCape ;
 			} ;
-			static Tortuga::Packet::ClientSettingsData readClientSettingsPacket ( Tortuga::Packet & packet )
-			{
-				return { packet.readString ( ) , packet.readChar ( ) , packet.readChar ( ) , packet.readBool ( ) , packet.readChar ( ) , packet.readBool ( ) } ;
-			}
+			static Tortuga::Packet::ClientSettingsData readClientSettingsPacket ( Tortuga::Packet & packet ) ;
 			
 			struct ClientDisconnectData
 			{
 				ARC::String reason ;
 			} ;
-			static Tortuga::Packet writeClientDisconnectPacket ( const Tortuga::Packet::ClientDisconnectData & clientDisconnectData )
-			{
-				Tortuga::Packet packet ;
-				
-				packet.writeVariableInt ( Tortuga::Packet::ClientDisconnect ) ;
-				packet.writeString ( clientDisconnectData.reason ) ;
-				
-				return packet ;
-			}
+			static Tortuga::Packet writeClientDisconnectPacket ( const Tortuga::Packet::ClientDisconnectData & clientDisconnectData ) ;
 			
 			// Status
 			struct StatusRequestData
 			{
 			} ;			
-			static Tortuga::Packet::StatusRequestData readStatusRequestPacket ( Tortuga::Packet & packet )
-			{
-				return Tortuga::Packet::StatusRequestData ( ) ;
-			}
+			static Tortuga::Packet::StatusRequestData readStatusRequestPacket ( Tortuga::Packet & packet ) ;
 			
 			struct StatusResponseData
 			{
 				ARC::String response ;
 			} ;			
-			static Tortuga::Packet writeStatusResponsePacket ( const Tortuga::Packet::StatusResponseData & statusResponseData )
-			{
-				Tortuga::Packet packet ;
-				
-				packet.writeVariableInt ( Tortuga::Packet::StatusResponse ) ;
-				packet.writeString ( statusResponseData.response ) ;
-				
-				return Tortuga::Packet::write ( packet ) ;
-			}
+			static Tortuga::Packet writeStatusResponsePacket ( const Tortuga::Packet::StatusResponseData & statusResponseData ) ;
 			
 			struct StatusKeepAliveData
 			{
 				ARC::UnsignedLong time ;	
 			} ;
-			static Tortuga::Packet::StatusKeepAliveData readStatusKeepAlivePacket ( Tortuga::Packet & packet )
-			{
-				return { packet.readLong ( ) } ;
-			}
-			static Tortuga::Packet writeStatusKeepAlivePacket ( const Tortuga::Packet::StatusKeepAliveData & statusKeepAliveData )
-			{
-				Tortuga::Packet packet ;
-				
-				packet.writeVariableInt ( Tortuga::Packet::StatusKeepAlive ) ;
-				packet.writeLong ( statusKeepAliveData.time ) ;
-				
-				return Tortuga::Packet::write ( packet ) ;
-			}
+			static Tortuga::Packet::StatusKeepAliveData readStatusKeepAlivePacket ( Tortuga::Packet & packet ) ;
+			static Tortuga::Packet writeStatusKeepAlivePacket ( const Tortuga::Packet::StatusKeepAliveData & statusKeepAliveData ) ;
 			
 			// World
 			struct WorldSpawnPositionData
@@ -242,33 +170,14 @@ namespace Tortuga
 				ARC::SignedInt y ;
 				ARC::SignedInt z ;
 			} ;
-			static Tortuga::Packet writeWorldSpawnPositionPacket ( const Tortuga::Packet::WorldSpawnPositionData & worldSpawnPositinData )
-			{
-				Tortuga::Packet packet ;
-				
-				packet.writeVariableInt ( Tortuga::Packet::WorldSpawnPosition ) ;
-				packet.writeInt ( worldSpawnPositinData.x ) ;
-				packet.writeInt ( worldSpawnPositinData.y ) ;
-				packet.writeInt ( worldSpawnPositinData.z ) ;
-				
-				return Tortuga::Packet::write ( packet ) ;
-			}
+			static Tortuga::Packet writeWorldSpawnPositionPacket ( const Tortuga::Packet::WorldSpawnPositionData & worldSpawnPositinData ) ;
 			
 			struct WorldTimeUpdateData
 			{
 				ARC::UnsignedLong age ;
 				ARC::UnsignedLong time ;
 			} ;
-			static Tortuga::Packet writeWorldTimeUpdatePacket ( const Tortuga::Packet::WorldTimeUpdateData & worldTimeUpdateData )
-			{
-				Tortuga::Packet packet ;
-				
-				packet.writeVariableInt ( Tortuga::Packet::WorldTimeUpdate ) ;
-				packet.writeLong ( worldTimeUpdateData.age ) ;
-				packet.writeLong ( worldTimeUpdateData.time ) ;
-				
-				return Tortuga::Packet::write ( packet ) ;
-			}
+			static Tortuga::Packet writeWorldTimeUpdatePacket ( const Tortuga::Packet::WorldTimeUpdateData & worldTimeUpdateData ) ;
 			
 			// Player
 			struct PlayerPositionAndLookData
@@ -280,43 +189,14 @@ namespace Tortuga
 				ARC::Float pitch ;
 				ARC::Bool onGround ;
 			} ;
-			static Tortuga::Packet writePlayerPositionAndLookPacket ( const Tortuga::Packet::PlayerPositionAndLookData & playerPositionAndLookData )
-			{
-				Tortuga::Packet packet ;
-				
-				packet.writeVariableInt ( Tortuga::Packet::PlayerPositionAndLookFromServer ) ;
-				packet.writeDouble ( playerPositionAndLookData.x ) ;
-				packet.writeDouble ( playerPositionAndLookData.y ) ;
-				packet.writeDouble ( playerPositionAndLookData.z ) ;
-				packet.writeFloat ( playerPositionAndLookData.yaw ) ;
-				packet.writeFloat ( playerPositionAndLookData.pitch ) ;
-				packet.writeBool ( playerPositionAndLookData.onGround ) ;
-				
-				return Tortuga::Packet::write ( packet ) ;
-			}
-			static Tortuga::Packet::PlayerPositionAndLookData readPlayerPositionAndLookPacket ( Tortuga::Packet & packet )
-			{
-				Tortuga::Packet::PlayerPositionAndLookData playerPositionAndLookData ;
-				
-				playerPositionAndLookData.x = packet.readDouble ( ) ;
-				playerPositionAndLookData.y = packet.readDouble ( ) ;
-				packet.readDouble ( ) ; // headY
-				playerPositionAndLookData.z = packet.readDouble ( ) ;
-				playerPositionAndLookData.yaw = packet.readFloat ( ) ;
-				playerPositionAndLookData.pitch = packet.readFloat ( ) ;
-				playerPositionAndLookData.onGround = packet.readBool ( ) ;
-				
-				return playerPositionAndLookData ;
-			}
+			static Tortuga::Packet writePlayerPositionAndLookPacket ( const Tortuga::Packet::PlayerPositionAndLookData & playerPositionAndLookData ) ;
+			static Tortuga::Packet::PlayerPositionAndLookData readPlayerPositionAndLookPacket ( Tortuga::Packet & packet ) ;
 			
 			struct PlayerOnGroundData
 			{
 				ARC::Bool onGround ;
 			} ;
-			static Tortuga::Packet::PlayerOnGroundData readPlayerOnGroundPacket ( Tortuga::Packet & packet )
-			{
-				return { packet.readBool ( ) } ;
-			}
+			static Tortuga::Packet::PlayerOnGroundData readPlayerOnGroundPacket ( Tortuga::Packet & packet ) ;
 			
 			struct PlayerPositionData
 			{
@@ -325,18 +205,7 @@ namespace Tortuga
 				ARC::Double z ;
 				ARC::Bool onGround ;			
 			} ;
-			static Tortuga::Packet::PlayerPositionData readPlayerPositionPacket ( Tortuga::Packet & packet )
-			{
-				Tortuga::Packet::PlayerPositionData playerPositionData ;
-				
-				playerPositionData.x = packet.readDouble ( ) ;
-				playerPositionData.y = packet.readDouble ( ) ;
-				packet.readDouble ( ) ; // headY
-				playerPositionData.y = packet.readDouble ( ) ;
-				playerPositionData.onGround = packet.readBool ( ) ;
-				
-				return playerPositionData ;
-			}
+			static Tortuga::Packet::PlayerPositionData readPlayerPositionPacket ( Tortuga::Packet & packet ) ;
 			
 			struct PlayerLookData
 			{
@@ -344,9 +213,6 @@ namespace Tortuga
 				ARC::Float pitch ;
 				ARC::Bool onGround ;
 			} ;
-			static Tortuga::Packet::PlayerLookData readPlayerLookPacket ( Tortuga::Packet & packet )
-			{
-				return { packet.readFloat ( ) , packet.readFloat ( ) , packet.readBool ( ) } ;
-			}
+			static Tortuga::Packet::PlayerLookData readPlayerLookPacket ( Tortuga::Packet & packet ) ;
 	} ;
 }
