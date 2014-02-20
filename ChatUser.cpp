@@ -1,20 +1,20 @@
 #include "ChatUser.hpp"
-#include "ChatManager.hpp"
+#include "Chat.hpp"
 
-Tortuga::ChatUser::ChatUser ( Tortuga::ChatManager & chatManager , Tortuga::Client & client , const ARC::String & name ) :
+Tortuga::ChatUser::ChatUser ( Tortuga::Chat & chat , Tortuga::Client & client , const ARC::String & name ) :
 	name ( name ) ,
-	chatManager ( chatManager ) ,
+	chat ( chat ) ,
 	client ( client )
 {
 }
 
-Tortuga::ChatManager & Tortuga::ChatUser::getChatManager ( )
+Tortuga::Chat & Tortuga::ChatUser::getChat ( )
 {
-	return this->chatManager ;
+	return this->chat ;
 }
-const Tortuga::ChatManager & Tortuga::ChatUser::getChatManager ( ) const
+const Tortuga::Chat & Tortuga::ChatUser::getChat ( ) const
 {
-	return this->chatManager ;
+	return this->chat ;
 }
 			
 Tortuga::Client & Tortuga::ChatUser::getClient ( )

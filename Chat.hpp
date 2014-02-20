@@ -9,7 +9,7 @@ namespace Tortuga
 	class Client ;
 	class Packet ;
 	
-	class ChatManager
+	class Chat
 	{
 		private :
 			Tortuga::Server & server ;
@@ -17,17 +17,12 @@ namespace Tortuga
 			ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> chatUsers ;
 			
 		public :
-			ChatManager ( Tortuga::Server & server ) ;
+			Chat ( Tortuga::Server & server ) ;
 			
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
 		
 			ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> getChatUsers ( ) ;
 			const ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> getChatUsers ( ) const ;
-			
-			ARC::Void initialize ( ) ;
-			ARC::Void finalize ( ) ;
-			
-			ARC::Void update ( ) ;
 	} ;
 }

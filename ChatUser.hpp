@@ -4,22 +4,22 @@
 
 namespace Tortuga
 {
-	class ChatManager ;
+	class Chat ;
 	class Client ;
 
 	class ChatUser
 	{
 		private :
-			Tortuga::ChatManager & chatManager ;
+			Tortuga::Chat & chat ;
 			Tortuga::Client & client ;
 		
 			ARC::String name ;
 			
 		public :
-			ChatUser ( Tortuga::ChatManager & chatManager , Tortuga::Client & client , const ARC::String & name = "" ) ;
+			ChatUser ( Tortuga::Chat & chat , Tortuga::Client & client , const ARC::String & name = "" ) ;
 			
-			Tortuga::ChatManager & getChatManager ( ) ;
-			const Tortuga::ChatManager & getChatManager ( ) const ;
+			Tortuga::Chat & getChat ( ) ;
+			const Tortuga::Chat & getChat ( ) const ;
 			
 			Tortuga::Client & getClient ( ) ;
 			const Tortuga::Client & getClient ( ) const ;
