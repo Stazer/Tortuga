@@ -5,7 +5,7 @@
 
 namespace Tortuga
 {
-	class Server : public ARC::ManagedTCPServer <Tortuga::Client>
+	class Server : public ARC::TCPServer <Tortuga::Client>
 	{
 		private :			
 			ARC::Thread threadHandle ;
@@ -13,9 +13,9 @@ namespace Tortuga
 			
 			ARC::Bool running ;
 			
-			ARC::Void onConnect ( ARC::SharedPointer <Client> & client ) ;
-			ARC::Void onDisconnect ( typename ARC::List <ARC::SharedPointer <Client>>::iterator & client ) ;
-			ARC::Void onReceive ( typename ARC::List <ARC::SharedPointer <Client>>::iterator & client ) ;
+			ARC::Void onConnect ( ARC::SharedPointer <Tortuga::Client> & client ) ;
+			ARC::Void onDisconnect ( typename ARC::List <ARC::SharedPointer <Tortuga::Client>>::iterator & client ) ;
+			ARC::Void onReceive ( typename ARC::List <ARC::SharedPointer <Tortuga::Client>>::iterator & client ) ;
 
 		public :
 			Server ( ) ;

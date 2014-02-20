@@ -24,21 +24,21 @@ ARC::Void Tortuga::Server::thread ( )
 }
 
 
-ARC::Void Tortuga::Server::onConnect ( ARC::SharedPointer <Client> & client )
+ARC::Void Tortuga::Server::onConnect ( ARC::SharedPointer <Tortuga::Client> & client )
 {
-	ARC::ManagedTCPServer <Tortuga::Client>::onConnect ( client ) ;
+	ARC::TCPServer <Tortuga::Client>::onConnect ( client ) ;
 	
 	std::cout << "Client connected ( " << client->getRemoteAddress ( ) << ":" << client->getRemotePort ( ) << " )\n" ;
 }
-ARC::Void Tortuga::Server::onDisconnect ( typename ARC::List <ARC::SharedPointer <Client>>::iterator & client )
+ARC::Void Tortuga::Server::onDisconnect ( typename ARC::List <ARC::SharedPointer <Tortuga::Client>>::iterator & client )
 {
-	ARC::ManagedTCPServer <Tortuga::Client>::onDisconnect ( client ) ;
+	ARC::TCPServer <Tortuga::Client>::onDisconnect ( client ) ;
 	
 	std::cout << "Client disconnected ( " << ( * client )->getRemoteAddress ( ) << ":" << ( * client )->getRemotePort ( ) << " )\n" ;
 }
-ARC::Void Tortuga::Server::onReceive ( typename ARC::List <ARC::SharedPointer <Client>>::iterator & client )
+ARC::Void Tortuga::Server::onReceive ( typename ARC::List <ARC::SharedPointer <Tortuga::Client>>::iterator & client )
 {
-	ARC::ManagedTCPServer <Tortuga::Client>::onReceive ( client ) ;	
+	ARC::TCPServer <Tortuga::Client>::onReceive ( client ) ;
 }
 
 Tortuga::Server::Server ( ) :

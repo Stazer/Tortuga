@@ -10,7 +10,7 @@ namespace Tortuga
 	class ClientManager ;
 	class ChatUser ;
 
-	class Client : public ARC::BufferedTCPClient
+	class Client : public ARC::TCPClient
 	{
 		public :
 			enum Type
