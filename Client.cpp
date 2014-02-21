@@ -145,7 +145,7 @@ ARC::Void Tortuga::Client::handleStatusRequest ( Tortuga::Packet & packet )
 ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
 {		
 	this->send ( Tortuga::Packet::writeClientLoginSuccessPacket ( { "" , Tortuga::Packet::readClientLoginStartPacket ( packet ).username } ) ) ;
-	this->send ( Tortuga::Packet::writeClientJoinGamePacket ( { 0 , 1 , -1 , 0 , 0 , "default" } ) ) ;				
+	this->send ( Tortuga::Packet::writeClientJoinGamePacket ( { 0 , 1 , 0 , 0 , 0 , "default" } ) ) ;				
 	this->send ( Tortuga::Packet::writeWorldSpawnPositionPacket ( { 0 , 0 , 0 } ) ) ;	
 	this->send ( Tortuga::Packet::writePlayerPositionAndLookPacket ( { 0 , 0 , 0 , 0 , 0 , true } ) ) ;
 										
