@@ -32,6 +32,11 @@ namespace Tortuga
 			Tortuga::Player player ;
 			
 			ARC::Void onReceive ( ) ;
+			
+			ARC::Void handleClientHandshake ( Tortuga::Packet & packet ) ;
+			
+			ARC::Void handleStatusKeepAlive ( Tortuga::Packet & packet ) ;
+			ARC::Void handleStatusRequest ( Tortuga::Packet & packet ) ;
 		
 		public :
 			Client ( ) ;

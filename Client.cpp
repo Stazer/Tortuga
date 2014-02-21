@@ -25,8 +25,7 @@ ARC::Void Tortuga::Client::onReceive ( )
 			{
 				case Tortuga::Packet::ClientHandshake :
 				{
-					this->type = static_cast <Tortuga::Client::Type> ( Tortuga::Packet::readClientHandshakePacket ( receivedPacket ).state ) ;
-					
+					this->handleClientHandshake ( receivedPacket ) ;
 					break ;
 				}
 				default :
@@ -42,19 +41,12 @@ ARC::Void Tortuga::Client::onReceive ( )
 			{
 				case Tortuga::Packet::StatusKeepAlive :
 				{
-					Tortuga::Packet packet = Tortuga::Packet::writeStatusKeepAlivePacket ( { Tortuga::Packet::readStatusKeepAlivePacket ( receivedPacket ).time } ) ;
-				
-					this->send ( packet ) ;
-				
+					this->handleStatusKeepAlive ( receivedPacket ) ;					
 					break ;
 				}
 				case Tortuga::Packet::StatusRequest :
 				{
-					Tortuga::Packet::readStatusRequestPacket ( receivedPacket ) ;
-					
-					Tortuga::Packet packet = Tortuga::Packet::writeStatusResponsePacket ( { "{\"version\": {\"name\": \"1.7.4\",\"protocol\": 4},\"players\": {\"max\": 100,\"online\": 5,\"sample\":[{\"name\":\"Thinkofdeath\", \"id\":\"\"}]},\"description\": {\"text\":\"Hello world\"}}" } ) ;
-					
-					this->send ( packet ) ;
+					this->handleStatusRequest ( receivedPacket ) ;
 			
 					break ;
 				}
@@ -147,6 +139,23 @@ ARC::Void Tortuga::Client::onReceive ( )
 		}
 	} while ( this->getBuffer ( ).size ( ) > 0 ) ;
 	
+}
+
+ARC::Void Tortuga::Client::handleClientHandshake ( Tortuga::Packet & packet )
+{
+	this->type = static_cast <Tortuga::Client::Type> ( Tortuga::Packet::readClientHandshakePacket ( packet ).state ) ;					
+}
+
+ARC::Void Tortuga::Client::handleStatusKeepAlive ( Tortuga::Packet & packet )
+{	
+	this->send ( Tortuga::Packet::writeStatusKeepAlivePacket ( { Tortuga::Packet::readStatusKeepAlivePacket ( packet ).time } ) ) ;	
+}
+ARC::Void Tortuga::Client::handleStatusRequest ( Tortuga::Packet & packet )
+{
+	// nothing to read here
+	Tortuga::Packet::readStatusRequestPacket ( packet ) ;
+				
+	this->send ( Tortuga::Packet::writeStatusResponsePacket ( { "{\"version\": {\"name\": \"1.7.4\",\"protocol\": 4},\"players\": {\"max\": 100,\"online\": 5,\"sample\":[{\"name\":\"Thinkofdeath\", \"id\":\"\"}]},\"description\": {\"text\":\"Hello world\"}}" } ) ) ;
 }
 
 Tortuga::Client::Client ( ) :
