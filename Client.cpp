@@ -154,6 +154,15 @@ Tortuga::Client::Client ( ) :
 {
 }
 
+Tortuga::Server & Tortuga::Client::getServer ( )
+{
+	return Tortuga::Server::getInstance ( ) ;
+}
+const Tortuga::Server & Tortuga::Client::getServer ( ) const
+{
+	return Tortuga::Server::getInstance ( ) ;
+}
+
 ARC::Void Tortuga::Client::setClientSettings ( const Tortuga::ClientSettings & clientSettings )
 {
 	this->clientSettings = clientSettings ;

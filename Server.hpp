@@ -5,7 +5,7 @@
 
 namespace Tortuga
 {
-	class Server : public ARC::TCPServer <Tortuga::Client>
+	class Server : public ARC::Singleton <Tortuga::Server> , public ARC::TCPServer <Tortuga::Client>
 	{
 		private :			
 			ARC::Thread threadHandle ;
@@ -24,5 +24,7 @@ namespace Tortuga
 			ARC::Bool getRunning ( ) const ;
 	
 			ARC::Return main ( const ARC::Vector <ARC::String> & arguments ) ;
+			
+			ARC::Void update ( ) ;
 	} ;
 }

@@ -97,3 +97,8 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 	
 	return returnValue ;
 }
+
+ARC::Void Tortuga::Server::update ( )
+{
+	ARC::TCPClientManager <Tortuga::Client>::update ( ARC::Time ( ) , 1024 ) ;
+}
