@@ -63,24 +63,7 @@ ARC::Void Tortuga::Client::onReceive ( )
 			{
 				case Tortuga::Packet::ClientLoginStart :
 				{				
-					Tortuga:Packet packet = Tortuga::Packet::writeClientLoginSuccessPacket ( { "" , Tortuga::Packet::readClientLoginStartPacket ( receivedPacket ).username } ) ;
-					
-					this->send ( packet ) ;
-					
-					packet = Tortuga::Packet::writeClientJoinGamePacket ( { 0 , 1 , -1 , 0 , 0 , "default" } ) ;
-					
-					this->send ( packet ) ;
-					
-					packet = Tortuga::Packet::writeWorldSpawnPositionPacket ( { 0 , 0 , 0 } ) ;
-					
-					this->send ( packet ) ;			
-					
-					packet = Tortuga::Packet::writePlayerPositionAndLookPacket ( { 0 , 0 , 0 , 0 , 0 , true } ) ;
-					
-					this->send ( packet ) ;
-										
-					this->type = Tortuga::Client::Player ;
-					
+					this->handleClientLoginStart ( receivedPacket ) ;
 					break ;
 				}
 				default :
@@ -94,6 +77,7 @@ ARC::Void Tortuga::Client::onReceive ( )
 		{
 			switch ( packetOpcode )
 			{
+				
 				/*case Tortuga::Packet::ClientSettings :
 				{
 					Tortuga::ClientSettings::readClientSettingsPacket ( * this , receivedPacket ) ;
@@ -157,6 +141,16 @@ ARC::Void Tortuga::Client::handleStatusRequest ( Tortuga::Packet & packet )
 				
 	this->send ( Tortuga::Packet::writeStatusResponsePacket ( { "{\"version\": {\"name\": \"1.7.4\",\"protocol\": 4},\"players\": {\"max\": 100,\"online\": 5,\"sample\":[{\"name\":\"Thinkofdeath\", \"id\":\"\"}]},\"description\": {\"text\":\"Hello world\"}}" } ) ) ;
 }
+
+ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
+{		
+	this->send ( Tortuga::Packet::writeClientLoginSuccessPacket ( { "" , Tortuga::Packet::readClientLoginStartPacket ( packet ).username } ) ) ;
+	this->send ( Tortuga::Packet::writeClientJoinGamePacket ( { 0 , 1 , -1 , 0 , 0 , "default" } ) ) ;				
+	this->send ( Tortuga::Packet::writeWorldSpawnPositionPacket ( { 0 , 0 , 0 } ) ) ;	
+	this->send ( Tortuga::Packet::writePlayerPositionAndLookPacket ( { 0 , 0 , 0 , 0 , 0 , true } ) ) ;
+										
+	this->type = Tortuga::Client::Player ;
+}		
 
 Tortuga::Client::Client ( ) :
 	type ( Tortuga::Client::None )
