@@ -33,5 +33,6 @@ namespace Tortuga
 			ARC::Void handlePlayerOnGround ( Tortuga::Packet & packet ) ;
 			ARC::Void handlePlayerPosition ( Tortuga::Packet & packet ) ;
 			ARC::Void handlePlayerLook ( Tortuga::Packet & packet ) ;
+			ARC::Void handlePlayerPositionAndLook ( Tortuga::Packet & packet ) ;
 	} ;
 }

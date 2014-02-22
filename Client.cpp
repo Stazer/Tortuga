@@ -102,6 +102,11 @@ ARC::Void Tortuga::Client::onReceive ( )
 					this->player->handlePlayerLook ( receivedPacket ) ;
 					break ;
 				}
+				case Tortuga::Packet::PlayerPositionAndLookToServer :
+				{
+					this->player->handlePlayerPositionAndLook ( receivedPacket ) ;				
+					break ;
+				}
 				/*case Tortuga::Packet::ChatMessageClient :
 				{
 					Tortuga::ChatManager::readChatMessagePacket ( * this , receivedPacket ) ;
@@ -110,12 +115,7 @@ ARC::Void Tortuga::Client::onReceive ( )
 				}
 				
 				*/
-				/*case Tortuga::Packet::PlayerPositionAndLookToServer :
-				{
-					Tortuga::Packet::readPlayerPositionAndLookPacket ( receivedPacket ) ;
-				
-					break ;
-				}*/
+				/**/
 				default :
 				{
 					std::cout << "<Error> unknown operationcode, packetOpcode: " << packetOpcode << "\n" ;
