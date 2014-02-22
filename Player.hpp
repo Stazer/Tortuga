@@ -26,6 +26,7 @@ namespace Tortuga
 			Tortuga::Location & getLocation ( ) ;
 			const Tortuga::Location & getLocation ( ) const ;
 			
+			ARC::Void setOnGround ( const ARC::Bool onGround ) ;
 			const ARC::Bool getOnGround ( ) const ;
 			const ARC::Bool isOnGround ( ) const ;
 	} ;

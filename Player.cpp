@@ -30,6 +30,10 @@ const Tortuga::Location & Tortuga::Player::getLocation ( ) const
 	return this->location ;
 }
 
+ARC::Void Tortuga::Player::setOnGround ( const ARC::Bool onGround )
+{
+	this->onGround = onGround ;
+}
 const ARC::Bool Tortuga::Player::getOnGround ( ) const
 {
 	return this->onGround ;
