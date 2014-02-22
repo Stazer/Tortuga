@@ -56,3 +56,11 @@ ARC::Void Tortuga::Player::handlePlayerPosition ( Tortuga::Packet & packet )
 	this->location.setZ ( playerPositionData.z ) ;
 	this->onGround = playerPositionData.onGround ;
 }
+ARC::Void Tortuga::Player::handlePlayerLook ( Tortuga::Packet & packet )
+{
+	Tortuga::Packet::PlayerLookData playerLookData = Tortuga::Packet::readPlayerLookPacket ( packet ) ;
+	
+	this->location.setYaw ( playerLookData.yaw ) ;
+	this->location.setPitch ( playerLookData.pitch ) ;
+	this->onGround = playerLookData.onGround ;					
+}
