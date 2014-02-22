@@ -1,22 +1,11 @@
 #include "ChatUser.hpp"
-#include "Chat.hpp"
 
-Tortuga::ChatUser::ChatUser ( Tortuga::Chat & chat , Tortuga::Client & client , const ARC::String & name ) :
+Tortuga::ChatUser::ChatUser ( Tortuga::Client & client , const ARC::String & name ) :
 	name ( name ) ,
-	chat ( chat ) ,
 	client ( client )
 {
 }
-
-Tortuga::Chat & Tortuga::ChatUser::getChat ( )
-{
-	return this->chat ;
-}
-const Tortuga::Chat & Tortuga::ChatUser::getChat ( ) const
-{
-	return this->chat ;
-}
-			
+		
 Tortuga::Client & Tortuga::ChatUser::getClient ( )
 {
 	return this->client ;

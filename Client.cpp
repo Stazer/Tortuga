@@ -2,7 +2,6 @@
 #include "Server.hpp"
 #include "Packet.hpp"
 #include "ChatUser.hpp"
-#include "Chat.hpp"
 #include "World.hpp"
 #include <iostream>
 
