@@ -1,4 +1,5 @@
 #include "ChatUser.hpp"
+#include "Packet.hpp"
 
 Tortuga::ChatUser::ChatUser ( Tortuga::Client & client , const ARC::String & name ) :
 	name ( name ) ,
@@ -22,4 +23,9 @@ ARC::Void Tortuga::ChatUser::setName ( const ARC::String & name )
 const ARC::String & Tortuga::ChatUser::getName ( ) const
 {
 	return this->name ;
+}
+
+ARC::Void Tortuga::ChatUser::handleChatMessage ( Tortuga::Packet & packet )
+{
+	//Tortuga::Packet::ChatMessage
 }

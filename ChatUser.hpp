@@ -5,6 +5,7 @@
 namespace Tortuga
 {
 	class Client ;
+	class Packet ;
 
 	class ChatUser
 	{
@@ -21,5 +22,7 @@ namespace Tortuga
 			
 			ARC::Void setName ( const ARC::String & name ) ;
 			const ARC::String & getName ( ) const ;
+			
+			ARC::Void handleChatMessage ( Tortuga::Packet & packet ) ;
 	} ;
 }
