@@ -38,6 +38,7 @@ namespace Tortuga
 			ARC::Void handleStatusKeepAlive ( Tortuga::Packet & packet ) ;
 			ARC::Void handleStatusRequest ( Tortuga::Packet & packet ) ;
 			
+			ARC::Void handleClientKeepAlive ( Tortuga::Packet & packet ) ;
 			ARC::Void handleClientLoginStart ( Tortuga::Packet & packet ) ;
 		
 		public :

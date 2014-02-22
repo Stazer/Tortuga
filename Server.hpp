@@ -13,6 +13,8 @@ namespace Tortuga
 			
 			ARC::Bool running ;
 			
+			ARC::Timer keepAliveTimer ;
+			
 			ARC::Void onConnect ( ARC::SharedPointer <Tortuga::Client> & client ) ;
 			ARC::Void onDisconnect ( typename ARC::List <ARC::SharedPointer <Tortuga::Client>>::iterator & client ) ;
 			ARC::Void onReceive ( typename ARC::List <ARC::SharedPointer <Tortuga::Client>>::iterator & client ) ;
