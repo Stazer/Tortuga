@@ -92,24 +92,18 @@ ARC::Void Tortuga::Client::onReceive ( )
 					this->player->handlePlayerOnGround ( receivedPacket ) ;
 					break ;
 				}
+				case Tortuga::Packet::PlayerPosition :
+				{	
+					this->player->handlePlayerPosition ( receivedPacket ) ;					
+					break ;
+				}
 				/*case Tortuga::Packet::ChatMessageClient :
 				{
 					Tortuga::ChatManager::readChatMessagePacket ( * this , receivedPacket ) ;
 					
 					break ;
 				}
-				/*case Tortuga::Packet::PlayerOnGround :
-				{
-					Tortuga::Player::readPlayerOnGroundPacket ( * this , receivedPacket ) ;
 				
-					break ;
-				}
-				case Tortuga::Packet::PlayerPosition :
-				{	
-					Tortuga::Player::readPlayerPositionPacket ( * this , receivedPacket ) ;
-					
-					break ;
-				}
 				case Tortuga::Packet::PlayerLook :
 				{
 					Tortuga::Player::readPlayerLookPacket ( * this , receivedPacket ) ;

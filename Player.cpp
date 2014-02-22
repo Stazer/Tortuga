@@ -47,3 +47,12 @@ ARC::Void Tortuga::Player::handlePlayerOnGround ( Tortuga::Packet & packet )
 {
 	this->onGround = Tortuga::Packet::readPlayerOnGroundPacket ( packet ).onGround ;
 }
+ARC::Void Tortuga::Player::handlePlayerPosition ( Tortuga::Packet & packet )
+{
+	Tortuga::Packet::PlayerPositionData playerPositionData = Tortuga::Packet::readPlayerPositionPacket ( packet ) ;
+	
+	this->location.setX ( playerPositionData.x ) ;
+	this->location.setY ( playerPositionData.y ) ;
+	this->location.setZ ( playerPositionData.z ) ;
+	this->onGround = playerPositionData.onGround ;
+}

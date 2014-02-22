@@ -15,7 +15,7 @@ namespace Tortuga
 			Position ( const ARC::Double x = 0 , const ARC::Double y = 0 , const ARC::Double z = 0 ) ;
 			
 			ARC::Void setX ( const ARC::Double x ) ;
-			ARC::Double setX ( ) const ;
+			ARC::Double getX ( ) const ;
 			
 			ARC::Void setY ( const ARC::Double y ) ;
 			ARC::Double getY ( ) const ;
