@@ -87,6 +87,11 @@ ARC::Void Tortuga::Client::onReceive ( )
 					this->handleClientSettings ( receivedPacket ) ;
 					break ;
 				}
+				/*case Tortuga:::Packet::PlayerOnGround :
+				{
+					this->handlePlayerOnGround ( receivedPacket ) ;
+					break ;
+				}*/
 				/*case Tortuga::Packet::ChatMessageClient :
 				{
 					Tortuga::ChatManager::readChatMessagePacket ( * this , receivedPacket ) ;
@@ -154,7 +159,8 @@ ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
 	this->send ( Tortuga::Packet::writeClientJoinGamePacket ( { 0 , 1 , 0 , 0 , 0 , "default" } ) ) ;				
 	this->send ( Tortuga::Packet::writeWorldSpawnPositionPacket ( { 0 , 0 , 0 } ) ) ;	
 	this->send ( Tortuga::Packet::writePlayerPositionAndLookPacket ( { 0 , 0 , 0 , 0 , 0 , true } ) ) ;
-				
+	
+	this->player = ARC::SharedPointer <Tortuga::Player> ( new Tortuga::Player ( * this ) ) ;	
 	this->type = Tortuga::Client::Player ;
 }		
 ARC::Void Tortuga::Client::handleClientSettings ( Tortuga::Packet & packet )
@@ -192,11 +198,11 @@ const ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( ) 
 	return this->chatUser ;
 }
 
-Tortuga::Player & Tortuga::Client::getPlayer ( )
+ARC::SharedPointer <Tortuga::Player> & Tortuga::Client::getPlayer ( )
 {
 	return this->player ;
 }
-const Tortuga::Player & Tortuga::Client::getPlayer ( ) const
+const ARC::SharedPointer  <Tortuga::Player> & Tortuga::Client::getPlayer ( ) const
 {
 	return this->player ;
 }

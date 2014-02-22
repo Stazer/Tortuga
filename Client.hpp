@@ -26,7 +26,7 @@ namespace Tortuga
 			
 			ARC::SharedPointer <Tortuga::ChatUser> chatUser ;
 			
-			Tortuga::Player player ;
+			ARC::SharedPointer <Tortuga::Player> player ;
 			
 			ARC::String locale ;
 			ARC::UnsignedChar viewDistance ;
@@ -46,6 +46,7 @@ namespace Tortuga
 			ARC::Void handleClientLoginStart ( Tortuga::Packet & packet ) ;
 			ARC::Void handleClientSettings ( Tortuga::Packet & packet ) ;
 		
+			
 		public :
 			Client ( ) ;
 			
@@ -55,8 +56,8 @@ namespace Tortuga
 			ARC::SharedPointer <Tortuga::ChatUser> & getChatUser ( ) ;
 			const ARC::SharedPointer <Tortuga::ChatUser> & getChatUser ( ) const ;
 			
-			Tortuga::Player & getPlayer ( ) ;
-			const Tortuga::Player & getPlayer ( ) const ;
+			ARC::SharedPointer <Tortuga::Player> & getPlayer ( ) ;
+			const ARC::SharedPointer <Tortuga::Player> & getPlayer ( ) const ;
 			
 			const ARC::String & getLocale ( ) const ;
 			ARC::UnsignedChar getViewDistance ( ) const ;
