@@ -148,7 +148,6 @@ ARC::Void Tortuga::Client::handleStatusRequest ( Tortuga::Packet & packet )
 
 ARC::Void Tortuga::Client::handleClientKeepAlive ( Tortuga::Packet & packet )
 {
-	std::cout << "receivedPacket" ;
 }
 ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
 {		
