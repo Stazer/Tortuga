@@ -42,3 +42,8 @@ const ARC::Bool Tortuga::Player::isOnGround ( ) const
 {
 	return this->onGround ;
 }
+			
+ARC::Void Tortuga::Player::handlePlayerOnGround ( Tortuga::Packet & packet )
+{
+	this->onGround = Tortuga::Packet::readPlayerOnGroundPacket ( packet ).onGround ;
+}

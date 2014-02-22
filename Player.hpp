@@ -29,5 +29,7 @@ namespace Tortuga
 			ARC::Void setOnGround ( const ARC::Bool onGround ) ;
 			const ARC::Bool getOnGround ( ) const ;
 			const ARC::Bool isOnGround ( ) const ;
+			
+			ARC::Void handlePlayerOnGround ( Tortuga::Packet & packet ) ;
 	} ;
 }
