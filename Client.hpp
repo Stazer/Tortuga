@@ -56,6 +56,7 @@ namespace Tortuga
 			ARC::UnsignedChar getDifficulty ( ) const ;
 			ARC::Bool getShowCape ( ) const ;
 			
+			// TODO: move to status
 			ARC::Void handleStatusKeepAlive ( Tortuga::Packet & packet ) ;
 			ARC::Void handleStatusRequest ( Tortuga::Packet & packet ) ;
 			
