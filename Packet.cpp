@@ -310,11 +310,11 @@ Tortuga::Packet Tortuga::Packet::writeStatusKeepAlivePacket ( const Tortuga::Pac
 	return Tortuga::Packet::write ( packet ) ;
 }
 
-Tortuga::Packet::ChatMessageData readChatMessagePacket ( Tortuga::Packet & packet )
+Tortuga::Packet::ChatMessageData Tortuga::Packet::readChatMessagePacket ( Tortuga::Packet & packet )
 {
 	return { packet.readString ( ) } ;
 }
-Tortuga::Packet writeChatMessagePacket ( const Tortuga::Packet::ChatMessageData & chatMessageData )
+Tortuga::Packet Tortuga::Packet::writeChatMessagePacket ( const Tortuga::Packet::ChatMessageData & chatMessageData )
 {
 	Tortuga::Packet packet ;
 	
