@@ -347,6 +347,24 @@ Tortuga::Packet Tortuga::Packet::writeWorldTimeUpdatePacket ( const Tortuga::Pac
 	return Tortuga::Packet::write ( packet ) ;
 }
 
+Tortuga::Packet Tortuga::Packet::writeWorldChunkPacket ( const Tortuga::Packet::WorldChunkData & worldChunkData )
+{
+	Tortuga::Packet packet ;
+	
+	packet.writeVariableInt ( Tortuga::Packet::WorldChunk ) ;
+	packet.writeInt ( worldChunkData.x ) ;
+	packet.writeInt ( worldChunkData.z ) ;
+	packet.writeBool ( worldChunkData.groundUpContinuous ) ;
+	packet.writeChar ( worldChunkData.primaryBitmask ) ;
+	packet.writeChar ( worldChunkData.addBitmask ) ;
+	packet.writeInt ( worldChunkData.data.size ( ) ) ;
+	
+	for ( auto element : worldChunkData.data )
+		packet.writeChar ( element ) ;
+
+	return Tortuga::Packet::write ( packet ) ;		
+}
+
 Tortuga::Packet Tortuga::Packet::writePlayerPositionAndLookPacket ( const Tortuga::Packet::PlayerPositionAndLookData & playerPositionAndLookData )
 {
 	Tortuga::Packet packet ;

@@ -75,7 +75,7 @@ namespace Tortuga
 				// World
 				WorldSpawnPosition = 0x05 ,
 				WorldTimeUpdate = 0x03 ,
-				WorldChunkData = 0x21 ,
+				WorldChunk = 0x21 ,
 				
 				// Player
 				PlayerAbilities = 0x13 ,
@@ -186,6 +186,17 @@ namespace Tortuga
 				ARC::UnsignedLong time ;
 			} ;
 			static Tortuga::Packet writeWorldTimeUpdatePacket ( const Tortuga::Packet::WorldTimeUpdateData & worldTimeUpdateData ) ;
+			
+			struct WorldChunkData
+			{
+				ARC::SignedInt x ;
+				ARC::SignedInt z ;
+				ARC::Bool groundUpContinuous ;
+				ARC::UnsignedChar primaryBitmask ;
+				ARC::UnsignedChar addBitmask ;
+				ARC::Buffer data ;
+			} ;
+			static Tortuga::Packet writeWorldChunkPacket ( const Tortuga::Packet::WorldChunkData & worldChunkData ) ;
 			
 			// Player
 			struct PlayerPositionAndLookData
