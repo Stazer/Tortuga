@@ -10,12 +10,17 @@ namespace Tortuga
 	class Player
 	{
 		private :
+			Tortuga::Client & client ;
+		
 			Tortuga::Location location ;
 			
 			ARC::Bool onGround ;
 	
 		public :
-			Player ( ) ;
+			Player ( Tortuga::Client & client ) ;
+			
+			Tortuga::Client & getClient ( ) ;
+			const Tortuga::Client & getClient ( ) const ;
 		
 			ARC::Void setLocation ( const Tortuga::Location & location ) ;
 			Tortuga::Location & getLocation ( ) ;

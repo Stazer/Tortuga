@@ -2,10 +2,19 @@
 #include "Client.hpp"
 #include "Packet.hpp"
 
-Tortuga::Player::Player ( ) :
-	location ( ) ,
+Tortuga::Player::Player ( Tortuga::Client & client ) :
+	client ( client ) ,
 	onGround ( true )
 {
+}
+
+Tortuga::Client & Tortuga::Player::getClient ( )
+{
+	return this->client ;
+}
+const Tortuga::Client & Tortuga::Player::getClient ( ) const
+{
+	return this->client ;
 }
 
 ARC::Void Tortuga::Player::setLocation ( const Tortuga::Location & location )
