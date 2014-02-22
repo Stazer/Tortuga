@@ -35,17 +35,7 @@ namespace Tortuga
 			ARC::UnsignedChar difficulty ;
 			ARC::Bool showCape ;
 			
-			ARC::Void onReceive ( ) ;
-			
-			ARC::Void handleClientHandshake ( Tortuga::Packet & packet ) ;
-			
-			ARC::Void handleStatusKeepAlive ( Tortuga::Packet & packet ) ;
-			ARC::Void handleStatusRequest ( Tortuga::Packet & packet ) ;
-			
-			ARC::Void handleClientKeepAlive ( Tortuga::Packet & packet ) ;
-			ARC::Void handleClientLoginStart ( Tortuga::Packet & packet ) ;
-			ARC::Void handleClientSettings ( Tortuga::Packet & packet ) ;
-		
+			ARC::Void onReceive ( ) ;		
 			
 		public :
 			Client ( ) ;
@@ -65,5 +55,13 @@ namespace Tortuga
 			ARC::Bool getChatColors ( ) const ;
 			ARC::UnsignedChar getDifficulty ( ) const ;
 			ARC::Bool getShowCape ( ) const ;
+			
+			ARC::Void handleStatusKeepAlive ( Tortuga::Packet & packet ) ;
+			ARC::Void handleStatusRequest ( Tortuga::Packet & packet ) ;
+			
+			ARC::Void handleClientHandshake ( Tortuga::Packet & packet ) ;
+			ARC::Void handleClientKeepAlive ( Tortuga::Packet & packet ) ;
+			ARC::Void handleClientLoginStart ( Tortuga::Packet & packet ) ;
+			ARC::Void handleClientSettings ( Tortuga::Packet & packet ) ;
 	} ;
 }
