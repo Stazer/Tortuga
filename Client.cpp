@@ -211,6 +211,7 @@ ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
 	this->send ( Tortuga::Packet::writePlayerPositionAndLookPacket ( { 0 , 0 , 0 , 0 , 0 , true } ) ) ;
 	
 	this->player = ARC::SharedPointer <Tortuga::Player> ( new Tortuga::Player ( * this ) ) ;
+	this->chatUser = ARC::SharedPointer <Tortuga::ChatUser> ( new Tortuga::ChatUser ( * this ) ) ;
 	this->type = Tortuga::Client::Player ;
 }		
 ARC::Void Tortuga::Client::handleClientSettings ( Tortuga::Packet & packet )
