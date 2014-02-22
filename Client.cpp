@@ -179,7 +179,6 @@ ARC::Bool Tortuga::Client::getShowCape ( ) const
 	return this->showCape ;
 }
 
-
 ARC::Void Tortuga::Client::handleStatusKeepAlive ( Tortuga::Packet & packet )
 {	
 	this->send ( Tortuga::Packet::writeStatusKeepAlivePacket ( { Tortuga::Packet::readStatusKeepAlivePacket ( packet ).time } ) ) ;	

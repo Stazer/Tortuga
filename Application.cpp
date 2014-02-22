@@ -4,5 +4,5 @@
 
 ARC::Return Application::main ( const ARC::Vector <ARC::String> & arguments )
 {
-	return Tortuga::Server ( ).main ( arguments ) ;
+	return Tortuga::Server::getInstance ( ).main ( arguments ) ;
 }
