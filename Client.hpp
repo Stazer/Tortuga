@@ -2,7 +2,6 @@
 
 #include <ARC.hpp>
 #include "Player.hpp"
-#include "ClientSettings.hpp"
 #include "Packet.hpp"
 
 namespace Tortuga
@@ -27,9 +26,14 @@ namespace Tortuga
 			
 			ARC::SharedPointer <Tortuga::ChatUser> chatUser ;
 			
-			Tortuga::ClientSettings clientSettings ;
-			
 			Tortuga::Player player ;
+			
+			ARC::String locale ;
+			ARC::UnsignedChar viewDistance ;
+			ARC::UnsignedChar chatFlags ;
+			ARC::Bool chatColors ;
+			ARC::UnsignedChar difficulty ;
+			ARC::Bool showCape ;
 			
 			ARC::Void onReceive ( ) ;
 			
@@ -40,6 +44,7 @@ namespace Tortuga
 			
 			ARC::Void handleClientKeepAlive ( Tortuga::Packet & packet ) ;
 			ARC::Void handleClientLoginStart ( Tortuga::Packet & packet ) ;
+			ARC::Void handleClientSettings ( Tortuga::Packet & packet ) ;
 		
 		public :
 			Client ( ) ;
@@ -47,14 +52,17 @@ namespace Tortuga
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
 			
-			ARC::Void setClientSettings ( const Tortuga::ClientSettings & clientSettings ) ;
-			Tortuga::ClientSettings & getClientSettings ( ) ;
-			const Tortuga::ClientSettings & getClientSettings ( ) const ;
-			
 			ARC::SharedPointer <Tortuga::ChatUser> & getChatUser ( ) ;
 			const ARC::SharedPointer <Tortuga::ChatUser> & getChatUser ( ) const ;
 			
 			Tortuga::Player & getPlayer ( ) ;
 			const Tortuga::Player & getPlayer ( ) const ;
+			
+			const ARC::String & getLocale ( ) const ;
+			ARC::UnsignedChar getViewDistance ( ) const ;
+			ARC::UnsignedChar getChatFlags ( ) const ;
+			ARC::Bool getChatColors ( ) const ;
+			ARC::UnsignedChar getDifficulty ( ) const ;
+			ARC::Bool getShowCape ( ) const ;
 	} ;
 }

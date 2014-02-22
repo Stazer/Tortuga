@@ -82,12 +82,11 @@ ARC::Void Tortuga::Client::onReceive ( )
 					this->handleClientKeepAlive ( receivedPacket ) ;				
 					break ;
 				}
-				/*case Tortuga::Packet::ClientSettings :
+				case Tortuga::Packet::ClientSettings :
 				{
-					Tortuga::ClientSettings::readClientSettingsPacket ( * this , receivedPacket ) ;
-				
+					this->handleClientSettings ( receivedPacket ) ;
 					break ;
-				}*/
+				}
 				/*case Tortuga::Packet::ChatMessageClient :
 				{
 					Tortuga::ChatManager::readChatMessagePacket ( * this , receivedPacket ) ;
@@ -158,6 +157,17 @@ ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
 				
 	this->type = Tortuga::Client::Player ;
 }		
+ARC::Void Tortuga::Client::handleClientSettings ( Tortuga::Packet & packet )
+{
+	Tortuga::Packet::ClientSettingsData clientSettingsData = Tortuga::Packet::readClientSettingsPacket ( packet ) ;
+
+	this->locale = clientSettingsData.locale ;
+	this->viewDistance = clientSettingsData.viewDistance ;
+	this->chatFlags = clientSettingsData.chatFlags ;
+	this->chatColors = clientSettingsData.chatColors ;
+	this->difficulty = clientSettingsData.difficulty ;
+	this->showCape = clientSettingsData.showCape ;
+}
 
 Tortuga::Client::Client ( ) :
 	type ( Tortuga::Client::None )
@@ -171,19 +181,6 @@ Tortuga::Server & Tortuga::Client::getServer ( )
 const Tortuga::Server & Tortuga::Client::getServer ( ) const
 {
 	return Tortuga::Server::getInstance ( ) ;
-}
-
-ARC::Void Tortuga::Client::setClientSettings ( const Tortuga::ClientSettings & clientSettings )
-{
-	this->clientSettings = clientSettings ;
-}
-Tortuga::ClientSettings & Tortuga::Client::getClientSettings ( )
-{
-	return this->clientSettings ;
-}
-const Tortuga::ClientSettings & Tortuga::Client::getClientSettings ( ) const
-{
-	return this->clientSettings ;
 }
 
 ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( )
@@ -202,4 +199,29 @@ Tortuga::Player & Tortuga::Client::getPlayer ( )
 const Tortuga::Player & Tortuga::Client::getPlayer ( ) const
 {
 	return this->player ;
+}
+
+const ARC::String & Tortuga::Client::getLocale ( ) const
+{
+	return this->locale ;
+}
+ARC::UnsignedChar Tortuga::Client::getViewDistance ( ) const
+{
+	return this->viewDistance ;
+}
+ARC::UnsignedChar Tortuga::Client::getChatFlags ( ) const
+{
+	return this->chatFlags ;
+}
+ARC::Bool Tortuga::Client::getChatColors ( ) const
+{
+	return this->chatColors ;
+}
+ARC::UnsignedChar Tortuga::Client::getDifficulty ( ) const
+{
+	return this->difficulty ;
+}
+ARC::Bool Tortuga::Client::getShowCape ( ) const
+{
+	return this->showCape ;
 }
