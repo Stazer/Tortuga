@@ -1,36 +1,36 @@
 #include "Position.hpp"
 
-Tortuga::Position::Position ( const ARC::Double positionX , const ARC::Double positionY , const ARC::Double positionZ ) :
-	positionX ( positionX ) ,
-	positionY ( positionY ) ,
-	positionZ ( positionZ )
+Tortuga::Position::Position ( const ARC::Double x , const ARC::Double y , const ARC::Double z ) :
+	x ( x ) ,
+	y ( y ) ,
+	z ( z )
 	
 {
 }
 
-ARC::Void Tortuga::Position::setPositionX ( const ARC::Double positionX )
+ARC::Void Tortuga::Position::setX ( const ARC::Double x )
 {
-	this->positionX = positionX ;
+	this->x = x ;
 }
-ARC::Double Tortuga::Position::getPositionX ( ) const
+ARC::Double Tortuga::Position::getX ( ) const
 {
-	return this->positionX ;
-}
-
-ARC::Void Tortuga::Position::setPositionY ( const ARC::Double positionY )
-{
-	this->positionY = positionY ;
-}
-ARC::Double Tortuga::Position::getPositionY ( ) const
-{
-	return this->positionY ;
+	return this->x ;
 }
 
-ARC::Void Tortuga::Position::setPositionZ ( const ARC::Double positionZ )
+ARC::Void Tortuga::Position::setY ( const ARC::Double y )
 {
-	this->positionZ = positionZ ;
+	this->y = y ;
 }
-ARC::Double Tortuga::Position::getPositionZ ( ) const
+ARC::Double Tortuga::Position::getY ( ) const
 {
-	return this->positionZ ;
+	return this->y ;
+}
+
+ARC::Void Tortuga::Position::setZ ( const ARC::Double z )
+{
+	this->z = z ;
+}
+ARC::Double Tortuga::Position::getZ ( ) const
+{
+	return this->z ;
 }

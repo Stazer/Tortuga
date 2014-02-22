@@ -9,6 +9,6 @@ namespace Tortuga
 	class Location : public Tortuga::Position , public Tortuga::Orientation
 	{	
 		public :
-			Location ( const ARC::Double positionX = 0 , const ARC::Double positionY = 0 , const ARC::Double positionZ = 0 , const ARC::Float yaw = 0 , const ARC::Float pitch = 0 ) ;
+			Location ( const ARC::Double x = 0 , const ARC::Double y = 0 , const ARC::Double z = 0 , const ARC::Float yaw = 0 , const ARC::Float pitch = 0 ) ;
 	} ;
 }

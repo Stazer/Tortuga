@@ -1,7 +1,7 @@
 #include "Location.hpp"
 
-Tortuga::Location::Location ( const ARC::Double positionX , const ARC::Double positionY , const ARC::Double positionZ , const ARC::Float yaw , const ARC::Float pitch ) :
-	Position ( positionX , positionY , positionZ ) ,
+Tortuga::Location::Location ( const ARC::Double x , const ARC::Double y , const ARC::Double z , const ARC::Float yaw , const ARC::Float pitch ) :
+	Position ( x , y , z ) ,
 	Orientation ( yaw , pitch )
 {
 }
