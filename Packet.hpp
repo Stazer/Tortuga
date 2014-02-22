@@ -163,6 +163,14 @@ namespace Tortuga
 			static Tortuga::Packet::StatusKeepAliveData readStatusKeepAlivePacket ( Tortuga::Packet & packet ) ;
 			static Tortuga::Packet writeStatusKeepAlivePacket ( const Tortuga::Packet::StatusKeepAliveData & statusKeepAliveData ) ;
 			
+			// Chat
+			struct ChatMessageData
+			{
+				ARC::String message ;
+			} ;
+			static Tortuga::Packet::ChatMessageData readChatMessagePacket ( Tortuga::Packet & packet ) ;
+			static Tortuga::Packet writeChatMessagePacket ( const Tortuga::Packet::ChatMessageData & chatMessageData ) ;
+			
 			// World
 			struct WorldSpawnPositionData
 			{

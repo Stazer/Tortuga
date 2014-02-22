@@ -310,6 +310,20 @@ Tortuga::Packet Tortuga::Packet::writeStatusKeepAlivePacket ( const Tortuga::Pac
 	return Tortuga::Packet::write ( packet ) ;
 }
 
+Tortuga::Packet::ChatMessageData readChatMessagePacket ( Tortuga::Packet & packet )
+{
+	return { packet.readString ( ) } ;
+}
+Tortuga::Packet writeChatMessagePacket ( const Tortuga::Packet::ChatMessageData & chatMessageData )
+{
+	Tortuga::Packet packet ;
+	
+	packet.writeVariableInt ( Tortuga::Packet::ChatMessageFromServer ) ;
+	packet.writeString ( chatMessageData.message ) ;
+	
+	return Tortuga::Packet::write ( packet ) ;
+}
+
 Tortuga::Packet Tortuga::Packet::writeWorldSpawnPositionPacket ( const Tortuga::Packet::WorldSpawnPositionData & worldSpawnPositinData )
 {
 	Tortuga::Packet packet ;
