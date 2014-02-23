@@ -4,19 +4,40 @@
 
 namespace Tortuga
 {
+	template <class Type>
 	class Position2
 	{
 		private :
-			ARC::Double x ;
-			ARC::Double y ;
+			Type x ;
+			Type y ;
 	
 		public :
-			Position2 ( const ARC::Double x = 0 , const ARC::Double y = 0 ) ;
+			Position2 ( const Type x = 0 , const Type y = 0 ) :
+				x ( x ) ,
+				y ( y )
+			{
+			}
 			
-			ARC::Void setX ( const ARC::Double x ) ;
-			ARC::Double getX ( ) const ;
+			ARC::Void setX ( const Type x )
+			{
+				this->x = x ;
+			}
+			Type getX ( ) const
+			{
+				return this->x ;
+			}
 			
-			ARC::Void setY ( const ARC::Double y ) ;
-			ARC::Double getY ( ) const ;
+			ARC::Void setY ( const Type y )
+			{
+				this->y = y ;
+			}
+			Type getY ( ) const
+			{
+				return this->y ;
+			}
 	} ;
+	
+	using Position2Double = Position2 <ARC::Double> ;
+	using Position2Float = Position2 <ARC::Float> ;
+	using Position2SignedInt = Position2 <ARC::SignedInt> ;
 }
