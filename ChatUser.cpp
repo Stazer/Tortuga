@@ -2,6 +2,7 @@
 #include "Packet.hpp"
 #include "Client.hpp"
 #include "Server.hpp"
+#include "Chunk.hpp"
 
 Tortuga::ChatUser::ChatUser ( Tortuga::Client & client , const ARC::String & name ) :
 	name ( name ) ,
@@ -42,6 +43,6 @@ ARC::Void Tortuga::ChatUser::broadcast ( const ARC::String & message )
 ARC::Void Tortuga::ChatUser::handleChatMessage ( Tortuga::Packet & packet )
 {
 	Tortuga::Packet::ChatMessageData chatMessageData = Tortuga::Packet::readChatMessagePacket ( packet ) ;
-	
+		
 	this->broadcast ( chatMessageData.message ) ;	
 }
