@@ -355,11 +355,11 @@ Tortuga::Packet Tortuga::Packet::writeWorldChunkPacket ( const Tortuga::Packet::
 	packet.writeInt ( worldChunkData.x ) ;
 	packet.writeInt ( worldChunkData.z ) ;
 	packet.writeBool ( worldChunkData.groundUpContinuous ) ;
-	packet.writeChar ( worldChunkData.primaryBitmask ) ;
-	packet.writeChar ( worldChunkData.addBitmask ) ;
-	packet.writeInt ( worldChunkData.data.size ( ) ) ;
+	packet.writeShort ( worldChunkData.primaryBitmask ) ;
+	packet.writeShort ( worldChunkData.addBitmask ) ;
+	packet.writeInt ( worldChunkData.data->size ( ) ) ;
 	
-	for ( auto element : worldChunkData.data )
+	for ( auto element : * worldChunkData.data )
 		packet.writeChar ( element ) ;
 
 	return Tortuga::Packet::write ( packet ) ;		

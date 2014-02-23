@@ -192,9 +192,9 @@ namespace Tortuga
 				ARC::SignedInt x ;
 				ARC::SignedInt z ;
 				ARC::Bool groundUpContinuous ;
-				ARC::UnsignedChar primaryBitmask ;
-				ARC::UnsignedChar addBitmask ;
-				ARC::Buffer data ;
+				ARC::UnsignedShort primaryBitmask ;
+				ARC::UnsignedShort addBitmask ;
+				ARC::SharedPointer <ARC::Buffer> data ;
 			} ;
 			static Tortuga::Packet writeWorldChunkPacket ( const Tortuga::Packet::WorldChunkData & worldChunkData ) ;
 			
