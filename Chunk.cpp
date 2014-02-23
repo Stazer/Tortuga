@@ -16,5 +16,18 @@ ARC::Void Tortuga::Chunk::send ( Tortuga::Client & client )
 	for ( ARC::UnsignedLong element = 0 ; element < deflator.getSize ( ) ; ++element )
 		buffer->push_back ( deflator.get ( ) ) ;
 	
-	client.send ( Tortuga::Packet::writeWorldChunkPacket ( { 0 , 0 , true , 0b1 , 0b1 , buffer } ) ) ;
+	client.send ( Tortuga::Packet::writeWorldChunkPacket ( { this->position.getX ( ) , this->position.getY ( ) , true , 0b1 , 0b1 , buffer } ) ) ;
+}
+
+ARC::Void Tortuga::Chunk::setPosition ( const Tortuga::Position2 & position )
+{
+	this->position = position ;
+}
+Tortuga::Position2 & Tortuga::Chunk::getPosition ( )
+{
+	return this->position ;
+}
+const Tortuga::Position2 & Tortuga::Chunk::getPosition ( ) const
+{
+	return this->position ;
 }
