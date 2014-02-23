@@ -11,7 +11,7 @@ namespace Tortuga
 			ARC::Double z ;
 	
 		public :
-			Position ( const ARC::Double x = 0 , const ARC::Double y = 0 , const ARC::Double z = 0 ) ;
+			Position3 ( const ARC::Double x = 0 , const ARC::Double y = 0 , const ARC::Double z = 0 ) ;
 			
 			ARC::Void setZ ( const ARC::Double z ) ;
 			ARC::Double getZ ( ) const ;
