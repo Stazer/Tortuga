@@ -2,19 +2,24 @@
 #include "Packet.hpp"
 #include "Client.hpp"
 
-Tortuga::Chunk::Chunk ( const Tortuga::Position2SignedInt & position ) :
+Tortuga::Chunk::Chunk ( const ARC::Vector2SignedInt & position ) :
 	position ( position )
 {
 }
 
+#include <iostream>
+
 ARC::Void Tortuga::Chunk::send ( Tortuga::Client & client )
 {
-	ARC::UnsignedChar data [ 16 * 16 ] ;
+	ARC::UnsignedChar blockData [ 16 * 16 * 3 ] ;
+	
+	for ( ARC::UnsignedLong element = 0 ; element < ( 16 * 16 * 3 ) ; ++element )
+		blockData [ element ] = 5 ; // Wood
 	
 	ARC::Deflator deflator ;
 	
-	for ( ARC::UnsignedLong element = 0 ; element < 16 * 16 ; ++element )
-		deflator.put ( this->data [ element ] ) ;
+	for ( ARC::UnsignedLong element = 0 ; element < ( 16 * 16 * 3 ) ; ++element )
+		deflator.put ( blockData [ element ] ) ;
 		
 	deflator.calculate ( ) ;
 		
@@ -22,6 +27,8 @@ ARC::Void Tortuga::Chunk::send ( Tortuga::Client & client )
 	
 	for ( ARC::UnsignedLong element = 0 ; element < deflator.getSize ( ) ; ++element )
 		buffer->push_back ( deflator.get ( ) ) ;
+		
+	client.send ( Tortuga::Packet::writeWorldChunkPacket ( { 0 , 0 , true , 0b11111 , 0 , buffer } ) ) ;
 
 	/*ARC::Deflator deflator ;
 	
@@ -35,18 +42,18 @@ ARC::Void Tortuga::Chunk::send ( Tortuga::Client & client )
 	for ( ARC::UnsignedLong element = 0 ; element < deflator.getSize ( ) ; ++element )
 		buffer->push_back ( deflator.get ( ) ) ;*/
 	
-	client.send ( Tortuga::Packet::writeWorldChunkPacket ( { this->position.getX ( ) , this->position.getY ( ) , true , 0b1 , 0b1 , buffer } ) ) ;
+	//client.send ( Tortuga::Packet::writeWorldChunkPacket ( { this->position.getX ( ) , this->position.getY ( ) , true , 0b1 , 0b1 , buffer } ) ) ;
 }
 
-ARC::Void Tortuga::Chunk::setPosition ( const Tortuga::Position2SignedInt & position )
+ARC::Void Tortuga::Chunk::setPosition ( const ARC::Vector2SignedInt & position )
 {
 	this->position = position ;
 }
-Tortuga::Position2SignedInt & Tortuga::Chunk::getPosition ( )
+ARC::Vector2SignedInt & Tortuga::Chunk::getPosition ( )
 {
 	return this->position ;
 }
-const Tortuga::Position2SignedInt & Tortuga::Chunk::getPosition ( ) const
+const ARC::Vector2SignedInt & Tortuga::Chunk::getPosition ( ) const
 {
 	return this->position ;
 }
