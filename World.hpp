@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ARC.hpp>
+#include "Chunk.hpp"
 
 namespace Tortuga
 {
@@ -10,14 +11,11 @@ namespace Tortuga
 	class World
 	{
 		private :
-			Tortuga::WorldManager & worldManager ;
+			ARC::Vector <Tortuga::Chunk> chunks ;
 	
 		public :
-			World ( Tortuga::WorldManager & worldManager ) ;
+			World ( ) ;
 			
-			Tortuga::WorldManager & getWorldManager ( ) ;
-			const Tortuga::WorldManager & getWorldManager ( ) const ;
-		
 			/*static ARC::Void writeTimeUpdate ( Tortuga::Client & client , const ARC::UnsignedLong ageOfWorld , const ARC::UnsignedLong timeOfDay ) ;
 			static ARC::Void writeSpawnPositionPacket ( Tortuga::Client & client , const ARC::SignedInt positionX , const ARC::SignedInt positionY , const ARC::SignedInt positionZ ) ;
 			
