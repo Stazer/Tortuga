@@ -2,6 +2,11 @@
 #include "Packet.hpp"
 #include "Client.hpp"
 
+Tortuga::Chunk::Chunk ( const ARC::Position2SignedInt & position = ARC::Position2SignedInt ( ) ) :
+	position ( position )
+{
+}
+
 ARC::Void Tortuga::Chunk::send ( Tortuga::Client & client )
 {
 	ARC::Deflator deflator ;

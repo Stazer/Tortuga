@@ -16,6 +16,8 @@ namespace Tortuga
 			Tortuga::Position2SignedInt position ;
 			
 		public :
+			Chunk ( const ARC::Position2SignedInt & position = ARC::Position2SignedInt ( ) ) ;
+		
 			ARC::Void setPosition ( const Tortuga::Position2SignedInt & position ) ;
 			Tortuga::Position2SignedInt & getPosition ( ) ;
 			const Tortuga::Position2SignedInt & getPosition ( ) const ;
