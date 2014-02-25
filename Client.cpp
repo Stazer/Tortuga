@@ -29,7 +29,7 @@ ARC::Void Tortuga::Client::onReceive ( )
 				}
 				default :
 				{
-					std::cout << "<Error> unknown operationcode, packetOpcode: " << packetOpcode << "\n" ;
+					std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
 					break ;
 				}
 			}
@@ -51,7 +51,7 @@ ARC::Void Tortuga::Client::onReceive ( )
 				}
 				default :
 				{
-					std::cout << "<Error> unknown operationcode, packetOpcode: " << packetOpcode << "\n" ;
+					std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
 					break ;
 				}
 			}
@@ -67,7 +67,7 @@ ARC::Void Tortuga::Client::onReceive ( )
 				}
 				default :
 				{
-					std::cout << "<Error> unknown operationcode, packetOpcode: " << packetOpcode << "\n" ;
+					std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
 					break ;
 				}
 			}
@@ -113,7 +113,7 @@ ARC::Void Tortuga::Client::onReceive ( )
 				}
 				default :
 				{
-					std::cout << "<Error> unknown operationcode, packetOpcode: " << packetOpcode << "\n" ;
+					std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
 					break ;
 				}
 			}
