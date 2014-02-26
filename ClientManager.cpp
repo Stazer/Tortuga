@@ -16,11 +16,11 @@ const Tortuga::Server & Tortuga::ClientManager::getServer ( ) const
 	return this->server ;
 }
 
-ARC::List <ARC::SharedPointer <Tortuga::Client>> & Tortuga::ClientManager::getClients ( )
+ARC::Vector <ARC::SharedPointer <Tortuga::Client>> & Tortuga::ClientManager::getClients ( )
 {
 	return this->clients ;
 }
-const ARC::List <ARC::SharedPointer <Tortuga::Client>> & Tortuga::ClientManager::getClients ( ) const
+const ARC::Vector <ARC::SharedPointer <Tortuga::Client>> & Tortuga::ClientManager::getClients ( ) const
 {
 	return this->clients ;
 }

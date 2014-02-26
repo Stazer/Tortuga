@@ -13,7 +13,7 @@ namespace Tortuga
 			Tortuga::Server & server ;
 			
 			ARC::SocketSelector selector ;
-			ARC::List <ARC::SharedPointer <Tortuga::Client>> clients ;
+			ARC::Vector <ARC::SharedPointer <Tortuga::Client>> clients ;
 			
 		public :
 			ClientManager ( Tortuga::Server & server ) ;
@@ -21,8 +21,8 @@ namespace Tortuga
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
 		
-			ARC::List <ARC::SharedPointer <Tortuga::Client>> & getClients ( ) ;
-			const ARC::List <ARC::SharedPointer <Tortuga::Client>> & getClients ( ) const ;
+			ARC::Vector <ARC::SharedPointer <Tortuga::Client>> & getClients ( ) ;
+			const ARC::Vector <ARC::SharedPointer <Tortuga::Client>> & getClients ( ) const ;
 			
 			ARC::Void initialize ( ) ;
 			
