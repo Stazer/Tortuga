@@ -219,16 +219,16 @@ ARC::Bool Tortuga::Client::update ( )
 	return true ;
 }
 
+#include "Status.hpp"
+
 ARC::Void Tortuga::Client::handleStatusKeepAlive ( Tortuga::Packet & packet )
 {	
 	this->send ( Tortuga::Packet::writeStatusKeepAlivePacket ( { Tortuga::Packet::readStatusKeepAlivePacket ( packet ).time } ) ) ;	
 }
 ARC::Void Tortuga::Client::handleStatusRequest ( Tortuga::Packet & packet )
 {
-	// nothing to read here
 	Tortuga::Packet::readStatusRequestPacket ( packet ) ;
-				
-	this->send ( Tortuga::Packet::writeStatusResponsePacket ( { "{\"version\": {\"name\": \"1.7.4\",\"protocol\": 4},\"players\": {\"max\": 100,\"online\": 5,\"sample\":[{\"name\":\"Thinkofdeath\", \"id\":\"\"}]},\"description\": {\"text\":\"Hello world\"}}" } ) ) ;
+	this->send ( Tortuga::Status ( ) ) ;
 }
 
 ARC::Void Tortuga::Client::handleClientHandshake ( Tortuga::Packet & packet )
