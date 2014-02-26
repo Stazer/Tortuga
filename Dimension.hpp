@@ -7,7 +7,7 @@ namespace Tortuga
 		enum Type
 		{
 			Nether = -1 ,
-			Overworld = 0 ,
+			Normal = 0 ,
 			End = 1	
 		} ;
 	} ;
