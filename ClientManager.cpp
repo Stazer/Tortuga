@@ -50,7 +50,7 @@ ARC::Void Tortuga::ClientManager::update ( )
 			{
 				if ( this->selector.isReady ( ( ** client ) ) )
 				{
-					if ( ( * client )->receive ( ) != ARC::Socket::Done )
+					if ( ! ( * client )->update ( ) )
 					{
 						this->selector.remove ( ** client ) ;
 						client = this->clients.erase ( client ) ;

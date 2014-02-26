@@ -49,8 +49,6 @@ namespace Tortuga
 			ARC::Buffer & getBuffer ( ) ;
 			const ARC::Buffer & getBuffer ( ) const ;
 			
-			ARC::Socket::Status receive ( ) ;
-			
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
 			
@@ -67,7 +65,7 @@ namespace Tortuga
 			ARC::UnsignedChar getDifficulty ( ) const ;
 			ARC::Bool getShowCape ( ) const ;
 			
-			ARC::Void update ( ) ;
+			ARC::Bool update ( ) ;
 			
 			// TODO: move to status
 			ARC::Void handleStatusKeepAlive ( Tortuga::Packet & packet ) ;

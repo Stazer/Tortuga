@@ -34,7 +34,51 @@ const ARC::Buffer & Tortuga::Client::getBuffer ( ) const
 	return this->buffer ;
 }
 
-ARC::Socket::Status Tortuga::Client::receive ( )
+ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( )
+{
+	return this->chatUser ;
+}
+const ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( ) const
+{
+	return this->chatUser ;
+}
+
+ARC::SharedPointer <Tortuga::Player> & Tortuga::Client::getPlayer ( )
+{
+	return this->player ;
+}
+const ARC::SharedPointer  <Tortuga::Player> & Tortuga::Client::getPlayer ( ) const
+{
+	return this->player ;
+}
+
+const ARC::String & Tortuga::Client::getLocale ( ) const
+{
+	return this->locale ;
+}
+ARC::UnsignedChar Tortuga::Client::getViewDistance ( ) const
+{
+	return this->viewDistance ;
+}
+ARC::UnsignedChar Tortuga::Client::getChatFlags ( ) const
+{
+	return this->chatFlags ;
+}
+ARC::Bool Tortuga::Client::getChatColors ( ) const
+{
+	return this->chatColors ;
+}
+ARC::UnsignedChar Tortuga::Client::getDifficulty ( ) const
+{
+	return this->difficulty ;
+}
+ARC::Bool Tortuga::Client::getShowCape ( ) const
+{
+	return this->showCape ;
+}
+
+
+ARC::Bool Tortuga::Client::update ( )
 {
 	const ARC::UnsignedLong maximalSize = 1024 ;
 
@@ -169,51 +213,10 @@ ARC::Socket::Status Tortuga::Client::receive ( )
 			}
 		} while ( this->getBuffer ( ).size ( ) > 0 ) ;
 	}
+	else
+		return false ;
 		
-	return status ;
-}
-
-ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( )
-{
-	return this->chatUser ;
-}
-const ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( ) const
-{
-	return this->chatUser ;
-}
-
-ARC::SharedPointer <Tortuga::Player> & Tortuga::Client::getPlayer ( )
-{
-	return this->player ;
-}
-const ARC::SharedPointer  <Tortuga::Player> & Tortuga::Client::getPlayer ( ) const
-{
-	return this->player ;
-}
-
-const ARC::String & Tortuga::Client::getLocale ( ) const
-{
-	return this->locale ;
-}
-ARC::UnsignedChar Tortuga::Client::getViewDistance ( ) const
-{
-	return this->viewDistance ;
-}
-ARC::UnsignedChar Tortuga::Client::getChatFlags ( ) const
-{
-	return this->chatFlags ;
-}
-ARC::Bool Tortuga::Client::getChatColors ( ) const
-{
-	return this->chatColors ;
-}
-ARC::UnsignedChar Tortuga::Client::getDifficulty ( ) const
-{
-	return this->difficulty ;
-}
-ARC::Bool Tortuga::Client::getShowCape ( ) const
-{
-	return this->showCape ;
+	return true ;
 }
 
 ARC::Void Tortuga::Client::handleStatusKeepAlive ( Tortuga::Packet & packet )
