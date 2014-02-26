@@ -1,21 +1,20 @@
 #pragma once
 
 #include <ARC.hpp>
-#include "World.hpp"
-
 namespace Tortuga
 {
 	class ChatUser ;
 	class Server ;
 	class Client ;
 	class Packet ;
+	class World ;
 	
 	class WorldManager
 	{
 		private :
 			Tortuga::Server & server ;
 			
-			ARC::Vector <Tortuga::World> worlds ;
+			ARC::Vector <ARC::SharedPointer <Tortuga::World>> worlds ;
 			
 		public :
 			WorldManager ( Tortuga::Server & server ) ;
@@ -23,7 +22,7 @@ namespace Tortuga
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
 			
-			ARC::Vector <Tortuga::World> getWorlds ( ) ;
-			const ARC::Vector <Tortuga::World> getWorlds ( ) const ;
+			ARC::Vector <ARC::SharedPointer <Tortuga::World>> & getWorlds ( ) ;
+			const ARC::Vector <ARC::SharedPointer <Tortuga::World>> & getWorlds ( ) const ;
 	} ;
 }

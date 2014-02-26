@@ -17,11 +17,11 @@ const Tortuga::Server & Tortuga::WorldManager::getServer ( ) const
 	return this->server ;
 }
 
-ARC::Vector <Tortuga::World> Tortuga::WorldManager::getWorlds ( )
+ARC::Vector <ARC::SharedPointer <Tortuga::World>> & Tortuga::WorldManager::getWorlds ( )
 {
 	return this->worlds ;
 }
-const ARC::Vector <Tortuga::World> Tortuga::WorldManager::getWorlds ( ) const
+const ARC::Vector <ARC::SharedPointer <Tortuga::World>> & Tortuga::WorldManager::getWorlds ( ) const
 {
 	return this->worlds ;
 }
