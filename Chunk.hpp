@@ -2,6 +2,7 @@
 
 #include <ARC.hpp>
 #include "Packet.hpp"
+#include "Block.hpp"
 
 namespace Tortuga
 {
@@ -28,6 +29,8 @@ namespace Tortuga
 			ARC::UnsignedChar add [ Tortuga::Chunk::Size ] ;
 			ARC::UnsignedChar biome [ Tortuga::Chunk::Width * Tortuga::Chunk::Width ] ;
 			
+			ARC::UnsignedLong getArrayPosition ( const ARC::Vector3SignedInt & position ) const ;
+			
 			
 		public :
 			Chunk ( const ARC::Vector2SignedInt & position = ARC::Vector2SignedInt ( ) ) ;
@@ -37,6 +40,15 @@ namespace Tortuga
 			ARC::Void setPosition ( const ARC::Vector2SignedInt & position ) ;
 			ARC::Vector2SignedInt & getPosition ( ) ;
 			const ARC::Vector2SignedInt & getPosition ( ) const ;
+			
+			ARC::Void setBlock ( const ARC::Vector3SignedInt & position , const Tortuga::Block block ) ;
+			Tortuga::Block getBlock ( const ARC::Vector3SignedInt & position ) const ;
+			
+			ARC::Void setBlockType ( const ARC::Vector3SignedInt & position , const Tortuga::Block::Type type ) ;
+			Tortuga::Block::Type getBlockType ( const ARC::Vector3SignedInt & position ) ;
+			
+			ARC::Void setBlockMetadata ( const ARC::Vector3SignedInt & position , const Tortuga::Block::Metadata metadata ) ;
+			Tortuga::Block::Metadata getBlockMetadata ( const ARC::Vector3SignedInt & position ) ;
 			
 			static Chunk getTestChunk ( Tortuga::Chunk chunk = Tortuga::Chunk ( ) , const ARC::UnsignedLong steps = 5 ) ;
 	} ;

@@ -4,6 +4,13 @@
 #include "Block.hpp"
 #include "ChatUser.hpp"
 
+ARC::UnsignedLong Tortuga::Chunk::getArrayPosition ( const ARC::Vector3SignedInt & position ) const
+{
+	const ARC::UnsignedLong arrayPosition = ( position.getY ( ) << 8 ) | ( position.getZ ( ) << 4 ) | position.getX ( ) ;
+				
+	return ( arrayPosition < Tortuga::Chunk::Size ) ? arrayPosition : 0 ;
+}
+
 Tortuga::Chunk::Chunk ( const ARC::Vector2SignedInt & position ) :
 	position ( position )
 {
@@ -52,6 +59,48 @@ ARC::Vector2SignedInt & Tortuga::Chunk::getPosition ( )
 const ARC::Vector2SignedInt & Tortuga::Chunk::getPosition ( ) const
 {
 	return this->position ;
+}
+
+ARC::Void Tortuga::Chunk::setBlock ( const ARC::Vector3SignedInt & position , const Tortuga::Block block )
+{
+	
+}
+Tortuga::Block Tortuga::Chunk::getBlock ( const ARC::Vector3SignedInt & position ) const
+{
+
+}
+			
+ARC::Void Tortuga::Chunk::setBlockType ( const ARC::Vector3SignedInt & position , const Tortuga::Block::Type type )
+{
+	this->type [ this->getArrayPosition ( position ) ] = type ;
+}
+Tortuga::Block::Type Tortuga::Chunk::getBlockType ( const ARC::Vector3SignedInt & position )
+{
+	return static_cast <Tortuga::Block::Type> ( this->type [ this->getArrayPosition ( position ) ] ) ;
+}
+			
+ARC::Void Tortuga::Chunk::setBlockMetadata ( const ARC::Vector3SignedInt & position , const Tortuga::Block::Metadata metadata )
+{
+	const ARC::UnsignedLong arrayPosition = this->getArrayPosition ( position ) ;
+	const ARC::UnsignedLong part = arrayPosition >> 1 ;
+	
+	if ( arrayPosition & 1 )
+	{
+		this->metadata [ part ] &= 0x0F ;
+		this->metadata [ part ] |= ( metadata << 4 ) ;
+	}
+	else
+	{
+		this->metadata [ part ] &= 0xF0 ;
+		this->metadata [ part ] |= metadata ;
+	}
+}
+Tortuga::Block::Metadata Tortuga::Chunk::getBlockMetadata ( const ARC::Vector3SignedInt & position )
+{
+	const ARC::UnsignedLong arrayPosition = this->getArrayPosition ( position ) ;
+	const ARC::UnsignedLong part = arrayPosition >> 1 ;
+	
+	return static_cast <Tortuga::Block::Metadata> ( ( arrayPosition & 1 ) ? this->metadata [ part ] >> 4 : this->metadata [ part ] & 0xF ) ;
 }
 
 Tortuga::Chunk Tortuga::Chunk::getTestChunk ( Tortuga::Chunk chunk , const ARC::UnsignedLong steps )
