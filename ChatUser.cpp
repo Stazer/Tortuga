@@ -4,6 +4,7 @@
 #include "ClientManager.hpp"
 #include "Server.hpp"
 #include "Chunk.hpp"
+#include "ChatMessage.hpp"
 
 Tortuga::ChatUser::ChatUser ( Tortuga::Chat & chat , Tortuga::Client & client , const ARC::String & name ) :
 	chat ( chat ) ,
@@ -39,16 +40,9 @@ const ARC::String & Tortuga::ChatUser::getName ( ) const
 	return this->name ;
 }
 
-ARC::Void Tortuga::ChatUser::send ( const ARC::String & message )
+ARC::Void Tortuga::ChatUser::send ( const Tortuga::ChatMessage & message )
 {
-	this->client.send ( Tortuga::Packet::writeChatMessagePacket ( { "{\"text\": \"" + message + "\"}" } ) ) ;
-}
-ARC::Void Tortuga::ChatUser::broadcast ( const ARC::String & message )
-{
-	/*for ( auto client : this->client.getClientManager ( ).getClients ( ) )
-	{
-		client->getChatUser ( )->send ( message ) ;
-	}*/
+	this->client.send ( message ) ;
 }
 
 ARC::Void Tortuga::ChatUser::handleChatMessage ( Tortuga::Packet & packet )
@@ -57,6 +51,6 @@ ARC::Void Tortuga::ChatUser::handleChatMessage ( Tortuga::Packet & packet )
 	
 	if ( chatMessageData.message == "/send" )
 		this->client.send ( Tortuga::Packet::writeClientJoinGamePacket ( { 0 , 0 , 0 , 0 , 0 , "default" } ) ) ;
-		
-	this->broadcast ( chatMessageData.message ) ;	
+	
+	this->chat.send ( Tortuga::ChatMessage ( chatMessageData.message ) ) ;	
 }

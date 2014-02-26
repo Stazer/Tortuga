@@ -6,13 +6,14 @@ namespace Tortuga
 {
 	class Server ;
 	class ChatUser ;
+	class ChatMessage ;
 
 	class Chat
 	{
 		private :
 			Tortuga::Server & server ;
 			
-			ARC::Vector <ARC::SharedPointer <Tortuga::ChatUser>> chatUsers ;
+			ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> chatUsers ;
 			
 		public :
 			Chat ( Tortuga::Server & server ) ;
@@ -20,9 +21,9 @@ namespace Tortuga
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
 			
-			ARC::Vector <ARC::SharedPointer <Tortuga::ChatUser>> & getChatUsers ( ) ;
-			const ARC::Vector <ARC::SharedPointer <Tortuga::ChatUser>> & getChatUsers ( ) const ;
+			ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> & getChatUsers ( ) ;
+			const ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> & getChatUsers ( ) const ;
 			
-			ARC::Void send ( const ARC::String & message ) ;
+			ARC::Void send ( const Tortuga::ChatMessage & message ) ;
 	} ;
 }

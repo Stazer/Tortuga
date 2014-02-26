@@ -1,4 +1,6 @@
 #include "Chat.hpp"
+#include "ChatUser.hpp"
+#include "ChatMessage.hpp"
 
 Tortuga::Chat::Chat ( Tortuga::Server & server ) :
 	server ( server )
@@ -14,15 +16,17 @@ const Tortuga::Server & Tortuga::Chat::getServer ( ) const
 	return this->server ;
 }
 
-ARC::Vector <ARC::SharedPointer <Tortuga::ChatUser>> & Tortuga::Chat::getChatUsers ( )
+ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> & Tortuga::Chat::getChatUsers ( )
 {
 	return this->chatUsers ;
 }
-const ARC::Vector <ARC::SharedPointer <Tortuga::ChatUser>> & Tortuga::Chat::getChatUsers ( ) const
+const ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> & Tortuga::Chat::getChatUsers ( ) const
 {
 	return this->chatUsers ;
 }
 			
-ARC::Void Tortuga::Chat::send ( const ARC::String & message )
+ARC::Void Tortuga::Chat::send ( const Tortuga::ChatMessage & message )
 {
+	for ( auto chatUser : this->chatUsers )
+		chatUser->send ( message ) ;
 }
