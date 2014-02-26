@@ -4,6 +4,7 @@
 #include "ClientManager.hpp"
 #include "Server.hpp"
 #include "Chunk.hpp"
+#include "Chat.hpp"
 #include "ChatMessage.hpp"
 
 Tortuga::ChatUser::ChatUser ( Tortuga::Chat & chat , Tortuga::Client & client , const ARC::String & name ) :
@@ -11,6 +12,7 @@ Tortuga::ChatUser::ChatUser ( Tortuga::Chat & chat , Tortuga::Client & client , 
 	client ( client ) ,
 	name ( name )
 {
+	this->chat.getChatUsers ( ).push_back ( ARC::SharedPointer <Tortuga::ChatUser> ( this ) ) ;
 }
 		
 Tortuga::Chat & Tortuga::ChatUser::getChat ( )
@@ -49,8 +51,5 @@ ARC::Void Tortuga::ChatUser::handleChatMessage ( Tortuga::Packet & packet )
 {
 	Tortuga::Packet::ChatMessageData chatMessageData = Tortuga::Packet::readChatMessagePacket ( packet ) ;
 	
-	if ( chatMessageData.message == "/send" )
-		this->client.send ( Tortuga::Packet::writeClientJoinGamePacket ( { 0 , 0 , 0 , 0 , 0 , "default" } ) ) ;
-	
-	this->chat.send ( Tortuga::ChatMessage ( chatMessageData.message ) ) ;	
+	this->chat.send ( Tortuga::ChatMessage ( chatMessageData.message ) ) ;
 }

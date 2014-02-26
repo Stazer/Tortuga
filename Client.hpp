@@ -52,11 +52,11 @@ namespace Tortuga
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
 			
-			ARC::SharedPointer <Tortuga::ChatUser> & getChatUser ( ) ;
-			const ARC::SharedPointer <Tortuga::ChatUser> & getChatUser ( ) const ;
+			Tortuga::ChatUser & getChatUser ( ) ;
+			const Tortuga::ChatUser & getChatUser ( ) const ;
 			
-			ARC::SharedPointer <Tortuga::Player> & getPlayer ( ) ;
-			const ARC::SharedPointer <Tortuga::Player> & getPlayer ( ) const ;
+			Tortuga::Player & getPlayer ( ) ;
+			const Tortuga::Player & getPlayer ( ) const ;
 			
 			const ARC::String & getLocale ( ) const ;
 			ARC::UnsignedChar getViewDistance ( ) const ;

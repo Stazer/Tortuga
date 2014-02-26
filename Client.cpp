@@ -34,22 +34,22 @@ const ARC::Buffer & Tortuga::Client::getBuffer ( ) const
 	return this->buffer ;
 }
 
-ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( )
+Tortuga::ChatUser & Tortuga::Client::getChatUser ( )
 {
-	return this->chatUser ;
+	return * this->chatUser ;
 }
-const ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( ) const
+const Tortuga::ChatUser & Tortuga::Client::getChatUser ( ) const
 {
-	return this->chatUser ;
+	return * this->chatUser ;
 }
 
-ARC::SharedPointer <Tortuga::Player> & Tortuga::Client::getPlayer ( )
+Tortuga::Player & Tortuga::Client::getPlayer ( )
 {
-	return this->player ;
+	return * this->player ;
 }
-const ARC::SharedPointer  <Tortuga::Player> & Tortuga::Client::getPlayer ( ) const
+const Tortuga::Player & Tortuga::Client::getPlayer ( ) const
 {
-	return this->player ;
+	return * this->player ;
 }
 
 const ARC::String & Tortuga::Client::getLocale ( ) const
@@ -76,7 +76,6 @@ ARC::Bool Tortuga::Client::getShowCape ( ) const
 {
 	return this->showCape ;
 }
-
 
 ARC::Bool Tortuga::Client::update ( )
 {
@@ -202,7 +201,7 @@ ARC::Bool Tortuga::Client::update ( )
 					case Tortuga::Packet::ChatMessageToServer :
 					{
 						this->chatUser->handleChatMessage ( receivedPacket ) ;
-						break ;	
+						break ;
 					}
 					default :
 					{
