@@ -207,12 +207,16 @@ ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
 	this->send ( Tortuga::Packet::writeWorldSpawnPositionPacket ( { 0 , 0 , 0 } ) ) ;	
 	this->send ( Tortuga::Packet::writePlayerPositionAndLookPacket ( { 0 , 0 , 0 , 0 , 0 , true } ) ) ;
 	
+	this->send ( Tortuga::Packet::writeWorldTimeUpdatePacket ( { 0 , 300 } ) ) ;
+	
 	this->player = ARC::SharedPointer <Tortuga::Player> ( new Tortuga::Player ( * this ) ) ;
 	this->chatUser = ARC::SharedPointer <Tortuga::ChatUser> ( new Tortuga::ChatUser ( * this ) ) ;
 	this->type = Tortuga::Client::Player ;
 	
 	// DEBUG
-	( Tortuga::Chunk ( ) ).send ( * this ) ;
+	Tortuga::Chunk chunk ;
+	
+	this->send ( chunk ) ;
 }		
 ARC::Void Tortuga::Client::handleClientSettings ( Tortuga::Packet & packet )
 {

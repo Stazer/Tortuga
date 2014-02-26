@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ARC.hpp>
+#include "Packet.hpp"
 
 namespace Tortuga
 {
@@ -30,12 +31,12 @@ namespace Tortuga
 			
 		public :
 			Chunk ( const ARC::Vector2SignedInt & position = ARC::Vector2SignedInt ( ) ) ;
+			
+			operator ARC::Buffer ( ) const ;
 		
 			ARC::Void setPosition ( const ARC::Vector2SignedInt & position ) ;
 			ARC::Vector2SignedInt & getPosition ( ) ;
 			const ARC::Vector2SignedInt & getPosition ( ) const ;
-			
-			ARC::Void send ( Tortuga::Client & client ) ;
 			
 			static Chunk getTestChunk ( Tortuga::Chunk chunk = Tortuga::Chunk ( ) , const ARC::UnsignedLong steps = 5 ) ;
 	} ;

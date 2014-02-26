@@ -9,7 +9,7 @@ Tortuga::Chunk::Chunk ( const ARC::Vector2SignedInt & position ) :
 {
 }
 
-ARC::Void Tortuga::Chunk::send ( Tortuga::Client & client )
+Tortuga::Chunk::operator ARC::Buffer ( ) const
 {
 	ARC::Deflator deflator ;
 	
@@ -38,7 +38,7 @@ ARC::Void Tortuga::Chunk::send ( Tortuga::Client & client )
 	for ( ARC::UnsignedLong element = 0 ; element < deflator.getSize ( ) ; ++element )
 		buffer->push_back ( deflator.get ( ) ) ;
 		
-	client.send ( Tortuga::Packet::writeWorldChunkPacket ( { this->position.getX ( ) , this->position.getY ( ) , true , 0xFFFF , 0 , buffer } ) ) ;
+	return Tortuga::Packet::writeWorldChunkPacket ( { this->position.getX ( ) , this->position.getY ( ) , true , 0xFFFF , 0 , buffer } ) ;
 }
 
 ARC::Void Tortuga::Chunk::setPosition ( const ARC::Vector2SignedInt & position )
