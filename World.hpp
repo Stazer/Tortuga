@@ -15,5 +15,7 @@ namespace Tortuga
 	
 		public :
 			World ( ) ;
+			
+			static Tortuga::World getTestWorld ( Tortuga::World world = Tortuga::World ( ) ) ;
 	} ;
 }
