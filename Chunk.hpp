@@ -8,11 +8,25 @@ namespace Tortuga
 
 	class Chunk
 	{
-		private :
-			static const ARC::UnsignedLong size = 16 * 16 * 256 ;
-		
-			ARC::UnsignedChar data [ Tortuga::Chunk::size ] ;
+		public :
+			enum
+			{
+				Width = 16 ,
+				Height = 256 ,
+				Size = Width * Height * Width
+			} ;
+			
+		private :		
 			ARC::Vector2SignedInt position ;
+				
+			ARC::UnsignedChar data [ Tortuga::Chunk::Size ] ;
+			ARC::UnsignedChar meta [ Tortuga::Chunk::Size / 2 ] ;
+			ARC::UnsignedChar light [ Tortuga::Chunk::Size / 2 ] ;
+			ARC::UnsignedChar skylight [ Tortuga::Chunk::Size / 2 ] ;
+			
+			ARC::UnsignedChar add [ Tortuga::Chunk::Size ] ;
+			ARC::UnsignedChar biome [ Tortuga::Chunk::Width * Tortuga::Chunk::Width ] ;
+			
 			
 		public :
 			Chunk ( const ARC::Vector2SignedInt & position = ARC::Vector2SignedInt ( ) ) ;
