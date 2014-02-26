@@ -1,50 +1,40 @@
 #include "Server.hpp"
+#include "ClientManager.hpp"
+#include "Client.hpp"
 #include <iostream>
 
 ARC::Void Tortuga::Server::thread ( )
 {
 	while ( this->running )
 	{
-		ARC::String command ;
-	
-		std::cin >> command ;
+		if ( this->keepAliveTimer.getElapsedTime ( ) >= ARC::seconds ( 5.0f ) )
+		{
+			for ( auto client : this->clientManager.getClients ( ) )
+			{
+				client->send ( Tortuga::Packet::writeClientKeepAlivePacket ( { static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100  ) ) } ) ) ;
+			}
 		
-		if ( command == "status" )
-		{
+			this->keepAliveTimer.restart ( ) ;
 		}
-		else if ( command == "shutdown" || command == "stop" )
-		{
-			this->running = false ;	
-		}
-		else if ( command == "restart" )
-		{
-			break ;
-		}
+		
+		this->clientManager.update ( ) ;
 	}
 }
 
-
-ARC::Void Tortuga::Server::onConnect ( ARC::SharedPointer <Tortuga::Client> & client )
-{
-	ARC::TCPServer <Tortuga::Client>::onConnect ( client ) ;
-	
-	std::cout << "Client connected ( " << client->getRemoteAddress ( ) << ":" << client->getRemotePort ( ) << " )\n" ;
-}
-ARC::Void Tortuga::Server::onDisconnect ( typename ARC::List <ARC::SharedPointer <Tortuga::Client>>::iterator & client )
-{
-	ARC::TCPServer <Tortuga::Client>::onDisconnect ( client ) ;
-	
-	std::cout << "Client disconnected ( " << ( * client )->getRemoteAddress ( ) << ":" << ( * client )->getRemotePort ( ) << " )\n" ;
-}
-ARC::Void Tortuga::Server::onReceive ( typename ARC::List <ARC::SharedPointer <Tortuga::Client>>::iterator & client )
-{
-	ARC::TCPServer <Tortuga::Client>::onReceive ( client ) ;
-}
-
 Tortuga::Server::Server ( ) :
+	clientManager ( * this ) ,
 	threadHandle ( & Server::thread , this ) ,
 	running ( true )
 {
+}
+
+Tortuga::ClientManager & Tortuga::Server::getClientManager ( )
+{
+	return this->clientManager ;
+}
+const Tortuga::ClientManager & Tortuga::Server::getClientManager ( ) const
+{
+	return this->clientManager ;
 }
 
 ARC::Void Tortuga::Server::setRunning ( const ARC::Bool running )
@@ -82,13 +72,30 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 	
 	while ( this->listen ( 25565 ) != ARC::Socket::Done ) ;
 	
+	this->clientManager.initialize ( ) ;
+	
 	this->threadHandle.launch ( ) ;
 	
-	std::cout << "Server started\n" ; 
+	std::cout << "Server started\n" ;
 
 	while ( this->running )
 	{
-		this->update ( ) ;
+		ARC::String command ;
+	
+		std::cin >> command ;
+		
+		if ( command == "status" )
+		{
+		}
+		else if ( command == "shutdown" || command == "stop" )
+		{
+			this->running = false ;
+		}
+		else if ( command == "restart" )
+		{
+			this->running = false ;
+			returnValue = ARC::Restart ;
+		}
 	}
 	
 	this->threadHandle.wait ( ) ;
@@ -96,19 +103,4 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 	std::cout << "Server stopped\n" ;
 	
 	return returnValue ;
-}
-
-ARC::Void Tortuga::Server::update ( )
-{
-	ARC::TCPClientManager <Tortuga::Client>::update ( ARC::milliseconds ( 20 ) , 1024 ) ;
-	
-	if ( this->keepAliveTimer.getElapsedTime ( ) >= ARC::seconds ( 5.0f ) )
-	{
-		for ( auto client : this->getClients ( ) )
-		{
-			client->send ( Tortuga::Packet::writeClientKeepAlivePacket ( { static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100  ) ) } ) ) ;
-		}
-		
-		this->keepAliveTimer.restart ( ) ;
-	}
 }

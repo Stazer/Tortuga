@@ -1,7 +1,6 @@
 #pragma once
 
 #include <ARC.hpp>
-#include "Player.hpp"
 #include "Packet.hpp"
 
 namespace Tortuga
@@ -9,8 +8,9 @@ namespace Tortuga
 	class Server ;
 	class ClientManager ;
 	class ChatUser ;
+	class Player ;
 
-	class Client : public ARC::TCPClient
+	class Client : public ARC::TCPSocket
 	{
 		public :
 			enum Type
@@ -21,7 +21,11 @@ namespace Tortuga
 				Player = 3
 			} ;
 	
-		private :		
+		private :
+			Tortuga::ClientManager & clientManager ;
+		
+			ARC::Buffer buffer ;
+			
 			Type type ;
 			
 			ARC::SharedPointer <Tortuga::ChatUser> chatUser ;
@@ -35,10 +39,17 @@ namespace Tortuga
 			ARC::UnsignedChar difficulty ;
 			ARC::Bool showCape ;
 			
-			ARC::Void onReceive ( ) ;		
-			
 		public :
-			Client ( ) ;
+			Client ( Tortuga::ClientManager & clientManager ) ;
+			
+			Tortuga::ClientManager & getClientManager ( ) ;
+			const Tortuga::ClientManager & getClientManager ( ) const ;			
+			
+			ARC::Void setBuffer ( const ARC::Buffer & buffer ) ;
+			ARC::Buffer & getBuffer ( ) ;
+			const ARC::Buffer & getBuffer ( ) const ;
+			
+			ARC::Socket::Status receive ( ) ;
 			
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
@@ -55,6 +66,8 @@ namespace Tortuga
 			ARC::Bool getChatColors ( ) const ;
 			ARC::UnsignedChar getDifficulty ( ) const ;
 			ARC::Bool getShowCape ( ) const ;
+			
+			ARC::Void update ( ) ;
 			
 			// TODO: move to status
 			ARC::Void handleStatusKeepAlive ( Tortuga::Packet & packet ) ;

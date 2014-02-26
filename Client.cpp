@@ -3,137 +3,174 @@
 #include "Packet.hpp"
 #include "ChatUser.hpp"
 #include "World.hpp"
+#include "Player.hpp"
 #include <iostream>
 
-ARC::Void Tortuga::Client::onReceive ( )
-{
-	do
-	{
-		Tortuga::Packet receivedPacket = Tortuga::Packet::read ( this->getBuffer ( ) ) ;
-		
-		if ( this->getBuffer ( ).size ( ) == 0 || receivedPacket.getBuffer ( ).size ( ) == 0 || this->getBuffer ( ).size ( ) < receivedPacket.getBuffer ( ).size ( ) )
-			break ;
-			
-		this->getBuffer ( ).erase ( this->getBuffer ( ).begin ( ) , this->getBuffer ( ).begin ( ) + receivedPacket.getBuffer ( ).size ( ) ) ;
-		
-		ARC::UnsignedInt packetOpcode = receivedPacket.readVariableInt ( ) ;
-		
-		if ( this->type == Tortuga::Client::None )
-		{
-			switch ( packetOpcode )
-			{
-				case Tortuga::Packet::ClientHandshake :
-				{
-					this->handleClientHandshake ( receivedPacket ) ;
-					break ;
-				}
-				default :
-				{
-					std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
-					break ;
-				}
-			}
-		}
-		else if ( this->type == Tortuga::Client::Status )
-		{
-			switch ( packetOpcode )
-			{
-				case Tortuga::Packet::StatusKeepAlive :
-				{
-					this->handleStatusKeepAlive ( receivedPacket ) ;					
-					break ;
-				}
-				case Tortuga::Packet::StatusRequest :
-				{
-					this->handleStatusRequest ( receivedPacket ) ;
-			
-					break ;
-				}
-				default :
-				{
-					std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
-					break ;
-				}
-			}
-		}
-		else if ( this->type == Tortuga::Client::Login )
-		{
-			switch ( packetOpcode )
-			{
-				case Tortuga::Packet::ClientLoginStart :
-				{				
-					this->handleClientLoginStart ( receivedPacket ) ;
-					break ;
-				}
-				default :
-				{
-					std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
-					break ;
-				}
-			}
-		}
-		else if ( this->type == Tortuga::Client::Player )
-		{
-			switch ( packetOpcode )
-			{
-				case Tortuga::Packet::ClientKeepAlive :
-				{
-					this->handleClientKeepAlive ( receivedPacket ) ;				
-					break ;
-				}
-				case Tortuga::Packet::ClientSettings :
-				{
-					this->handleClientSettings ( receivedPacket ) ;
-					break ;
-				}
-				case Tortuga::Packet::PlayerOnGround :
-				{
-					this->player->handlePlayerOnGround ( receivedPacket ) ;
-					break ;
-				}
-				case Tortuga::Packet::PlayerPosition :
-				{	
-					this->player->handlePlayerPosition ( receivedPacket ) ;					
-					break ;
-				}
-				case Tortuga::Packet::PlayerLook :
-				{
-					this->player->handlePlayerLook ( receivedPacket ) ;
-					break ;
-				}
-				case Tortuga::Packet::PlayerPositionAndLookToServer :
-				{
-					this->player->handlePlayerPositionAndLook ( receivedPacket ) ;				
-					break ;
-				}
-				case Tortuga::Packet::ChatMessageToServer :
-				{
-					this->chatUser->handleChatMessage ( receivedPacket ) ;
-					break ;	
-				}
-				default :
-				{
-					std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
-					break ;
-				}
-			}
-		}
-	} while ( this->getBuffer ( ).size ( ) > 0 ) ;
-	
-}
-
-Tortuga::Client::Client ( ) :
+Tortuga::Client::Client ( Tortuga::ClientManager & clientManager ) :
+	clientManager ( clientManager ) ,
 	type ( Tortuga::Client::None )
 {
 }
 
-Tortuga::Server & Tortuga::Client::getServer ( )
+Tortuga::ClientManager & Tortuga::Client::getClientManager ( )
 {
-	return Tortuga::Server::getInstance ( ) ;
+	return this->clientManager ;
 }
-const Tortuga::Server & Tortuga::Client::getServer ( ) const
+const Tortuga::ClientManager & Tortuga::Client::getClientManager ( ) const
 {
-	return Tortuga::Server::getInstance ( ) ;
+	return this->clientManager ;
+}
+
+ARC::Void Tortuga::Client::setBuffer ( const ARC::Buffer & buffer )
+{
+	this->buffer = buffer ;
+}
+ARC::Buffer & Tortuga::Client::getBuffer ( )
+{
+	return this->buffer ;
+}
+const ARC::Buffer & Tortuga::Client::getBuffer ( ) const
+{
+	return this->buffer ;
+}
+
+ARC::Socket::Status Tortuga::Client::receive ( )
+{
+	const ARC::UnsignedLong maximalSize = 1024 ;
+
+	ARC::UnsignedChar * receivedData = new ARC::UnsignedChar [ maximalSize ] ;
+	ARC::UnsignedLong receivedSize = 0 ;
+		
+	ARC::Socket::Status status = sf::TcpSocket::receive ( receivedData , maximalSize , receivedSize ) ;
+	
+	ARC::Buffer newBuffer ;
+	
+	for ( ARC::UnsignedLong element = 0 ; element < receivedSize ; ++element )
+	{
+		newBuffer.push_back ( receivedData [ element ] ) ;
+	}
+	
+	delete receivedData ;
+	
+	if ( status == ARC::Socket::Done )
+	{
+		this->buffer.insert ( this->buffer.end ( ) , newBuffer.begin ( ) , newBuffer.end ( ) ) ;
+			
+		do
+		{
+			Tortuga::Packet receivedPacket = Tortuga::Packet::read ( this->getBuffer ( ) ) ;
+		
+			if ( this->getBuffer ( ).size ( ) == 0 || receivedPacket.getBuffer ( ).size ( ) == 0 || this->getBuffer ( ).size ( ) < receivedPacket.getBuffer ( ).size ( ) )
+				break ;
+			
+			this->getBuffer ( ).erase ( this->getBuffer ( ).begin ( ) , this->getBuffer ( ).begin ( ) + receivedPacket.getBuffer ( ).size ( ) ) ;
+		
+			ARC::UnsignedInt packetOpcode = receivedPacket.readVariableInt ( ) ;
+		
+			if ( this->type == Tortuga::Client::None )
+			{
+				switch ( packetOpcode )
+				{
+					case Tortuga::Packet::ClientHandshake :
+					{
+						this->handleClientHandshake ( receivedPacket ) ;
+						break ;
+					}
+					default :
+					{
+						std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
+						break ;
+					}
+				}
+			}
+			else if ( this->type == Tortuga::Client::Status )
+			{
+				switch ( packetOpcode )
+				{
+					case Tortuga::Packet::StatusKeepAlive :
+					{
+						this->handleStatusKeepAlive ( receivedPacket ) ;					
+						break ;
+					}
+					case Tortuga::Packet::StatusRequest :
+					{
+						this->handleStatusRequest ( receivedPacket ) ;
+			
+						break ;
+					}
+					default :
+					{
+						std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
+						break ;
+					}
+				}
+			}
+			else if ( this->type == Tortuga::Client::Login )
+			{
+				switch ( packetOpcode )
+				{
+					case Tortuga::Packet::ClientLoginStart :
+					{				
+						this->handleClientLoginStart ( receivedPacket ) ;
+						break ;
+					}
+					default :
+					{
+						std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
+						break ;
+					}
+				}
+			}
+			else if ( this->type == Tortuga::Client::Player )
+			{
+				switch ( packetOpcode )
+				{
+					case Tortuga::Packet::ClientKeepAlive :
+					{
+						this->handleClientKeepAlive ( receivedPacket ) ;				
+						break ;
+					}
+					case Tortuga::Packet::ClientSettings :
+					{
+						this->handleClientSettings ( receivedPacket ) ;
+						break ;
+					}
+					case Tortuga::Packet::PlayerOnGround :
+					{
+						this->player->handlePlayerOnGround ( receivedPacket ) ;
+						break ;
+					}
+					case Tortuga::Packet::PlayerPosition :
+					{	
+						this->player->handlePlayerPosition ( receivedPacket ) ;					
+						break ;
+					}
+					case Tortuga::Packet::PlayerLook :
+					{
+						this->player->handlePlayerLook ( receivedPacket ) ;
+						break ;
+					}
+					case Tortuga::Packet::PlayerPositionAndLookToServer :
+					{
+						this->player->handlePlayerPositionAndLook ( receivedPacket ) ;				
+						break ;
+					}
+					case Tortuga::Packet::ChatMessageToServer :
+					{
+						this->chatUser->handleChatMessage ( receivedPacket ) ;
+						break ;	
+					}
+					default :
+					{
+						std::cout << "<Error> unknown operationcode, packetOpcode: 0x" << std::hex << packetOpcode << "\n" ;
+						break ;
+					}
+				}
+			}
+		} while ( this->getBuffer ( ).size ( ) > 0 ) ;
+	}
+		
+	return status ;
 }
 
 ARC::SharedPointer <Tortuga::ChatUser> & Tortuga::Client::getChatUser ( )

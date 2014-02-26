@@ -1,6 +1,7 @@
 #include "ChatUser.hpp"
 #include "Packet.hpp"
 #include "Client.hpp"
+#include "ClientManager.hpp"
 #include "Server.hpp"
 #include "Chunk.hpp"
 
@@ -34,10 +35,10 @@ ARC::Void Tortuga::ChatUser::send ( const ARC::String & message )
 }
 ARC::Void Tortuga::ChatUser::broadcast ( const ARC::String & message )
 {
-	for ( auto client : this->client.getServer ( ).getClients ( ) )
+	/*for ( auto client : this->client.getClientManager ( ).getClients ( ) )
 	{
 		client->getChatUser ( )->send ( message ) ;
-	}
+	}*/
 }
 
 ARC::Void Tortuga::ChatUser::handleChatMessage ( Tortuga::Packet & packet )
