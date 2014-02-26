@@ -19,8 +19,8 @@ namespace Tortuga
 		private :		
 			ARC::Vector2SignedInt position ;
 				
-			ARC::UnsignedChar data [ Tortuga::Chunk::Size ] ;
-			ARC::UnsignedChar meta [ Tortuga::Chunk::Size / 2 ] ;
+			ARC::UnsignedChar type [ Tortuga::Chunk::Size ] ;
+			ARC::UnsignedChar metadata [ Tortuga::Chunk::Size / 2 ] ;
 			ARC::UnsignedChar light [ Tortuga::Chunk::Size / 2 ] ;
 			ARC::UnsignedChar skylight [ Tortuga::Chunk::Size / 2 ] ;
 			
@@ -36,5 +36,7 @@ namespace Tortuga
 			const ARC::Vector2SignedInt & getPosition ( ) const ;
 			
 			ARC::Void send ( Tortuga::Client & client ) ;
+			
+			static Chunk getTestChunk ( ) ;
 	} ;
 }

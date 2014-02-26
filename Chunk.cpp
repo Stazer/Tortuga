@@ -1,6 +1,7 @@
 #include "Chunk.hpp"
 #include "Packet.hpp"
 #include "Client.hpp"
+#include "Block.hpp"
 #include "ChatUser.hpp"
 
 Tortuga::Chunk::Chunk ( const ARC::Vector2SignedInt & position ) :
@@ -12,23 +13,23 @@ ARC::Void Tortuga::Chunk::send ( Tortuga::Client & client )
 {
 	ARC::Deflator deflator ;
 	
-	for ( ARC::UnsignedLong element = 0 ; element < sizeof ( this->data ) ; ++element )
-		deflator.put ( this->data [ element ] ) ;
+	for ( ARC::UnsignedLong element = 0 ; element < sizeof ( this->type ) ; ++element )
+		deflator.put ( this->type [ element ] ) ;
 	
-	for ( ARC::UnsignedLong element = 0 ; element < sizeof ( this->meta ) ; ++element )
-		deflator.put ( this->data [ element ] ) ;
+	for ( ARC::UnsignedLong element = 0 ; element < sizeof ( this->metadata ) ; ++element )
+		deflator.put ( this->metadata [ element ] ) ;
 		
 	for ( ARC::UnsignedLong element = 0 ; element < sizeof ( this->light ) ; ++element )
-		deflator.put ( this->data [ element ] ) ;
+		deflator.put ( this->light [ element ] ) ;
 		
 	for ( ARC::UnsignedLong element = 0 ; element < sizeof ( this->skylight ) ; ++element )
-		deflator.put ( this->data [ element ] ) ;
+		deflator.put ( this->skylight [ element ] ) ;
 	
 	for ( ARC::UnsignedLong element = 0 ; element < sizeof ( this->biome ) ; ++element )
-		deflator.put ( this->data [ element ] ) ;
+		deflator.put ( this->biome [ element ] ) ;
 	
 	for ( ARC::UnsignedLong element = 0 ; element < sizeof ( this->add ) ; ++element )
-		deflator.put ( this->data [ element ] ) ;
+		deflator.put ( this->add [ element ] ) ;
 
 	deflator.calculate ( ) ;
 	
@@ -51,4 +52,16 @@ ARC::Vector2SignedInt & Tortuga::Chunk::getPosition ( )
 const ARC::Vector2SignedInt & Tortuga::Chunk::getPosition ( ) const
 {
 	return this->position ;
+}
+
+Tortuga::Chunk Tortuga::Chunk::getTestChunk ( )
+{
+	Tortuga::Chunk chunk ;
+	
+	for ( ARC::UnsignedLong element = 0 ; element < Tortuga::Chunk::Width * Tortuga::Chunk::Width * Tortuga::Chunk::Width ; element += 5 )
+	{
+		chunk.type [ element ] = Tortuga::Block::Stone ;
+	}
+	
+	return chunk ;
 }
