@@ -54,11 +54,9 @@ const ARC::Vector2SignedInt & Tortuga::Chunk::getPosition ( ) const
 	return this->position ;
 }
 
-Tortuga::Chunk Tortuga::Chunk::getTestChunk ( )
+Tortuga::Chunk Tortuga::Chunk::getTestChunk ( Tortuga::Chunk chunk , const ARC::UnsignedLong steps )
 {
-	Tortuga::Chunk chunk ;
-	
-	for ( ARC::UnsignedLong element = 0 ; element < Tortuga::Chunk::Width * Tortuga::Chunk::Width * Tortuga::Chunk::Width ; element += 5 )
+	for ( ARC::UnsignedLong element = 0 ; element < Tortuga::Chunk::Width * Tortuga::Chunk::Width * Tortuga::Chunk::Width ; element += steps )
 	{
 		chunk.type [ element ] = Tortuga::Block::Stone ;
 	}

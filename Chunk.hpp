@@ -37,6 +37,6 @@ namespace Tortuga
 			
 			ARC::Void send ( Tortuga::Client & client ) ;
 			
-			static Chunk getTestChunk ( ) ;
+			static Chunk getTestChunk ( Tortuga::Chunk chunk = Tortuga::Chunk ( ) , const ARC::UnsignedLong steps = 5 ) ;
 	} ;
 }
