@@ -103,9 +103,9 @@ Tortuga::Block::Metadata Tortuga::Chunk::getBlockMetadata ( const ARC::Vector3Si
 	return static_cast <Tortuga::Block::Metadata> ( ( arrayPosition & 1 ) ? this->metadata [ part ] >> 4 : this->metadata [ part ] & 0xF ) ;
 }
 
-Tortuga::Chunk Tortuga::Chunk::getTestChunk ( Tortuga::Chunk chunk , const ARC::UnsignedLong steps )
+Tortuga::Chunk Tortuga::Chunk::getTestChunk ( Tortuga::Chunk chunk )
 {
-	for ( ARC::UnsignedLong element = 0 ; element < Tortuga::Chunk::Size / 4 ; element += steps )
+	for ( ARC::UnsignedLong element = 0 ; element < Tortuga::Chunk::Size / 4 ; element += 5 )
 	{
 		chunk.type [ element ] = Tortuga::Block::Stone ;
 	}

@@ -50,6 +50,6 @@ namespace Tortuga
 			ARC::Void setBlockMetadata ( const ARC::Vector3SignedInt & position , const Tortuga::Block::Metadata metadata ) ;
 			Tortuga::Block::Metadata getBlockMetadata ( const ARC::Vector3SignedInt & position ) ;
 			
-			static Chunk getTestChunk ( Tortuga::Chunk chunk = Tortuga::Chunk ( ) , const ARC::UnsignedLong steps = 5 ) ;
+			static Chunk getTestChunk ( Tortuga::Chunk chunk = Tortuga::Chunk ( ) ) ;
 	} ;
 }
