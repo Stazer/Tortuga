@@ -5,10 +5,20 @@
 #include "Server.hpp"
 #include "Chunk.hpp"
 
-Tortuga::ChatUser::ChatUser ( Tortuga::Client & client , const ARC::String & name ) :
-	name ( name ) ,
-	client ( client )
+Tortuga::ChatUser::ChatUser ( Tortuga::Chat & chat , Tortuga::Client & client , const ARC::String & name ) :
+	chat ( chat ) ,
+	client ( client ) ,
+	name ( name )
 {
+}
+		
+Tortuga::Chat & Tortuga::ChatUser::getChat ( )
+{
+	return this->chat ;
+}
+const Tortuga::Chat & Tortuga::ChatUser::getChat ( ) const
+{
+	return this->chat ;
 }
 		
 Tortuga::Client & Tortuga::ChatUser::getClient ( )

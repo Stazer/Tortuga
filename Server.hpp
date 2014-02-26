@@ -2,7 +2,7 @@
 
 #include <ARC.hpp>
 #include "ClientManager.hpp"
-
+#include "Chat.hpp"
 
 namespace Tortuga
 {
@@ -10,6 +10,7 @@ namespace Tortuga
 	{
 		private :			
 			Tortuga::ClientManager clientManager ;
+			Tortuga::Chat chat ;
 		
 			ARC::Thread threadHandle ;
 			ARC::Void thread ( ) ;
@@ -23,6 +24,9 @@ namespace Tortuga
 			
 			Tortuga::ClientManager & getClientManager ( ) ;
 			const Tortuga::ClientManager & getClientManager ( ) const ;
+			
+			Tortuga::Chat & getChat ( ) ;
+			const Tortuga::Chat & getChat ( ) const ;
 			
 			ARC::Void setRunning ( const ARC::Bool running ) ;
 			ARC::Bool getRunning ( ) const ;

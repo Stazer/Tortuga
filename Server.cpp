@@ -23,6 +23,7 @@ ARC::Void Tortuga::Server::thread ( )
 
 Tortuga::Server::Server ( ) :
 	clientManager ( * this ) ,
+	chat ( * this ) ,
 	threadHandle ( & Server::thread , this ) ,
 	running ( true )
 {
@@ -35,6 +36,15 @@ Tortuga::ClientManager & Tortuga::Server::getClientManager ( )
 const Tortuga::ClientManager & Tortuga::Server::getClientManager ( ) const
 {
 	return this->clientManager ;
+}
+
+Tortuga::Chat & Tortuga::Server::getChat ( )
+{
+	return this->chat ;
+}
+const Tortuga::Chat & Tortuga::Server::getChat ( ) const
+{
+	return this->chat ;
 }
 
 ARC::Void Tortuga::Server::setRunning ( const ARC::Bool running )

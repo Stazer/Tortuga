@@ -227,7 +227,7 @@ ARC::Void Tortuga::Client::handleStatusKeepAlive ( Tortuga::Packet & packet )
 }
 ARC::Void Tortuga::Client::handleStatusRequest ( Tortuga::Packet & packet )
 {
-	Tortuga::Packet::readStatusRequestPacket ( packet ) ;
+	Tortuga::Packet::readStatusRequestPacket ( packet ) ;				
 	this->send ( Tortuga::Status ( ) ) ;
 }
 
@@ -249,7 +249,7 @@ ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
 	this->send ( Tortuga::Packet::writeWorldTimeUpdatePacket ( { 0 , 300 } ) ) ;
 	
 	this->player = ARC::SharedPointer <Tortuga::Player> ( new Tortuga::Player ( * this ) ) ;
-	this->chatUser = ARC::SharedPointer <Tortuga::ChatUser> ( new Tortuga::ChatUser ( * this ) ) ;
+	this->chatUser = ARC::SharedPointer <Tortuga::ChatUser> ( new Tortuga::ChatUser ( this->getClientManager ( ).getServer ( ).getChat ( ) , * this ) ) ;
 	this->type = Tortuga::Client::Player ;
 }		
 ARC::Void Tortuga::Client::handleClientSettings ( Tortuga::Packet & packet )
