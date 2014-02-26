@@ -1,6 +1,7 @@
 #include "Server.hpp"
 #include "ClientManager.hpp"
 #include "Client.hpp"
+#include "Packet.hpp"
 #include <iostream>
 
 ARC::Void Tortuga::Server::thread ( )

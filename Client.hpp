@@ -1,7 +1,8 @@
 #pragma once
 
 #include <ARC.hpp>
-#include "Packet.hpp"
+
+#include "Difficulty.hpp"
 
 namespace Tortuga
 {
@@ -9,6 +10,7 @@ namespace Tortuga
 	class ClientManager ;
 	class ChatUser ;
 	class Player ;
+	class Packet ;
 
 	class Client : public ARC::TCPSocket
 	{
@@ -36,7 +38,7 @@ namespace Tortuga
 			ARC::UnsignedChar viewDistance ;
 			ARC::UnsignedChar chatFlags ;
 			ARC::Bool chatColors ;
-			ARC::UnsignedChar difficulty ;
+			Tortuga::Difficulty::Type difficulty ;
 			ARC::Bool showCape ;
 			
 		public :
@@ -62,7 +64,7 @@ namespace Tortuga
 			ARC::UnsignedChar getViewDistance ( ) const ;
 			ARC::UnsignedChar getChatFlags ( ) const ;
 			ARC::Bool getChatColors ( ) const ;
-			ARC::UnsignedChar getDifficulty ( ) const ;
+			Tortuga::Difficulty::Type getDifficulty ( ) const ;
 			ARC::Bool getShowCape ( ) const ;
 			
 			ARC::Bool update ( ) ;

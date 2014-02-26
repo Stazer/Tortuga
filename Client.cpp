@@ -4,6 +4,7 @@
 #include "ChatUser.hpp"
 #include "World.hpp"
 #include "Player.hpp"
+#include "Difficulty.hpp"
 #include <iostream>
 
 Tortuga::Client::Client ( Tortuga::ClientManager & clientManager ) :
@@ -68,7 +69,7 @@ ARC::Bool Tortuga::Client::getChatColors ( ) const
 {
 	return this->chatColors ;
 }
-ARC::UnsignedChar Tortuga::Client::getDifficulty ( ) const
+Tortuga::Difficulty::Type Tortuga::Client::getDifficulty ( ) const
 {
 	return this->difficulty ;
 }
@@ -259,6 +260,6 @@ ARC::Void Tortuga::Client::handleClientSettings ( Tortuga::Packet & packet )
 	this->viewDistance = clientSettingsData.viewDistance ;
 	this->chatFlags = clientSettingsData.chatFlags ;
 	this->chatColors = clientSettingsData.chatColors ;
-	this->difficulty = clientSettingsData.difficulty ;
+	this->difficulty = static_cast <Tortuga::Difficulty::Type> ( clientSettingsData.difficulty ) ;
 	this->showCape = clientSettingsData.showCape ;
 }
