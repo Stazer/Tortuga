@@ -1,11 +1,13 @@
 #pragma once
 
+#include <ARC.hpp>
 #include "Location.hpp"
 
 namespace Tortuga
 {
 	class Client ;
 	class Packet ;
+	class World ;
 
 	class Player
 	{

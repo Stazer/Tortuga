@@ -3,10 +3,11 @@
 #include "Chunk.hpp"
 #include "Packet.hpp"
 
-Tortuga::World::World ( Tortuga::WorldManager & worldManager , const Tortuga::Dimension::Type dimension , const Tortuga::Difficulty::Type difficulty ) :
+Tortuga::World::World ( Tortuga::WorldManager & worldManager , const Tortuga::Dimension::Type dimension , const Tortuga::Difficulty::Type difficulty , const ARC::Vector3SignedInt & spawnPosition ) :
 	worldManager ( worldManager ) ,
 	dimension ( dimension ) ,
-	difficulty ( difficulty )
+	difficulty ( difficulty ) ,
+	spawnPosition ( spawnPosition )
 {
 }
 
@@ -35,6 +36,15 @@ ARC::Void Tortuga::World::setDifficulty ( const Tortuga::Difficulty::Type diffic
 Tortuga::Difficulty::Type Tortuga::World::getDifficulty ( ) const
 {
 	return this->difficulty ;
+}
+
+ARC::Void Tortuga::World::setSpawnPosition ( const ARC::Vector3SignedInt & spawnPosition )
+{
+	this->spawnPosition = spawnPosition ;
+}
+const ARC::Vector3SignedInt & Tortuga::World::getSpawnPosition ( ) const
+{
+	return this->spawnPosition ;
 }
 
 Tortuga::World Tortuga::World::getTestWorld ( Tortuga::World world )
