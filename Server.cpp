@@ -1,8 +1,10 @@
 #include "Server.hpp"
-#include "ClientManager.hpp"
 #include "Client.hpp"
 #include "Packet.hpp"
 #include "World.hpp"
+#include "ClientManager.hpp"
+#include "Chat.hpp"
+#include "WorldManager.hpp"
 #include <iostream>
 
 ARC::Void Tortuga::Server::thread ( )
@@ -11,7 +13,7 @@ ARC::Void Tortuga::Server::thread ( )
 	{
 		if ( this->keepAliveTimer.getElapsedTime ( ) >= ARC::seconds ( 5.0f ) )
 		{
-			for ( auto client : this->clientManager.getClients ( ) )
+			for ( auto client : this->getClientManager ( ).getClients ( ) )
 			{
 				client->send ( Tortuga::Packet::writeClientKeepAlivePacket ( { static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100 ) ) } ) ) ;
 			}
@@ -19,14 +21,14 @@ ARC::Void Tortuga::Server::thread ( )
 			this->keepAliveTimer.restart ( ) ;
 		}
 		
-		this->clientManager.update ( ) ;
+		this->getClientManager ( ).update ( ) ;
 	}
 }
 
 Tortuga::Server::Server ( ) :
-	clientManager ( * this ) ,
-	chat ( * this ) ,
-	worldManager ( * this ) ,
+	clientManager ( new Tortuga::ClientManager ( * this ) ) ,
+	chat ( new Tortuga::Chat ( * this ) ) ,
+	worldManager ( new Tortuga::WorldManager ( * this ) ) ,
 	threadHandle ( & Server::thread , this ) ,
 	running ( true )
 {
@@ -34,29 +36,29 @@ Tortuga::Server::Server ( ) :
 
 Tortuga::ClientManager & Tortuga::Server::getClientManager ( )
 {
-	return this->clientManager ;
+	return * this->clientManager ;
 }
 const Tortuga::ClientManager & Tortuga::Server::getClientManager ( ) const
 {
-	return this->clientManager ;
+	return * this->clientManager ;
 }
 
 Tortuga::Chat & Tortuga::Server::getChat ( )
 {
-	return this->chat ;
+	return * this->chat ;
 }
 const Tortuga::Chat & Tortuga::Server::getChat ( ) const
 {
-	return this->chat ;
+	return * this->chat ;
 }
 
 Tortuga::WorldManager & Tortuga::Server::getWorldManager ( )
 {
-	return this->worldManager ;
+	return * this->worldManager ;
 }
 const Tortuga::WorldManager & Tortuga::Server::getWorldManager ( ) const
 {
-	return this->worldManager ;
+	return * this->worldManager ;
 }
 
 ARC::Void Tortuga::Server::setRunning ( const ARC::Bool running )
@@ -94,7 +96,7 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 	
 	while ( this->listen ( 25565 ) != ARC::Socket::Done ) ;
 	
-	this->clientManager.initialize ( ) ;
+	this->getClientManager ( ).initialize ( ) ;
 	
 	this->threadHandle.launch ( ) ;
 	
@@ -103,8 +105,8 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 	/*
 		DEBUG
 	*/
-	this->worldManager.getWorlds ( ).push_back ( ARC::SharedPointer <Tortuga::World> ( new Tortuga::World ( Tortuga::World::getTestWorld ( Tortuga::World ( this->worldManager ) ) ) ) ) ;
-	this->worldManager.setDefaultWorld ( ** this->worldManager.getWorlds ( ).begin ( ) ) ;
+	this->getWorldManager ( ).getWorlds ( ).push_back ( ARC::SharedPointer <Tortuga::World> ( new Tortuga::World ( Tortuga::World::getTestWorld ( Tortuga::World ( this->getWorldManager ( ) ) ) ) ) ) ;
+	this->getWorldManager ( ).setDefaultWorld ( ** this->getWorldManager ( ).getWorlds ( ).begin ( ) ) ;
 
 	while ( this->running )
 	{

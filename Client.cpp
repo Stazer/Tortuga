@@ -5,6 +5,7 @@
 #include "World.hpp"
 #include "Player.hpp"
 #include "Difficulty.hpp"
+#include "ClientManager.hpp"
 #include <iostream>
 
 Tortuga::Client::Client ( Tortuga::ClientManager & clientManager ) :
