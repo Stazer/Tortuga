@@ -11,16 +11,6 @@ ARC::Void Tortuga::Server::thread ( )
 {
 	while ( this->running )
 	{
-		if ( this->keepAliveTimer.getElapsedTime ( ) >= ARC::seconds ( 5.0f ) )
-		{
-			for ( auto client : this->getClientManager ( ).getClients ( ) )
-			{
-				client->send ( Tortuga::Packet::writeClientKeepAlivePacket ( { static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100 ) ) } ) ) ;
-			}
-		
-			this->keepAliveTimer.restart ( ) ;
-		}
-		
 		this->getClientManager ( ).update ( ) ;
 	}
 }

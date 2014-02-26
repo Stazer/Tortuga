@@ -19,8 +19,6 @@ namespace Tortuga
 			ARC::Void thread ( ) ;
 			
 			ARC::Bool running ;
-			
-			ARC::Timer keepAliveTimer ;
 
 		public :
 			Server ( ) ;

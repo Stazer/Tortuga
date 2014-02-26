@@ -1,6 +1,7 @@
 #include "ClientManager.hpp"
 #include "Client.hpp"
 #include "Server.hpp"
+#include "Packet.hpp"
 
 Tortuga::ClientManager::ClientManager ( Tortuga::Server & server ) :
 	server ( server )
@@ -59,4 +60,15 @@ ARC::Void Tortuga::ClientManager::update ( )
 			}
 		}
 	}
+	
+
+	if ( this->keepAliveTimer.getElapsedTime ( ) >= ARC::seconds ( 5.0f ) )
+	{
+		for ( auto client : this->getClients ( ) )
+		{
+			client->send ( Tortuga::Packet::writeClientKeepAlivePacket ( { static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100 ) ) } ) ) ;
+		}
+		
+		this->keepAliveTimer.restart ( ) ;
+	}	
 }

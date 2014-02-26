@@ -15,6 +15,8 @@ namespace Tortuga
 			ARC::SocketSelector selector ;
 			ARC::List <ARC::SharedPointer <Tortuga::Client>> clients ;
 			
+			ARC::Timer keepAliveTimer ;
+			
 		public :
 			ClientManager ( Tortuga::Server & server ) ;
 			
