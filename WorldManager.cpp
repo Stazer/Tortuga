@@ -17,14 +17,11 @@ const Tortuga::Server & Tortuga::WorldManager::getServer ( ) const
 	return this->server ;
 }
 
-ARC::Void Tortuga::WorldManager::initialize ( )
+ARC::Vector <Tortuga::World> Tortuga::WorldManager::getWorlds ( )
 {
+	return this->worlds ;
 }
-ARC::Void Tortuga::WorldManager::finalize ( )
+const ARC::Vector <Tortuga::World> Tortuga::WorldManager::getWorlds ( ) const
 {
+	return this->worlds ;
 }
-			
-ARC::Void Tortuga::WorldManager::update ( )
-{
-}
-

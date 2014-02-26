@@ -43,6 +43,9 @@ ARC::Void Tortuga::ChatUser::broadcast ( const ARC::String & message )
 ARC::Void Tortuga::ChatUser::handleChatMessage ( Tortuga::Packet & packet )
 {
 	Tortuga::Packet::ChatMessageData chatMessageData = Tortuga::Packet::readChatMessagePacket ( packet ) ;
+	
+	if ( chatMessageData.message == "/send" )
+		this->client.send ( Tortuga::Packet::writeClientJoinGamePacket ( { 0 , 0 , 0 , 0 , 0 , "default" } ) ) ;
 		
 	this->broadcast ( chatMessageData.message ) ;	
 }

@@ -198,7 +198,6 @@ ARC::Void Tortuga::Client::handleClientHandshake ( Tortuga::Packet & packet )
 ARC::Void Tortuga::Client::handleClientKeepAlive ( Tortuga::Packet & packet )
 {
 }
-#include "Chunk.hpp"
 
 ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
 {		
@@ -212,11 +211,6 @@ ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
 	this->player = ARC::SharedPointer <Tortuga::Player> ( new Tortuga::Player ( * this ) ) ;
 	this->chatUser = ARC::SharedPointer <Tortuga::ChatUser> ( new Tortuga::ChatUser ( * this ) ) ;
 	this->type = Tortuga::Client::Player ;
-	
-	// DEBUG
-	Tortuga::Chunk chunk ;
-	
-	this->send ( chunk ) ;
 }		
 ARC::Void Tortuga::Client::handleClientSettings ( Tortuga::Packet & packet )
 {

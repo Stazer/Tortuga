@@ -62,7 +62,7 @@ ARC::Void Tortuga::Player::handlePlayerLook ( Tortuga::Packet & packet )
 	
 	this->location.setYaw ( playerLookData.yaw ) ;
 	this->location.setPitch ( playerLookData.pitch ) ;
-	this->onGround = playerLookData.onGround ;					
+	this->onGround = playerLookData.onGround ;
 }
 ARC::Void Tortuga::Player::handlePlayerPositionAndLook ( Tortuga::Packet & packet )
 {

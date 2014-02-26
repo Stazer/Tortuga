@@ -14,15 +14,15 @@ namespace Tortuga
 		private :
 			Tortuga::Server & server ;
 			
+			ARC::Vector <Tortuga::World> worlds ;
+			
 		public :
 			WorldManager ( Tortuga::Server & server ) ;
 			
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
-					
-			ARC::Void initialize ( ) ;
-			ARC::Void finalize ( ) ;
 			
-			ARC::Void update ( ) ;
+			ARC::Vector <Tortuga::World> getWorlds ( ) ;
+			const ARC::Vector <Tortuga::World> getWorlds ( ) const ;
 	} ;
 }
