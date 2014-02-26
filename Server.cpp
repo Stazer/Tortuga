@@ -2,6 +2,7 @@
 #include "ClientManager.hpp"
 #include "Client.hpp"
 #include "Packet.hpp"
+#include "World.hpp"
 #include <iostream>
 
 ARC::Void Tortuga::Server::thread ( )
@@ -98,6 +99,12 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 	this->threadHandle.launch ( ) ;
 	
 	std::cout << "Server started\n" ;
+	
+	/*
+		DEBUG
+	*/
+	this->worldManager.getWorlds ( ).push_back ( ARC::SharedPointer <Tortuga::World> ( new Tortuga::World ( Tortuga::World::getTestWorld ( Tortuga::World ( this->worldManager ) ) ) ) ) ;
+	this->worldManager.setDefaultWorld ( ** this->worldManager.getWorlds ( ).begin ( ) ) ;
 
 	while ( this->running )
 	{

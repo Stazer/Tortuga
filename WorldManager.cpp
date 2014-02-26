@@ -7,10 +7,6 @@
 Tortuga::WorldManager::WorldManager ( Tortuga::Server & server ) :
 	server ( server )
 {
-	ARC::SharedPointer <Tortuga::World> world ( new Tortuga::World ( Tortuga::World::getTestWorld ( ) ) ) ;
-	
-	this->defaultWorld = world ;
-	this->worlds.push_back ( world ) ;
 }
 
 Tortuga::Server & Tortuga::WorldManager::getServer ( )

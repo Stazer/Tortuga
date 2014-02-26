@@ -1,21 +1,31 @@
 #pragma once
 
 #include <ARC.hpp>
-#include "Chunk.hpp"
+#include "Dimension.hpp"
+#include "Difficulty.hpp"
 
 namespace Tortuga
 {
 	class Client ;
 	class WorldManager ;
+	class Chunk ;
 
 	class World
 	{
 		private :
-			ARC::Vector <Tortuga::Chunk> chunks ;
+			Tortuga::WorldManager & worldManager ;
+		
+			Tortuga::Dimension::Type dimension ;
+			Tortuga::Difficulty::Type difficulty ;
+		
+			ARC::List <ARC::SharedPointer <Tortuga::Chunk>> chunks ;
 	
 		public :
-			World ( ) ;
+			World ( Tortuga::WorldManager & worldManager ) ;
 			
-			static Tortuga::World getTestWorld ( Tortuga::World world = Tortuga::World ( ) ) ;
+			Tortuga::WorldManager & getWorldManager ( ) ;
+			const Tortuga::WorldManager & getWorldManager ( ) const ;
+			
+			static Tortuga::World getTestWorld ( Tortuga::World world ) ;
 	} ;
 }
