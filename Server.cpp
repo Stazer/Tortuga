@@ -11,7 +11,7 @@ ARC::Void Tortuga::Server::thread ( )
 		{
 			for ( auto client : this->clientManager.getClients ( ) )
 			{
-				client->send ( Tortuga::Packet::writeClientKeepAlivePacket ( { static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100  ) ) } ) ) ;
+				client->send ( Tortuga::Packet::writeClientKeepAlivePacket ( { static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100 ) ) } ) ) ;
 			}
 		
 			this->keepAliveTimer.restart ( ) ;

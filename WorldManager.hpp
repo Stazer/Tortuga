@@ -15,6 +15,7 @@ namespace Tortuga
 			Tortuga::Server & server ;
 			
 			ARC::Vector <ARC::SharedPointer <Tortuga::World>> worlds ;
+			ARC::SharedPointer <Tortuga::World> defaultWorld ;
 			
 		public :
 			WorldManager ( Tortuga::Server & server ) ;
@@ -24,5 +25,9 @@ namespace Tortuga
 			
 			ARC::Vector <ARC::SharedPointer <Tortuga::World>> & getWorlds ( ) ;
 			const ARC::Vector <ARC::SharedPointer <Tortuga::World>> & getWorlds ( ) const ;
+			
+			ARC::Void setDefaultWorld ( Tortuga::World & defaultWorld ) ;
+			Tortuga::World & getDefaultWorld ( ) ;
+			const Tortuga::World & getDefaultWorld ( ) const ;
 	} ;
 }
