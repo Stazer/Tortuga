@@ -12,16 +12,15 @@ namespace Tortuga
 	class ChatUser
 	{
 		private :
-			ARC::SharedPointer <Tortuga::Chat> chat ;
-			ARC::SharedPointer <Tortuga::Client> client ;
+			Tortuga::Client & client ;
+			Tortuga::Chat & chat ;
 		
 			ARC::String name ;
 			
 		public :
-			ChatUser ( Tortuga::Client & client , const ARC::String & name = "" ) ;
 			ChatUser ( Tortuga::Client & client , Tortuga::Chat & chat , const ARC::String & name = "" ) ;
+			~ChatUser ( ) ;
 			
-			ARC::Void setChat ( Tortuga::Chat & chat ) ;
 			Tortuga::Chat & getChat ( ) ;
 			const Tortuga::Chat & getChat ( ) const ;
 			

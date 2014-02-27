@@ -2,9 +2,6 @@
 #include "Client.hpp"
 #include "Packet.hpp"
 #include "World.hpp"
-#include "ClientManager.hpp"
-#include "Chat.hpp"
-#include "WorldManager.hpp"
 #include <iostream>
 
 ARC::Void Tortuga::Server::thread ( )
@@ -16,9 +13,9 @@ ARC::Void Tortuga::Server::thread ( )
 }
 
 Tortuga::Server::Server ( ) :
-	clientManager ( new Tortuga::ClientManager ( * this ) ) ,
-	chat ( new Tortuga::Chat ( * this ) ) ,
-	worldManager ( new Tortuga::WorldManager ( * this ) ) ,
+	clientManager ( * this ) ,
+	chat ( * this ) ,
+	worldManager ( * this ) ,
 	threadHandle ( & Server::thread , this ) ,
 	running ( true )
 {
@@ -26,29 +23,29 @@ Tortuga::Server::Server ( ) :
 
 Tortuga::ClientManager & Tortuga::Server::getClientManager ( )
 {
-	return * this->clientManager ;
+	return this->clientManager ;
 }
 const Tortuga::ClientManager & Tortuga::Server::getClientManager ( ) const
 {
-	return * this->clientManager ;
+	return this->clientManager ;
 }
 
 Tortuga::Chat & Tortuga::Server::getChat ( )
 {
-	return * this->chat ;
+	return this->chat ;
 }
 const Tortuga::Chat & Tortuga::Server::getChat ( ) const
 {
-	return * this->chat ;
+	return this->chat ;
 }
 
 Tortuga::WorldManager & Tortuga::Server::getWorldManager ( )
 {
-	return * this->worldManager ;
+	return this->worldManager ;
 }
 const Tortuga::WorldManager & Tortuga::Server::getWorldManager ( ) const
 {
-	return * this->worldManager ;
+	return this->worldManager ;
 }
 
 ARC::Void Tortuga::Server::setRunning ( const ARC::Bool running )
@@ -95,8 +92,8 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 	/*
 		DEBUG
 	*/
-	this->getWorldManager ( ).getWorlds ( ).push_back ( ARC::SharedPointer <Tortuga::World> ( new Tortuga::World ( Tortuga::World::getTestWorld ( Tortuga::World ( this->getWorldManager ( ) ) ) ) ) ) ;
-	this->getWorldManager ( ).setDefaultWorld ( ** this->getWorldManager ( ).getWorlds ( ).begin ( ) ) ;
+	//this->getWorldManager ( ).getWorlds ( ).push_back ( ARC::SharedPointer <Tortuga::World> ( new Tortuga::World ( Tortuga::World::getTestWorld ( Tortuga::World ( this->getWorldManager ( ) ) ) ) ) ) ;
+	//this->getWorldManager ( ).setDefaultWorld ( ** this->getWorldManager ( ).getWorlds ( ).begin ( ) ) ;
 
 	while ( this->running )
 	{
@@ -106,11 +103,12 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 		
 		if ( command == "status" )
 		{
+			std::cout << this->clientManager.getClients ( ).size ( ) << " client(s) connected\n" ;
+			std::cout << this->chat.getChatUsers ( ).size ( ) << " chatuser(s) connected\n" ;
+			std::cout << this->worldManager.getWorlds ( ).size ( ) << " world(s) are loaded\n" ;
 		}
 		else if ( command == "shutdown" || command == "stop" )
-		{
 			this->running = false ;
-		}
 		else if ( command == "restart" )
 		{
 			this->running = false ;
@@ -118,7 +116,7 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 		}
 	}
 	
-	this->threadHandle.terminate ( ) ;
+	this->threadHandle.wait ( ) ;
 	
 	std::cout << "Server stopped\n" ;
 	

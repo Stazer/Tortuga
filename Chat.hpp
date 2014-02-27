@@ -23,7 +23,8 @@ namespace Tortuga
 			
 			ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> & getChatUsers ( ) ;
 			const ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> & getChatUsers ( ) const ;
-			
+	
+			ARC::Void broadcast ( const Tortuga::ChatMessage & message ) ;
 			ARC::Void send ( const Tortuga::ChatMessage & message ) ;
 	} ;
 }

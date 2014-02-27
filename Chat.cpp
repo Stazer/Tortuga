@@ -25,6 +25,11 @@ const ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> & Tortuga::Chat::getCha
 	return this->chatUsers ;
 }
 			
+ARC::Void Tortuga::Chat::broadcast ( const Tortuga::ChatMessage & message )
+{
+	for ( auto chatUser : this->chatUsers )
+		chatUser->send ( message ) ;
+}
 ARC::Void Tortuga::Chat::send ( const Tortuga::ChatMessage & message )
 {
 	for ( auto chatUser : this->chatUsers )

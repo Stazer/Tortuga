@@ -1,19 +1,18 @@
 #pragma once
 
 #include <ARC.hpp>
+#include "ClientManager.hpp"
+#include "Chat.hpp"
+#include "WorldManager.hpp"
 
 namespace Tortuga
 {
-	class ClientManager ;
-	class Chat ;
-	class WorldManager ;
-
 	class Server : public ARC::TCPListener
 	{
 		private :			
-			ARC::SharedPointer <Tortuga::ClientManager> clientManager ;
-			ARC::SharedPointer <Tortuga::Chat> chat ;
-			ARC::SharedPointer <Tortuga::WorldManager> worldManager ;
+			Tortuga::ClientManager clientManager ;
+			Tortuga::Chat chat ;
+			Tortuga::WorldManager worldManager ;
 		
 			ARC::Thread threadHandle ;
 			ARC::Void thread ( ) ;

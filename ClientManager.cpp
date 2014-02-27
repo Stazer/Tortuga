@@ -33,7 +33,7 @@ ARC::Void Tortuga::ClientManager::initialize ( )
 
 ARC::Void Tortuga::ClientManager::update ( )
 {
-	if ( this->selector.wait ( ARC::Time ( ) ) )
+	if ( this->selector.wait ( ARC::milliseconds ( 20 ) ) )
 	{
 		if ( this->selector.isReady ( this->server ) )
 		{
