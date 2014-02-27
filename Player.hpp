@@ -20,6 +20,7 @@ namespace Tortuga
 	
 		public :
 			Player ( Tortuga::Client & client ) ;
+			~Player ( ) ;
 			
 			Tortuga::Client & getClient ( ) ;
 			const Tortuga::Client & getClient ( ) const ;

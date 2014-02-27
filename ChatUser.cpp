@@ -12,7 +12,7 @@ Tortuga::ChatUser::ChatUser ( Tortuga::Client & client , Tortuga::Chat & chat , 
 	name ( name ) ,
 	chat ( chat )
 {
-	this->chat.getChatUsers ( ).push_back ( ARC::SharedPointer <Tortuga::ChatUser> ( this ) ) ;
+	this->chat.getChatUsers ( ).push_back ( this ) ;
 }
 Tortuga::ChatUser::~ChatUser ( )
 {

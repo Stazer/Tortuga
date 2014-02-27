@@ -13,7 +13,7 @@ namespace Tortuga
 		private :
 			Tortuga::Server & server ;
 			
-			ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> chatUsers ;
+			ARC::List <Tortuga::ChatUser *> chatUsers ;
 			
 		public :
 			Chat ( Tortuga::Server & server ) ;
@@ -21,8 +21,8 @@ namespace Tortuga
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
 			
-			ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> & getChatUsers ( ) ;
-			const ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> & getChatUsers ( ) const ;
+			ARC::List <Tortuga::ChatUser *> & getChatUsers ( ) ;
+			const ARC::List <Tortuga::ChatUser *> & getChatUsers ( ) const ;
 	
 			ARC::Void broadcast ( const Tortuga::ChatMessage & message ) ;
 			ARC::Void send ( const Tortuga::ChatMessage & message ) ;

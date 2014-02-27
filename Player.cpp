@@ -7,6 +7,9 @@ Tortuga::Player::Player ( Tortuga::Client & client ) :
 	onGround ( true )
 {
 }
+Tortuga::Player::~Player ( )
+{
+}
 
 Tortuga::Client & Tortuga::Player::getClient ( )
 {

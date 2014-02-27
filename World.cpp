@@ -47,6 +47,15 @@ const ARC::Vector3SignedInt & Tortuga::World::getSpawnPosition ( ) const
 	return this->spawnPosition ;
 }
 
+ARC::List <ARC::SharedPointer <Tortuga::Player>> & Tortuga::World::getPlayers ( )
+{
+	return this->players ;
+}
+const ARC::List <ARC::SharedPointer <Tortuga::Player>> & Tortuga::World::getPlayers ( ) const
+{
+	return this->players ;
+}
+
 Tortuga::World Tortuga::World::getTestWorld ( Tortuga::World world )
 {
 	for ( ARC::UnsignedShort x = -10 ; x <= 10 ; ++x )

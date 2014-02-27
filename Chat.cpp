@@ -16,11 +16,11 @@ const Tortuga::Server & Tortuga::Chat::getServer ( ) const
 	return this->server ;
 }
 
-ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> & Tortuga::Chat::getChatUsers ( )
+ARC::List <Tortuga::ChatUser *> & Tortuga::Chat::getChatUsers ( )
 {
 	return this->chatUsers ;
 }
-const ARC::List <ARC::SharedPointer <Tortuga::ChatUser>> & Tortuga::Chat::getChatUsers ( ) const
+const ARC::List <Tortuga::ChatUser *> & Tortuga::Chat::getChatUsers ( ) const
 {
 	return this->chatUsers ;
 }
