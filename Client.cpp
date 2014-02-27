@@ -249,7 +249,7 @@ ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
 	
 	this->send ( Tortuga::Packet::writeWorldTimeUpdatePacket ( { 0 , 300 } ) ) ;
 	
-	this->chatUser = ARC::SharedPointer <Tortuga::ChatUser> ( new Tortuga::ChatUser ( this->getClientManager ( ).getServer ( ).getChat ( ) , * this ) ) ;
+	this->chatUser = ARC::SharedPointer <Tortuga::ChatUser> ( new Tortuga::ChatUser ( * this , this->getClientManager ( ).getServer ( ).getChat ( ) ) ) ;
 	this->player = ARC::SharedPointer <Tortuga::Player> ( new Tortuga::Player ( * this ) ) ;
 	this->type = Tortuga::Client::Player ;
 }		

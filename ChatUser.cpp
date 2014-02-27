@@ -7,30 +7,38 @@
 #include "Chat.hpp"
 #include "ChatMessage.hpp"
 
-Tortuga::ChatUser::ChatUser ( Tortuga::Chat & chat , Tortuga::Client & client , const ARC::String & name ) :
-	chat ( chat ) ,
-	client ( client ) ,
+Tortuga::ChatUser::ChatUser ( Tortuga::Client & client , const ARC::String & name ) :
+	client ( & client ) ,
 	name ( name )
 {
-	this->chat.getChatUsers ( ).push_back ( ARC::SharedPointer <Tortuga::ChatUser> ( this ) ) ;
 }
-		
+Tortuga::ChatUser::ChatUser ( Tortuga::Client & client , Tortuga::Chat & chat , const ARC::String & name ) :
+	client ( & client ) ,
+	name ( name )
+{
+	this->setChat ( chat ) ;
+}
+
+ARC::Void Tortuga::ChatUser::setChat ( Tortuga::Chat & chat )
+{
+	this->chat = ARC::SharedPointer <Tortuga::Chat> ( & chat ) ;
+}
 Tortuga::Chat & Tortuga::ChatUser::getChat ( )
 {
-	return this->chat ;
+	return * this->chat ;
 }
 const Tortuga::Chat & Tortuga::ChatUser::getChat ( ) const
 {
-	return this->chat ;
+	return * this->chat ;
 }
 		
 Tortuga::Client & Tortuga::ChatUser::getClient ( )
 {
-	return this->client ;
+	return * this->client ;
 }
 const Tortuga::Client & Tortuga::ChatUser::getClient ( ) const
 {
-	return this->client ;
+	return * this->client ;
 }
 			
 ARC::Void Tortuga::ChatUser::setName ( const ARC::String & name )
@@ -44,12 +52,12 @@ const ARC::String & Tortuga::ChatUser::getName ( ) const
 
 ARC::Void Tortuga::ChatUser::send ( const Tortuga::ChatMessage & message )
 {
-	this->client.send ( message ) ;
+	this->client->send ( message ) ;
 }
 
 ARC::Void Tortuga::ChatUser::handleChatMessage ( Tortuga::Packet & packet )
 {
 	Tortuga::Packet::ChatMessageData chatMessageData = Tortuga::Packet::readChatMessagePacket ( packet ) ;
 	
-	this->chat.send ( Tortuga::ChatMessage ( chatMessageData.message ) ) ;
+	this->chat->send ( Tortuga::ChatMessage ( chatMessageData.message ) ) ;
 }
