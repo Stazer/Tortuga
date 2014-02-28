@@ -23,7 +23,7 @@ namespace Tortuga
 		
 			ARC::List <ARC::SharedPointer <Tortuga::Chunk>> chunks ;
 	
-			ARC::List <ARC::SharedPointer <Tortuga::Player>> players ;
+			ARC::List <Tortuga::Player *> players ;
 	
 		public :
 			World ( Tortuga::WorldManager & worldManager , const Tortuga::Dimension::Type dimension = Tortuga::Dimension::Normal , const Tortuga::Difficulty::Type difficulty = Tortuga::Difficulty::Normal , const ARC::Vector3SignedInt & spawnPosition = ARC::Vector3SignedInt ( ) ) ;
@@ -40,8 +40,8 @@ namespace Tortuga
 			ARC::Void setSpawnPosition ( const ARC::Vector3SignedInt & spawnPosition ) ;
 			const ARC::Vector3SignedInt & getSpawnPosition ( ) const ;
 			
-			ARC::List <ARC::SharedPointer <Tortuga::Player>> & getPlayers ( ) ;
-			const ARC::List <ARC::SharedPointer <Tortuga::Player>> & getPlayers ( ) const ;
+			ARC::List <Tortuga::Player *> & getPlayers ( ) ;
+			const ARC::List <Tortuga::Player *> & getPlayers ( ) const ;
 			
 			static Tortuga::World getTestWorld ( Tortuga::World world ) ;
 	} ;

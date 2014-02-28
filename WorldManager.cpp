@@ -7,6 +7,8 @@
 Tortuga::WorldManager::WorldManager ( Tortuga::Server & server ) :
 	server ( server )
 {
+	this->worlds.push_back ( Tortuga::World::getTestWorld ( * this ) ) ;
+	this->setDefaultWorld ( * this->worlds.begin ( ) ) ;
 }
 
 Tortuga::Server & Tortuga::WorldManager::getServer ( )
@@ -18,18 +20,18 @@ const Tortuga::Server & Tortuga::WorldManager::getServer ( ) const
 	return this->server ;
 }
 
-ARC::Vector <ARC::SharedPointer <Tortuga::World>> & Tortuga::WorldManager::getWorlds ( )
+ARC::List <Tortuga::World> & Tortuga::WorldManager::getWorlds ( )
 {
 	return this->worlds ;
 }
-const ARC::Vector <ARC::SharedPointer <Tortuga::World>> & Tortuga::WorldManager::getWorlds ( ) const
+const ARC::List <Tortuga::World> & Tortuga::WorldManager::getWorlds ( ) const
 {
 	return this->worlds ;
 }
 
 ARC::Void Tortuga::WorldManager::setDefaultWorld ( Tortuga::World & defaultWorld )
 {
-	this->defaultWorld = ARC::SharedPointer <Tortuga::World> ( & defaultWorld ) ;
+	this->defaultWorld = & defaultWorld ;
 }
 Tortuga::World & Tortuga::WorldManager::getDefaultWorld ( )
 {

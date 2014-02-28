@@ -1,21 +1,22 @@
 #pragma once
 
 #include <ARC.hpp>
+#include "World.hpp"
+
 namespace Tortuga
 {
 	class ChatUser ;
 	class Server ;
 	class Client ;
 	class Packet ;
-	class World ;
 	
 	class WorldManager
 	{
 		private :
 			Tortuga::Server & server ;
 			
-			ARC::Vector <ARC::SharedPointer <Tortuga::World>> worlds ;
-			ARC::SharedPointer <Tortuga::World> defaultWorld ;
+			ARC::List <Tortuga::World> worlds ;
+			Tortuga::World * defaultWorld ;
 			
 		public :
 			WorldManager ( Tortuga::Server & server ) ;
@@ -23,8 +24,8 @@ namespace Tortuga
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
 			
-			ARC::Vector <ARC::SharedPointer <Tortuga::World>> & getWorlds ( ) ;
-			const ARC::Vector <ARC::SharedPointer <Tortuga::World>> & getWorlds ( ) const ;
+			ARC::List <Tortuga::World> & getWorlds ( ) ;
+			const ARC::List <Tortuga::World> & getWorlds ( ) const ;
 			
 			ARC::Void setDefaultWorld ( Tortuga::World & defaultWorld ) ;
 			Tortuga::World & getDefaultWorld ( ) ;

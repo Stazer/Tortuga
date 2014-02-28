@@ -7,30 +7,39 @@
 #include "Chat.hpp"
 #include "ChatMessage.hpp"
 
-Tortuga::ChatUser::ChatUser ( Tortuga::Client & client , Tortuga::Chat & chat , const ARC::String & name ) :
+Tortuga::ChatUser::ChatUser ( Tortuga::Client & client , const ARC::String & name ) :
 	client ( client ) ,
 	name ( name ) ,
-	chat ( chat )
+	chat ( nullptr )
 {
-	this->chat.getChatUsers ( ).push_back ( this ) ;
+}
+Tortuga::ChatUser::ChatUser ( Tortuga::Client & client , Tortuga::Chat * chat , const ARC::String & name ) :
+	client ( client ) ,
+	name ( name ) ,
+	chat ( nullptr )
+{
+	this->setChat ( chat ) ;
 }
 Tortuga::ChatUser::~ChatUser ( )
 {
-	for ( auto chatUser = this->chat.getChatUsers ( ).begin ( ) ; chatUser != this->chat.getChatUsers ( ).end ( ) ; ++chatUser )
-	{
-		if ( & ( ** chatUser ) == this )
-		{
-			chatUser = this->chat.getChatUsers ( ).erase ( chatUser ) ;
-			break ;
-		}
-	}
+	this->setChat ( nullptr ) ;
 }
 
-Tortuga::Chat & Tortuga::ChatUser::getChat ( )
+ARC::Void Tortuga::ChatUser::setChat ( Tortuga::Chat * chat )
+{
+	if ( this->chat )
+		this->chat->getChatUsers ( ).remove ( this ) ;
+	
+	this->chat = chat ;
+	
+	if ( this->chat )
+		this->chat->getChatUsers ( ).push_back ( this ) ;
+}
+Tortuga::Chat * Tortuga::ChatUser::getChat ( )
 {
 	return this->chat ;
 }
-const Tortuga::Chat & Tortuga::ChatUser::getChat ( ) const
+const Tortuga::Chat * Tortuga::ChatUser::getChat ( ) const
 {
 	return this->chat ;
 }
@@ -60,5 +69,6 @@ ARC::Void Tortuga::ChatUser::send ( const Tortuga::ChatMessage & message )
 
 ARC::Void Tortuga::ChatUser::handleChatMessage ( Tortuga::Packet & packet )
 {
-	this->chat.send ( Tortuga::ChatMessage ( Tortuga::Packet::readChatMessagePacket ( packet ).message ) ) ;
+	if ( this->chat )
+		this->chat->send ( Tortuga::ChatMessage ( Tortuga::Packet::readChatMessagePacket ( packet ).message ) ) ;
 }

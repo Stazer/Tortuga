@@ -13,16 +13,18 @@ namespace Tortuga
 	{
 		private :
 			Tortuga::Client & client ;
-			Tortuga::Chat & chat ;
+			Tortuga::Chat * chat ;
 		
 			ARC::String name ;
 			
 		public :
-			ChatUser ( Tortuga::Client & client , Tortuga::Chat & chat , const ARC::String & name = "" ) ;
+			ChatUser ( Tortuga::Client & client , const ARC::String & name = "" ) ;
+			ChatUser ( Tortuga::Client & client , Tortuga::Chat * chat , const ARC::String & name = "" ) ;
 			~ChatUser ( ) ;
 			
-			Tortuga::Chat & getChat ( ) ;
-			const Tortuga::Chat & getChat ( ) const ;
+			ARC::Void setChat ( Tortuga::Chat * chat ) ;
+			Tortuga::Chat * getChat ( ) ;
+			const Tortuga::Chat * getChat ( ) const ;
 			
 			Tortuga::Client & getClient ( ) ;
 			const Tortuga::Client & getClient ( ) const ;
