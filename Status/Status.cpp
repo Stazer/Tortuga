@@ -1,5 +1,5 @@
-#include "Status.hpp"
-#include "Packet.hpp"
+#include <Tortuga/Status/Status.hpp>
+#include <Tortuga/Protocol/StatusResponsePacket.hpp>
 
 Tortuga::Status::Status ( const ARC::String & version , const ARC::UnsignedShort protocol , const ARC::UnsignedShort maximalPlayers , const ARC::UnsignedShort onlinePlayers , const ARC::String & text ) :
 	version ( version ) ,
@@ -12,7 +12,7 @@ Tortuga::Status::Status ( const ARC::String & version , const ARC::UnsignedShort
 
 Tortuga::Status::operator ARC::Buffer ( )
 {
-	return Tortuga::Packet::writeStatusResponsePacket ( { "{\"version\": {\"name\": \"" + this->version + "\",\"protocol\": " + ARC::toString <ARC::UnsignedShort> ( this->protocol ) + "},\"players\": {\"max\": " + ARC::toString <ARC::UnsignedShort> ( this->maximalPlayers ) + ",\"online\": " + ARC::toString <ARC::UnsignedShort> ( this->onlinePlayers ) + "},\"description\": {\"text\":\"" + this->text + "\"}}" } ) ;
+	return Tortuga::StatusResponsePacket ( "{\"version\": {\"name\": \"" + this->version + "\",\"protocol\": " + ARC::toString <ARC::UnsignedShort> ( this->protocol ) + "},\"players\": {\"max\": " + ARC::toString <ARC::UnsignedShort> ( this->maximalPlayers ) + ",\"online\": " + ARC::toString <ARC::UnsignedShort> ( this->onlinePlayers ) + "},\"description\": {\"text\":\"" + this->text + "\"}}" ) ;
 }
 			
 ARC::Void Tortuga::Status::setVersion ( const ARC::String & version )

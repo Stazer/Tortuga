@@ -1,7 +1,5 @@
-#include "Server.hpp"
-#include "Client.hpp"
-#include "Packet.hpp"
-#include "World.hpp"
+#include <Tortuga/Server/Server.hpp>
+#include <Tortuga/Client/Client.hpp>
 #include <iostream>
 
 ARC::Void Tortuga::Server::thread ( )
@@ -14,8 +12,6 @@ ARC::Void Tortuga::Server::thread ( )
 
 Tortuga::Server::Server ( ) :
 	clientManager ( * this ) ,
-	chat ( * this ) ,
-	worldManager ( * this ) ,
 	threadHandle ( & Server::thread , this ) ,
 	running ( true )
 {
@@ -28,24 +24,6 @@ Tortuga::ClientManager & Tortuga::Server::getClientManager ( )
 const Tortuga::ClientManager & Tortuga::Server::getClientManager ( ) const
 {
 	return this->clientManager ;
-}
-
-Tortuga::Chat & Tortuga::Server::getChat ( )
-{
-	return this->chat ;
-}
-const Tortuga::Chat & Tortuga::Server::getChat ( ) const
-{
-	return this->chat ;
-}
-
-Tortuga::WorldManager & Tortuga::Server::getWorldManager ( )
-{
-	return this->worldManager ;
-}
-const Tortuga::WorldManager & Tortuga::Server::getWorldManager ( ) const
-{
-	return this->worldManager ;
 }
 
 ARC::Void Tortuga::Server::setRunning ( const ARC::Bool running )
@@ -89,12 +67,6 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 	
 	std::cout << "Server started\n" ;
 	
-	/*
-		DEBUG
-	*/
-	//this->getWorldManager ( ).getWorlds ( ).push_back ( ARC::SharedPointer <Tortuga::World> ( new Tortuga::World ( Tortuga::World::getTestWorld ( Tortuga::World ( this->getWorldManager ( ) ) ) ) ) ) ;
-	//this->getWorldManager ( ).setDefaultWorld ( ** this->getWorldManager ( ).getWorlds ( ).begin ( ) ) ;
-
 	while ( this->running )
 	{
 		ARC::String command ;
@@ -104,8 +76,6 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 		if ( command == "status" )
 		{
 			std::cout << this->clientManager.getClients ( ).size ( ) << " client(s) connected\n" ;
-			std::cout << this->chat.getChatUsers ( ).size ( ) << " chatuser(s) connected\n" ;
-			std::cout << this->worldManager.getWorlds ( ).size ( ) << " world(s) are loaded\n" ;
 		}
 		else if ( command == "shutdown" || command == "stop" )
 			this->running = false ;

@@ -1,11 +1,16 @@
-#include "Client.hpp"
-#include "Server.hpp"
-#include "Packet.hpp"
-#include "ChatUser.hpp"
-#include "World.hpp"
-#include "Player.hpp"
-#include "Difficulty.hpp"
-#include "ClientManager.hpp"
+#include <Tortuga/Client/Client.hpp>
+#include <Tortuga/Client/ClientManager.hpp>
+#include <Tortuga/Status/Status.hpp>
+#include <Tortuga/Protocol/Packet.hpp>
+#include <Tortuga/Protocol/PacketReader.hpp>
+#include <Tortuga/Protocol/PacketWriter.hpp>
+#include <Tortuga/Protocol/HandshakePacket.hpp>
+#include <Tortuga/Protocol/LoginStartPacket.hpp>
+#include <Tortuga/Protocol/LoginSuccessPacket.hpp>
+#include <Tortuga/Protocol/StatusRequestPacket.hpp>
+#include <Tortuga/Protocol/StatusResponsePacket.hpp>
+#include <Tortuga/Protocol/StatusKeepAlivePacket.hpp>
+#include <Tortuga/Protocol/JoinGamePacket.hpp>
 #include <iostream>
 
 Tortuga::Client::Client ( Tortuga::ClientManager & clientManager ) :
@@ -35,7 +40,7 @@ const ARC::Buffer & Tortuga::Client::getBuffer ( ) const
 {
 	return this->buffer ;
 }
-
+/*
 Tortuga::ChatUser & Tortuga::Client::getChatUser ( )
 {
 	return * this->chatUser ;
@@ -53,7 +58,7 @@ const Tortuga::Player & Tortuga::Client::getPlayer ( ) const
 {
 	return * this->player ;
 }
-
+*/
 const ARC::String & Tortuga::Client::getLocale ( ) const
 {
 	return this->locale ;
@@ -70,10 +75,10 @@ ARC::Bool Tortuga::Client::getChatColors ( ) const
 {
 	return this->chatColors ;
 }
-Tortuga::Difficulty::Type Tortuga::Client::getDifficulty ( ) const
+/*Tortuga::Difficulty::Type Tortuga::Client::getDifficulty ( ) const
 {
 	return this->difficulty ;
-}
+}*/
 ARC::Bool Tortuga::Client::getShowCape ( ) const
 {
 	return this->showCape ;
@@ -103,22 +108,24 @@ ARC::Bool Tortuga::Client::update ( )
 			
 		do
 		{
-			Tortuga::Packet receivedPacket = Tortuga::Packet::read ( this->getBuffer ( ) ) ;
-		
-			if ( this->getBuffer ( ).size ( ) == 0 || receivedPacket.getBuffer ( ).size ( ) == 0 || this->getBuffer ( ).size ( ) < receivedPacket.getBuffer ( ).size ( ) )
+			Tortuga::PacketReader packetReader ;
+			
+			packetReader.read ( this->getBuffer ( ) ) ;
+			
+			if ( this->getBuffer ( ).size ( ) == 0 || packetReader.getBuffer ( ).size ( ) == 0 || this->getBuffer ( ).size ( ) < packetReader.getBuffer ( ).size ( ) )
 				break ;
 			
-			this->getBuffer ( ).erase ( this->getBuffer ( ).begin ( ) , this->getBuffer ( ).begin ( ) + receivedPacket.getBuffer ( ).size ( ) ) ;
-		
-			ARC::UnsignedInt packetOpcode = receivedPacket.readVariableInt ( ) ;
-		
+			this->getBuffer ( ).erase ( this->getBuffer ( ).begin ( ) , this->getBuffer ( ).begin ( ) + packetReader.getBuffer ( ).size ( ) ) ;
+
+			const ARC::UnsignedInt packetOpcode = packetReader.readVariableInt ( ) ;
+			
 			if ( this->type == Tortuga::Client::None )
 			{
 				switch ( packetOpcode )
 				{
-					case Tortuga::Packet::ClientHandshake :
+					case Tortuga::Packet::Handshake :
 					{
-						this->handleClientHandshake ( receivedPacket ) ;
+						this->type = static_cast <Tortuga::Client::Type> ( Tortuga::HandshakePacket ( packetReader ).getState ( ) ) ;
 						break ;
 					}
 					default :
@@ -134,13 +141,12 @@ ARC::Bool Tortuga::Client::update ( )
 				{
 					case Tortuga::Packet::StatusKeepAlive :
 					{
-						this->handleStatusKeepAlive ( receivedPacket ) ;					
+						this->send ( Tortuga::StatusKeepAlivePacket ( packetReader ) ) ;
 						break ;
 					}
 					case Tortuga::Packet::StatusRequest :
 					{
-						this->handleStatusRequest ( receivedPacket ) ;
-			
+						this->send ( Tortuga::Status ( ) ) ;
 						break ;
 					}
 					default :
@@ -154,9 +160,10 @@ ARC::Bool Tortuga::Client::update ( )
 			{
 				switch ( packetOpcode )
 				{
-					case Tortuga::Packet::ClientLoginStart :
-					{				
-						this->handleClientLoginStart ( receivedPacket ) ;
+					case Tortuga::Packet::LoginStart :
+					{
+						this->send ( Tortuga::LoginSuccessPacket ( "" , Tortuga::LoginStartPacket ( packetReader ).getName ( ) ) ) ;
+						this->send ( Tortuga::JoinGamePacket ( 0 , 1 , 0 , 0 , "default" ) ) ;
 						break ;
 					}
 					default :
@@ -166,7 +173,7 @@ ARC::Bool Tortuga::Client::update ( )
 					}
 				}
 			}
-			else if ( this->type == Tortuga::Client::Player )
+			/*else if ( this->type == Tortuga::Client::Player )
 			{
 				switch ( packetOpcode )
 				{
@@ -211,53 +218,11 @@ ARC::Bool Tortuga::Client::update ( )
 						break ;
 					}
 				}
-			}
+			}*/
 		} while ( this->getBuffer ( ).size ( ) > 0 ) ;
 	}
 	else
 		return false ;
 		
 	return true ;
-}
-
-#include "Status.hpp"
-
-ARC::Void Tortuga::Client::handleStatusKeepAlive ( Tortuga::Packet & packet )
-{	
-	this->send ( Tortuga::Packet::writeStatusKeepAlivePacket ( { Tortuga::Packet::readStatusKeepAlivePacket ( packet ).time } ) ) ;	
-}
-ARC::Void Tortuga::Client::handleStatusRequest ( Tortuga::Packet & packet )
-{
-	Tortuga::Packet::readStatusRequestPacket ( packet ) ;				
-	this->send ( Tortuga::Status ( ) ) ;
-}
-
-ARC::Void Tortuga::Client::handleClientHandshake ( Tortuga::Packet & packet )
-{
-	this->type = static_cast <Tortuga::Client::Type> ( Tortuga::Packet::readClientHandshakePacket ( packet ).state ) ;					
-}
-ARC::Void Tortuga::Client::handleClientKeepAlive ( Tortuga::Packet & packet )
-{
-}
-
-ARC::Void Tortuga::Client::handleClientLoginStart ( Tortuga::Packet & packet )
-{		
-	ARC::String username = Tortuga::Packet::readClientLoginStartPacket ( packet ).username ;
-
-	this->send ( Tortuga::Packet::writeClientLoginSuccessPacket ( { "" , username } ) ) ;
-	
-	this->chatUser = ARC::SharedPointer <Tortuga::ChatUser> ( new Tortuga::ChatUser ( * this , & this->getClientManager ( ).getServer ( ).getChat ( ) , username ) ) ;
-	this->player = ARC::SharedPointer <Tortuga::Player> ( new Tortuga::Player ( * this , & this->getClientManager ( ).getServer ( ).getWorldManager ( ).getDefaultWorld ( ) ) ) ;
-	this->type = Tortuga::Client::Player ;
-}
-ARC::Void Tortuga::Client::handleClientSettings ( Tortuga::Packet & packet )
-{
-	Tortuga::Packet::ClientSettingsData clientSettingsData = Tortuga::Packet::readClientSettingsPacket ( packet ) ;
-
-	this->locale = clientSettingsData.locale ;
-	this->viewDistance = clientSettingsData.viewDistance ;
-	this->chatFlags = clientSettingsData.chatFlags ;
-	this->chatColors = clientSettingsData.chatColors ;
-	this->difficulty = static_cast <Tortuga::Difficulty::Type> ( clientSettingsData.difficulty ) ;
-	this->showCape = clientSettingsData.showCape ;
 }

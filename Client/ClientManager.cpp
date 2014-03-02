@@ -1,7 +1,6 @@
-#include "ClientManager.hpp"
-#include "Client.hpp"
-#include "Server.hpp"
-#include "Packet.hpp"
+#include <Tortuga/Client/ClientManager.hpp>
+#include <Tortuga/Client/Client.hpp>
+#include <Tortuga/Server/Server.hpp>
 
 Tortuga::ClientManager::ClientManager ( Tortuga::Server & server ) :
 	server ( server )
@@ -31,6 +30,8 @@ ARC::Void Tortuga::ClientManager::initialize ( )
 	this->selector.add ( this->server ) ;
 }
 
+#include <iostream>
+
 ARC::Void Tortuga::ClientManager::update ( )
 {
 	if ( this->selector.wait ( ARC::milliseconds ( 20 ) ) )
@@ -52,7 +53,7 @@ ARC::Void Tortuga::ClientManager::update ( )
 				if ( this->selector.isReady ( ( ** client ) ) )
 				{
 					if ( ! ( * client )->update ( ) )
-					{
+					{					
 						this->selector.remove ( ** client ) ;
 						client = this->clients.erase ( client ) ;
 					}
@@ -60,15 +61,4 @@ ARC::Void Tortuga::ClientManager::update ( )
 			}
 		}
 	}
-	
-
-	if ( this->keepAliveTimer.getElapsedTime ( ) >= ARC::seconds ( 5.0f ) )
-	{
-		for ( auto client : this->getClients ( ) )
-		{
-			client->send ( Tortuga::Packet::writeClientKeepAlivePacket ( { static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100 ) ) } ) ) ;
-		}
-		
-		this->keepAliveTimer.restart ( ) ;
-	}	
 }

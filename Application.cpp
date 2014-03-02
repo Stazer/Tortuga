@@ -1,6 +1,5 @@
-#include "Server.hpp"
-#include "Application.hpp"
-#include <ARC.hpp>
+#include <Tortuga/Application.hpp>
+#include <Tortuga/Server/Server.hpp>
 
 ARC::Return Application::main ( const ARC::Vector <ARC::String> & arguments )
 {
