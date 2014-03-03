@@ -5,6 +5,7 @@ Tortuga::WorldManager::WorldManager ( Tortuga::Server & server ) :
 {
 	// DEBUG
 	this->worlds.push_back ( Tortuga::World::getTestWorld ( * this ) ) ;
+	
 	this->setDefaultWorld ( * this->worlds.begin ( ) ) ;
 }
 

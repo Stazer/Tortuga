@@ -10,7 +10,6 @@ namespace Tortuga
 {
 	class Client ;
 	class WorldManager ;
-	class Chunk ;
 	class Player ;
 
 	class World
