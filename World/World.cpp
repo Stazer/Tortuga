@@ -71,7 +71,6 @@ const ARC::List <Tortuga::Player *> & Tortuga::World::getPlayers ( ) const
 {
 	return this->players ;
 }
-#include <iostream>
 
 Tortuga::World Tortuga::World::getTestWorld ( Tortuga::World world )
 {
