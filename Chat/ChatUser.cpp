@@ -64,9 +64,3 @@ ARC::Void Tortuga::ChatUser::send ( const Tortuga::ChatMessage & message )
 {
 	this->client.send ( message ) ;
 }
-
-ARC::Void Tortuga::ChatUser::handleChatMessage ( Tortuga::Packet & packet )
-{
-	//if ( this->chat )
-		//this->chat->send ( Tortuga::ChatMessage ( Tortuga::Packet::readChatMessagePacket ( packet ).message ) ) ;
-}

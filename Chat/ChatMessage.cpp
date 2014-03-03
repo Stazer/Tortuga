@@ -1,4 +1,5 @@
 #include <Tortuga/Chat/ChatMessage.hpp>
+#include <Tortuga/Protocol/ChatMessageFromServerPacket.hpp>
 
 Tortuga::ChatMessage::ChatMessage ( const ARC::String & text ) :
 	text ( text )
@@ -7,7 +8,7 @@ Tortuga::ChatMessage::ChatMessage ( const ARC::String & text ) :
 
 Tortuga::ChatMessage::operator ARC::Buffer ( ) const
 {
-	return ARC::Buffer ( ) ;//Tortuga::Packet::writeChatMessagePacket ( { "{\"text\": \"" + this->text + "\"}" } ) ;
+	return Tortuga::ChatMessageFromServerPacket ( "{\"text\": \"" + this->text + "\"}" ) ;
 }
 
 ARC::Void Tortuga::ChatMessage::setText ( const ARC::String & text )

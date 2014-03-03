@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ARC.hpp>
+#include <Tortuga/Chat/ChatUser.hpp>
 
 namespace Tortuga
 {
@@ -28,10 +29,8 @@ namespace Tortuga
 			
 			Type type ;
 			
-			//ARC::SharedPointer <Tortuga::ChatUser> chatUser ;
-			
-			//ARC::SharedPointer <Tortuga::Player> player ;
-			
+			Tortuga::ChatUser chatUser ;
+						
 			ARC::String locale ;
 			ARC::UnsignedChar viewDistance ;
 			ARC::UnsignedChar chatFlags ;
@@ -52,10 +51,10 @@ namespace Tortuga
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
 			
-			/*Tortuga::ChatUser & getChatUser ( ) ;
+			Tortuga::ChatUser & getChatUser ( ) ;
 			const Tortuga::ChatUser & getChatUser ( ) const ;
 			
-			Tortuga::Player & getPlayer ( ) ;
+		/*	Tortuga::Player & getPlayer ( ) ;
 			const Tortuga::Player & getPlayer ( ) const ;
 			*/
 			const ARC::String & getLocale ( ) const ;

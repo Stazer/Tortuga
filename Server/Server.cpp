@@ -1,5 +1,6 @@
 #include <Tortuga/Server/Server.hpp>
 #include <Tortuga/Client/Client.hpp>
+#include <Tortuga/Chat/ChatUser.hpp>
 #include <iostream>
 
 ARC::Void Tortuga::Server::thread ( )
@@ -12,6 +13,7 @@ ARC::Void Tortuga::Server::thread ( )
 
 Tortuga::Server::Server ( ) :
 	clientManager ( * this ) ,
+	chat ( * this ) ,
 	threadHandle ( & Server::thread , this ) ,
 	running ( true )
 {
@@ -24,6 +26,15 @@ Tortuga::ClientManager & Tortuga::Server::getClientManager ( )
 const Tortuga::ClientManager & Tortuga::Server::getClientManager ( ) const
 {
 	return this->clientManager ;
+}
+
+Tortuga::Chat & Tortuga::Server::getChat ( )
+{
+	return this->chat ;
+}
+const Tortuga::Chat & Tortuga::Server::getChat( ) const
+{
+	return this->chat ;
 }
 
 ARC::Void Tortuga::Server::setRunning ( const ARC::Bool running )
@@ -75,7 +86,8 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 		
 		if ( command == "status" )
 		{
-			std::cout << this->clientManager.getClients ( ).size ( ) << " client(s) connected\n" ;
+			std::cout << this->clientManager.getClients ( ).size ( ) << " client(s)\n" ;
+			std::cout << this->chat.getChatUsers ( ).size ( ) << " chatusers(s)\n" ;
 		}
 		else if ( command == "shutdown" || command == "stop" )
 			this->running = false ;

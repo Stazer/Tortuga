@@ -1,5 +1,7 @@
 #include <Tortuga/Client/Client.hpp>
 #include <Tortuga/Client/ClientManager.hpp>
+#include <Tortuga/Server/Server.hpp>
+#include <Tortuga/Chat/ChatMessage.hpp>
 #include <Tortuga/Status/Status.hpp>
 #include <Tortuga/Protocol/Packet.hpp>
 #include <Tortuga/Protocol/PacketReader.hpp>
@@ -11,10 +13,15 @@
 #include <Tortuga/Protocol/StatusResponsePacket.hpp>
 #include <Tortuga/Protocol/StatusKeepAlivePacket.hpp>
 #include <Tortuga/Protocol/JoinGamePacket.hpp>
+#include <Tortuga/Protocol/SpawnPositionPacket.hpp>
+#include <Tortuga/Protocol/PlayerPositionAndLookFromServerPacket.hpp>
+#include <Tortuga/Protocol/ChatMessageToServerPacket.hpp>
+#include <Tortuga/Protocol/ChatMessageFromServerPacket.hpp>
 #include <iostream>
 
 Tortuga::Client::Client ( Tortuga::ClientManager & clientManager ) :
 	clientManager ( clientManager ) ,
+	chatUser ( * this ) ,
 	type ( Tortuga::Client::None )
 {
 }
@@ -40,17 +47,17 @@ const ARC::Buffer & Tortuga::Client::getBuffer ( ) const
 {
 	return this->buffer ;
 }
-/*
+
 Tortuga::ChatUser & Tortuga::Client::getChatUser ( )
 {
-	return * this->chatUser ;
+	return this->chatUser ;
 }
 const Tortuga::ChatUser & Tortuga::Client::getChatUser ( ) const
 {
-	return * this->chatUser ;
+	return this->chatUser ;
 }
 
-Tortuga::Player & Tortuga::Client::getPlayer ( )
+/*Tortuga::Player & Tortuga::Client::getPlayer ( )
 {
 	return * this->player ;
 }
@@ -164,6 +171,12 @@ ARC::Bool Tortuga::Client::update ( )
 					{
 						this->send ( Tortuga::LoginSuccessPacket ( "" , Tortuga::LoginStartPacket ( packetReader ).getName ( ) ) ) ;
 						this->send ( Tortuga::JoinGamePacket ( 0 , 1 , 0 , 0 , "default" ) ) ;
+						this->send ( Tortuga::SpawnPositionPacket ( ARC::Vector3SignedInt ( 0 , 0 , 0 ) ) ) ;
+						this->send ( Tortuga::PlayerPositionAndLookFromServerPacket ( Tortuga::Location ( ) , true ) ) ;
+						
+						this->chatUser.setChat ( & this->clientManager.getServer ( ).getChat ( ) ) ;
+						
+						this->type = Tortuga::Client::Player ;
 						break ;
 					}
 					default :
@@ -173,43 +186,38 @@ ARC::Bool Tortuga::Client::update ( )
 					}
 				}
 			}
-			/*else if ( this->type == Tortuga::Client::Player )
+			else if ( this->type == Tortuga::Client::Player )
 			{
 				switch ( packetOpcode )
 				{
-					case Tortuga::Packet::ClientKeepAlive :
-					{
-						this->handleClientKeepAlive ( receivedPacket ) ;				
+					case Tortuga::Packet::KeepAlive :
+					{			
 						break ;
 					}
 					case Tortuga::Packet::ClientSettings :
 					{
-						this->handleClientSettings ( receivedPacket ) ;
 						break ;
 					}
 					case Tortuga::Packet::PlayerOnGround :
 					{
-						this->player->handlePlayerOnGround ( receivedPacket ) ;
 						break ;
 					}
 					case Tortuga::Packet::PlayerPosition :
-					{	
-						this->player->handlePlayerPosition ( receivedPacket ) ;					
+					{					
 						break ;
 					}
 					case Tortuga::Packet::PlayerLook :
 					{
-						this->player->handlePlayerLook ( receivedPacket ) ;
 						break ;
 					}
 					case Tortuga::Packet::PlayerPositionAndLookToServer :
-					{
-						this->player->handlePlayerPositionAndLook ( receivedPacket ) ;				
+					{			
 						break ;
 					}
 					case Tortuga::Packet::ChatMessageToServer :
 					{
-						this->chatUser->handleChatMessage ( receivedPacket ) ;
+						if ( this->chatUser.getChat ( ) )
+							this->chatUser.getChat ( )->send ( Tortuga::ChatMessage ( Tortuga::ChatMessageToServerPacket ( packetReader ).getMessage ( ) ) ) ;
 						break ;
 					}
 					default :
@@ -218,7 +226,7 @@ ARC::Bool Tortuga::Client::update ( )
 						break ;
 					}
 				}
-			}*/
+			}
 		} while ( this->getBuffer ( ).size ( ) > 0 ) ;
 	}
 	else
