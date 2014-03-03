@@ -1,7 +1,7 @@
 #pragma once
 
 #include <ARC.hpp>
-#include "World.hpp"
+#include <Tortuga/World/World.hpp>
 
 namespace Tortuga
 {
@@ -30,5 +30,7 @@ namespace Tortuga
 			ARC::Void setDefaultWorld ( Tortuga::World & defaultWorld ) ;
 			Tortuga::World & getDefaultWorld ( ) ;
 			const Tortuga::World & getDefaultWorld ( ) const ;
+			
+			ARC::Void update ( ) ;
 	} ;
 }

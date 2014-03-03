@@ -8,12 +8,14 @@ ARC::Void Tortuga::Server::thread ( )
 	while ( this->running )
 	{
 		this->getClientManager ( ).update ( ) ;
+		this->getWorldManager ( ).update ( ) ;
 	}
 }
 
 Tortuga::Server::Server ( ) :
 	clientManager ( * this ) ,
 	chat ( * this ) ,
+	worldManager ( * this ) ,
 	threadHandle ( & Server::thread , this ) ,
 	running ( true )
 {
@@ -35,6 +37,15 @@ Tortuga::Chat & Tortuga::Server::getChat ( )
 const Tortuga::Chat & Tortuga::Server::getChat( ) const
 {
 	return this->chat ;
+}
+
+Tortuga::WorldManager & Tortuga::Server::getWorldManager ( )
+{
+	return this->worldManager ;
+}
+const Tortuga::WorldManager & Tortuga::Server::getWorldManager( ) const
+{
+	return this->worldManager ;
 }
 
 ARC::Void Tortuga::Server::setRunning ( const ARC::Bool running )
