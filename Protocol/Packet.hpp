@@ -47,7 +47,6 @@ namespace Tortuga
 				
 				PlayerPositionAndLookFromServer = 0x08 ,
 				PlayerPositionAndLookToServer = 0x06 ,
-							
 				PlayerAbilities = 0x13 ,
 				PlayerOnGround = 0x03 ,
 				PlayerPosition = 0x04 ,
