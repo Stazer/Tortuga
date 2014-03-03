@@ -1,13 +1,26 @@
 #pragma once
 
 #include <ARC.hpp>
-#include "Orientation.hpp"
+#include <Tortuga/Position.hpp>
+#include <Tortuga/Orientation.hpp>
 
 namespace Tortuga
 {
-	class Location : public ARC::Vector3Double , public Tortuga::Orientation
-	{	
+	class Location 
+	{
+		private :
+			Tortuga::Position position ;
+			Tortuga::Orientation orientation ;
+		
 		public :
-			Location ( const ARC::Double x = 0 , const ARC::Double y = 0 , const ARC::Double z = 0 , const ARC::Float yaw = 0 , const ARC::Float pitch = 0 ) ;
+			Location ( const Tortuga::Position & position = Tortuga::Position ( ) , const Tortuga::Orientation & orientation = Tortuga::Orientation ( ) ) ;
+			
+			ARC::Void setPosition ( const Tortuga::Position & position ) ;
+			Tortuga::Position & getPosition ( ) ;
+			const Tortuga::Position & getPosition ( ) const ;
+			
+			ARC::Void setOrientation ( const Tortuga::Orientation & orientation ) ;
+			Tortuga::Orientation & getOrientation ( ) ;
+			const Tortuga::Orientation & getOrientation ( ) const ;
 	} ;
 }

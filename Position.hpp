@@ -4,5 +4,5 @@
 
 namespace Tortuga
 {
-	using Orientation = ARC::Vector2Float ;
+	using Position = ARC::Vector3Double ;
 }

@@ -1,7 +1,33 @@
-#include "Location.hpp"
+#include <Tortuga/Location.hpp>
 
-Tortuga::Location::Location ( const ARC::Double x , const ARC::Double y , const ARC::Double z , const ARC::Float yaw , const ARC::Float pitch ) :
-	ARC::Vector3Double ( x , y , z ) ,
-	Orientation ( yaw , pitch )
+Tortuga::Location::Location ( const Tortuga::Position & position , const Tortuga::Orientation & orientation ) :
+	position ( position ) ,
+	orientation ( orientation )
 {
+}
+			
+ARC::Void Tortuga::Location::setPosition ( const Tortuga::Position & position )
+{
+	this->position = position ;
+}
+Tortuga::Position & Tortuga::Location::getPosition ( )
+{
+	return this->position ;
+}
+const Tortuga::Position & Tortuga::Location::getPosition ( ) const
+{
+	return this->position ;
+}
+			
+ARC::Void Tortuga::Location::setOrientation ( const Tortuga::Orientation & orientation )
+{
+	this->orientation = orientation ;
+}
+Tortuga::Orientation & Tortuga::Location::getOrientation ( )
+{
+	return this->orientation ;
+}
+const Tortuga::Orientation & Tortuga::Location::getOrientation ( ) const
+{
+	return this->orientation ;
 }
