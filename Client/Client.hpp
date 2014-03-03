@@ -26,6 +26,8 @@ namespace Tortuga
 	
 		private :
 			Tortuga::ClientManager & clientManager ;
+			
+			ARC::Timer keepAliveTimer ;
 		
 			ARC::Buffer buffer ;
 			

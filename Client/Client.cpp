@@ -16,6 +16,7 @@
 #include <Tortuga/Protocol/StatusKeepAlivePacket.hpp>
 #include <Tortuga/Protocol/ChatMessageToServerPacket.hpp>
 #include <Tortuga/Protocol/ChatMessageFromServerPacket.hpp>
+#include <Tortuga/Protocol/KeepAlivePacket.hpp>
 #include <iostream>
 
 Tortuga::Client::Client ( Tortuga::ClientManager & clientManager ) :
@@ -93,6 +94,13 @@ ARC::Bool Tortuga::Client::getShowCape ( ) const
 
 ARC::Bool Tortuga::Client::update ( )
 {
+	if ( this->type == Tortuga::Client::Player && this->keepAliveTimer.getElapsedTime ( ) >= ARC::seconds ( 5.0f ) )
+	{
+		this->send ( Tortuga::KeepAlivePacket ( static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100 ) ) ) ) ;
+			
+		this->keepAliveTimer.restart ( ) ;
+	}
+
 	const ARC::UnsignedLong maximalSize = 1024 ;
 
 	ARC::UnsignedChar * receivedData = new ARC::UnsignedChar [ maximalSize ] ;

@@ -1,7 +1,6 @@
 #include <Tortuga/Client/ClientManager.hpp>
 #include <Tortuga/Client/Client.hpp>
 #include <Tortuga/Server/Server.hpp>
-#include <Tortuga/Protocol/KeepAlivePacket.hpp>
 
 Tortuga::ClientManager::ClientManager ( Tortuga::Server & server ) :
 	server ( server )
@@ -60,7 +59,4 @@ ARC::Void Tortuga::ClientManager::update ( )
 			}
 		}
 	}
-	
-	for ( auto client : this->getClients ( ) )
-		client->send ( Tortuga::KeepAlivePacket ( static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100 ) ) ) ) ;
 }
