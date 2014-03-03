@@ -1,8 +1,10 @@
 #include <Tortuga/Client/Client.hpp>
 #include <Tortuga/Client/ClientManager.hpp>
+#include <Tortuga/World/WorldManager.hpp>
 #include <Tortuga/Server/Server.hpp>
 #include <Tortuga/Chat/ChatMessage.hpp>
 #include <Tortuga/Status/Status.hpp>
+#include <Tortuga/Player.hpp>
 #include <Tortuga/Protocol/Packet.hpp>
 #include <Tortuga/Protocol/PacketReader.hpp>
 #include <Tortuga/Protocol/PacketWriter.hpp>
@@ -12,9 +14,6 @@
 #include <Tortuga/Protocol/StatusRequestPacket.hpp>
 #include <Tortuga/Protocol/StatusResponsePacket.hpp>
 #include <Tortuga/Protocol/StatusKeepAlivePacket.hpp>
-#include <Tortuga/Protocol/JoinGamePacket.hpp>
-#include <Tortuga/Protocol/SpawnPositionPacket.hpp>
-#include <Tortuga/Protocol/PlayerPositionAndLookFromServerPacket.hpp>
 #include <Tortuga/Protocol/ChatMessageToServerPacket.hpp>
 #include <Tortuga/Protocol/ChatMessageFromServerPacket.hpp>
 #include <iostream>
@@ -22,6 +21,7 @@
 Tortuga::Client::Client ( Tortuga::ClientManager & clientManager ) :
 	clientManager ( clientManager ) ,
 	chatUser ( * this ) ,
+	player ( * this ) ,
 	type ( Tortuga::Client::None )
 {
 }
@@ -57,15 +57,15 @@ const Tortuga::ChatUser & Tortuga::Client::getChatUser ( ) const
 	return this->chatUser ;
 }
 
-/*Tortuga::Player & Tortuga::Client::getPlayer ( )
+Tortuga::Player & Tortuga::Client::getPlayer ( )
 {
-	return * this->player ;
+	return this->player ;
 }
 const Tortuga::Player & Tortuga::Client::getPlayer ( ) const
 {
-	return * this->player ;
+	return this->player ;
 }
-*/
+
 const ARC::String & Tortuga::Client::getLocale ( ) const
 {
 	return this->locale ;
@@ -82,10 +82,10 @@ ARC::Bool Tortuga::Client::getChatColors ( ) const
 {
 	return this->chatColors ;
 }
-/*Tortuga::Difficulty::Type Tortuga::Client::getDifficulty ( ) const
+Tortuga::Difficulty::Type Tortuga::Client::getDifficulty ( ) const
 {
 	return this->difficulty ;
-}*/
+}
 ARC::Bool Tortuga::Client::getShowCape ( ) const
 {
 	return this->showCape ;
@@ -172,12 +172,11 @@ ARC::Bool Tortuga::Client::update ( )
 						Tortuga::LoginStartPacket loginStartPacket ( packetReader ) ;
 					
 						this->send ( Tortuga::LoginSuccessPacket ( "" , loginStartPacket.getName ( ) ) ) ;
-						this->send ( Tortuga::JoinGamePacket ( 0 , 1 , 0 , 0 , "default" ) ) ;
-						this->send ( Tortuga::SpawnPositionPacket ( ARC::Vector3SignedInt ( 0 , 0 , 0 ) ) ) ;
-						this->send ( Tortuga::PlayerPositionAndLookFromServerPacket ( Tortuga::Location ( ) , true ) ) ;
 						
 						this->chatUser.setChat ( & this->clientManager.getServer ( ).getChat ( ) ) ;
 						this->chatUser.setName ( loginStartPacket.getName ( ) ) ;
+						
+						this->player.setWorld ( & this->clientManager.getServer ( ).getWorldManager ( ).getDefaultWorld ( ) ) ;
 						
 						this->type = Tortuga::Client::Player ;
 						break ;

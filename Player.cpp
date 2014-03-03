@@ -1,5 +1,10 @@
 #include <Tortuga/Player.hpp>
 #include <Tortuga/World/World.hpp>
+#include <Tortuga/Protocol/JoinGamePacket.hpp>
+#include <Tortuga/Protocol/SpawnPositionPacket.hpp>
+#include <Tortuga/Protocol/PlayerPositionAndLookFromServerPacket.hpp>
+#include <Tortuga/Protocol/TimeUpdatePacket.hpp>
+#include <Tortuga/Client/Client.hpp>
 
 Tortuga::Player::Player ( Tortuga::Client & client ) :
 	client ( client ) ,
@@ -37,10 +42,10 @@ ARC::Void Tortuga::Player::setWorld ( Tortuga::World * world )
 	
 	if ( this->world )
 	{
-		/*this->client.send ( Tortuga::Packet::writeClientJoinGamePacket ( { 0 , 1 , this->world->getDimension ( ) , this->world->getDifficulty ( ) , 0 , "default" } ) ) ;				
-		this->client.send ( Tortuga::Packet::writeWorldSpawnPositionPacket ( { static_cast <ARC::SignedInt> ( this->world->getSpawnPosition ( ).getX ( ) ) , static_cast <ARC::SignedInt> ( this->world->getSpawnPosition ( ).getY ( ) ) , static_cast <ARC::SignedInt> ( this->world->getSpawnPosition ( ).getZ ( ) ) } ) ) ;	
-		this->client.send ( Tortuga::Packet::writePlayerPositionAndLookPacket ( { this->world->getSpawnPosition ( ).getX ( ) , this->world->getSpawnPosition ( ).getY ( ) , this->world->getSpawnPosition ( ).getZ ( ) , 0 , 0 , true } ) ) ;
-		this->client.send ( Tortuga::Packet::writeWorldTimeUpdatePacket ( { 0 , 300 } ) ) ;*/
+		this->client.send ( Tortuga::JoinGamePacket ( 0 , world->getGamemode ( ) , world->getDimension ( ) , world->getDifficulty ( ) , "default" ) ) ;
+		this->client.send ( Tortuga::SpawnPositionPacket ( world->getSpawnPosition ( ) ) ) ;
+		this->client.send ( Tortuga::PlayerPositionAndLookFromServerPacket ( Tortuga::Location ( ) , true ) ) ;
+		this->client.send ( Tortuga::TimeUpdatePacket ( 0 , 300 ) ) ;
 	}
 }
 Tortuga::World * Tortuga::Player::getWorld ( )
