@@ -62,5 +62,5 @@ ARC::Void Tortuga::ClientManager::update ( )
 	}
 	
 	for ( auto client : this->getClients ( ) )
-		client.send ( Tortuga::KeepAlivePacket ( static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100 ) ) ) ) ;
+		client->send ( Tortuga::KeepAlivePacket ( static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100 ) ) ) ) ;
 }
