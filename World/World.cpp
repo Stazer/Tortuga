@@ -79,7 +79,7 @@ Tortuga::World Tortuga::World::getTestWorld ( Tortuga::World world )
 		for ( ARC::SignedInt y = -10 ; y <= 10 ; ++y )
 			world.chunks.push_back ( Tortuga::Chunk::getTestChunk ( Tortuga::Chunk ( ARC::Vector2SignedInt ( x , y ) ) ) ) ;
 				
-	world.setSpawnPosition ( ARC::Vector3SignedInt ( 0 , 64 , 0 ) ) ;
+	world.setSpawnPosition ( ARC::Vector3SignedInt ( 0 , 66 , 0 ) ) ;
 						
 	return world ;
 }

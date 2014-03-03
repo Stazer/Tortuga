@@ -98,7 +98,7 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 		if ( command == "status" )
 		{
 			std::cout << this->clientManager.getClients ( ).size ( ) << " client(s)\n" ;
-			std::cout << this->chat.getChatUsers ( ).size ( ) << " chatusers(s)\n" ;
+			std::cout << this->worldManager.getWorlds ( ).size ( ) << " world(s)\n" ;
 		}
 		else if ( command == "shutdown" || command == "stop" )
 			this->running = false ;

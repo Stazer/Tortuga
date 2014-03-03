@@ -44,8 +44,11 @@ ARC::Void Tortuga::Player::setWorld ( Tortuga::World * world )
 	{
 		this->client.send ( Tortuga::JoinGamePacket ( 0 , world->getGamemode ( ) , world->getDimension ( ) , world->getDifficulty ( ) , "default" ) ) ;
 		this->client.send ( Tortuga::SpawnPositionPacket ( world->getSpawnPosition ( ) ) ) ;
-		this->client.send ( Tortuga::PlayerPositionAndLookFromServerPacket ( Tortuga::Location ( ) , true ) ) ;
+		this->client.send ( Tortuga::PlayerPositionAndLookFromServerPacket ( Tortuga::Location ( Tortuga::Position ( static_cast <ARC::Double> ( world->getSpawnPosition ( ).getX ( ) ) , static_cast <ARC::Double> ( world->getSpawnPosition ( ).getY ( ) ) , static_cast <ARC::Double> ( world->getSpawnPosition ( ).getZ ( ) ) ) ) , true ) ) ;
 		this->client.send ( Tortuga::TimeUpdatePacket ( 0 , 300 ) ) ;
+		
+		for ( auto chunk : this->world->getChunks ( ) )
+			this->client.send ( chunk ) ;
 	}
 }
 Tortuga::World * Tortuga::Player::getWorld ( )
