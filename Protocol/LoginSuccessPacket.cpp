@@ -23,7 +23,16 @@ Tortuga::LoginSuccessPacket::LoginSuccessPacket ( const ARC::String & uuid , con
 	name ( name )
 {
 }
-	
+
+ARC::Void Tortuga::LoginSuccessPacket::setUUID ( const ARC::String & uuid )
+{
+    this->uuid = uuid ;
+}
+const ARC::String & Tortuga::LoginSuccessPacket::getUUID ( ) const
+{
+    return this->uuid ;
+}
+
 ARC::Void Tortuga::LoginSuccessPacket::setName ( const ARC::String & name )
 {
 	this->name = name ;
