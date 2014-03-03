@@ -169,12 +169,15 @@ ARC::Bool Tortuga::Client::update ( )
 				{
 					case Tortuga::Packet::LoginStart :
 					{
-						this->send ( Tortuga::LoginSuccessPacket ( "" , Tortuga::LoginStartPacket ( packetReader ).getName ( ) ) ) ;
+						Tortuga::LoginStartPacket loginStartPacket ( packetReader ) ;
+					
+						this->send ( Tortuga::LoginSuccessPacket ( "" , loginStartPacket.getName ( ) ) ) ;
 						this->send ( Tortuga::JoinGamePacket ( 0 , 1 , 0 , 0 , "default" ) ) ;
 						this->send ( Tortuga::SpawnPositionPacket ( ARC::Vector3SignedInt ( 0 , 0 , 0 ) ) ) ;
 						this->send ( Tortuga::PlayerPositionAndLookFromServerPacket ( Tortuga::Location ( ) , true ) ) ;
 						
 						this->chatUser.setChat ( & this->clientManager.getServer ( ).getChat ( ) ) ;
+						this->chatUser.setName ( loginStartPacket.getName ( ) ) ;
 						
 						this->type = Tortuga::Client::Player ;
 						break ;
