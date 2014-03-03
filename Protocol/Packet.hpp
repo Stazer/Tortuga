@@ -41,6 +41,9 @@ namespace Tortuga
 				SpawnPosition = 0x05 ,
 				TimeUpdate = 0x03 ,
 				WorldChunk = 0x21 ,
+				
+				PlayerPositionAndLookFromServer = 0x08 ,
+				PlayerPositionAndLookToServer = 0x06 ,
 			
 				// Client
 				ClientHandshake = 0x00 ,		
@@ -49,6 +52,9 @@ namespace Tortuga
 				ClientKeepAlive = 0x00 ,
 				ClientJoinGame = 0x01 ,
 				ClientDisconnect = 0x00 ,
+				
+				//
+				
 				
 				// Chat
 				ChatMessageFromServer = 0x02 ,
@@ -60,9 +66,8 @@ namespace Tortuga
 				PlayerAbilities = 0x13 ,
 				PlayerOnGround = 0x03 ,
 				PlayerPosition = 0x04 ,
-				PlayerLook = 0x05 ,
-				PlayerPositionAndLookFromServer = 0x08 ,
-				PlayerPositionAndLookToServer = 0x06
+				PlayerLook = 0x05
+				
 			} ;
 	} ;
 }
