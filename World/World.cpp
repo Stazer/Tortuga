@@ -1,11 +1,13 @@
 #include <Tortuga/World/World.hpp>
 
-Tortuga::World::World ( Tortuga::WorldManager & worldManager , const Tortuga::Gamemode::Type gamemode , const Tortuga::Dimension::Type dimension , const Tortuga::Difficulty::Type difficulty , const ARC::Vector3SignedInt & spawnPosition ) :
+Tortuga::World::World ( Tortuga::WorldManager & worldManager , const Tortuga::Gamemode::Type gamemode , const Tortuga::Dimension::Type dimension , const Tortuga::Difficulty::Type difficulty , const ARC::Vector3SignedInt & spawnPosition , const ARC::UnsignedLong age , const ARC::UnsignedLong time ) :
 	worldManager ( worldManager ) ,
 	gamemode ( gamemode ) ,
 	dimension ( dimension ) ,
 	difficulty ( difficulty ) ,
-	spawnPosition ( spawnPosition )
+	spawnPosition ( spawnPosition ) ,
+	age ( age ) ,
+	time ( time )
 {
 }
 
@@ -35,7 +37,7 @@ Tortuga::Dimension::Type Tortuga::World::getDimension ( ) const
 {
 	return this->dimension ;
 }
-			
+
 ARC::Void Tortuga::World::setDifficulty ( const Tortuga::Difficulty::Type difficulty )
 {
 	this->difficulty = difficulty ;
@@ -52,6 +54,24 @@ ARC::Void Tortuga::World::setSpawnPosition ( const ARC::Vector3SignedInt & spawn
 const ARC::Vector3SignedInt & Tortuga::World::getSpawnPosition ( ) const
 {
 	return this->spawnPosition ;
+}
+
+ARC::Void Tortuga::World::setAge ( const ARC::UnsignedLong age )
+{
+	this->age = age ;
+}
+ARC::UnsignedLong Tortuga::World::getAge ( ) const
+{
+	return this->age ;
+}
+
+ARC::Void Tortuga::World::setTime ( const ARC::UnsignedLong time )
+{
+	this->time = time ;
+}
+ARC::UnsignedLong Tortuga::World::getTime ( ) const
+{
+	return this->time ;
 }
 
 ARC::List <Tortuga::Chunk> & Tortuga::World::getChunks ( )
@@ -71,14 +91,24 @@ const ARC::List <Tortuga::Player *> & Tortuga::World::getPlayers ( ) const
 {
 	return this->players ;
 }
+#include <iostream>
+
+ARC::Void Tortuga::World::update ( )
+{
+	++this->age ;
+	++this->time ;
+
+	if ( this->time >= 24000 )
+		this->time = 0 ;
+}
 
 Tortuga::World Tortuga::World::getTestWorld ( Tortuga::World world )
 {
 	for ( ARC::SignedInt x = -10 ; x <= 10 ; ++x )
 		for ( ARC::SignedInt y = -10 ; y <= 10 ; ++y )
 			world.chunks.push_back ( Tortuga::Chunk::getTestChunk ( Tortuga::Chunk ( ARC::Vector2SignedInt ( x , y ) ) ) ) ;
-				
-	world.setSpawnPosition ( ARC::Vector3SignedInt ( 0 , 66 , 0 ) ) ;
-						
+
+	world.setSpawnPosition ( ARC::Vector3SignedInt ( 0 , 70 , 0 ) ) ;
+
 	return world ;
 }

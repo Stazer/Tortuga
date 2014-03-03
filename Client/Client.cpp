@@ -226,8 +226,11 @@ ARC::Bool Tortuga::Client::update ( )
 					}
 					case Tortuga::Packet::ChatMessageToServer :
 					{
+						Tortuga::ChatMessageToServerPacket chatMessageToServerPacket ( packetReader ) ;
+										
 						if ( this->chatUser.getChat ( ) )
-							this->chatUser.getChat ( )->send ( Tortuga::ChatMessage ( Tortuga::ChatMessageToServerPacket ( packetReader ).getMessage ( ) ) ) ;
+							this->chatUser.getChat ( )->send ( Tortuga::ChatMessage ( chatMessageToServerPacket.getMessage ( ) ) ) ;
+							
 						break ;
 					}
 					default :

@@ -5,7 +5,7 @@ Tortuga::WorldManager::WorldManager ( Tortuga::Server & server ) :
 {
 	// DEBUG
 	this->worlds.push_back ( Tortuga::World::getTestWorld ( * this ) ) ;
-	
+
 	this->setDefaultWorld ( * this->worlds.begin ( ) ) ;
 }
 
@@ -38,8 +38,10 @@ Tortuga::World & Tortuga::WorldManager::getDefaultWorld ( )
 const Tortuga::World & Tortuga::WorldManager::getDefaultWorld ( ) const
 {
 	return * this->defaultWorld ;
-}			
+}
 
 ARC::Void Tortuga::WorldManager::update ( )
 {
+	for ( auto & world : this->getWorlds ( ) )
+		world.update ( ) ;
 }
