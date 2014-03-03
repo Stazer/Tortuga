@@ -16,7 +16,8 @@ Tortuga::KeepAlivePacket::KeepAlivePacket ( Tortuga::PacketReader & packetReader
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::KeepAlivePacket::KeepAlivePacket ( const ARC::UnsignedInt identification )
+Tortuga::KeepAlivePacket::KeepAlivePacket ( const ARC::UnsignedInt identification ) :
+	identification ( identification )
 {
 }
 
