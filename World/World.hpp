@@ -2,7 +2,9 @@
 
 #include <ARC.hpp>
 #include <Tortuga/World/Dimension.hpp>
+#include <Tortuga/World/Chunk.hpp>
 #include <Tortuga/Difficulty.hpp>
+#include <Tortuga/Gamemode.hpp>
 
 namespace Tortuga
 {
@@ -16,20 +18,24 @@ namespace Tortuga
 		private :
 			Tortuga::WorldManager & worldManager ;
 		
+			Tortuga::Gamemode::Type gamemode ;
 			Tortuga::Dimension::Type dimension ;
 			Tortuga::Difficulty::Type difficulty ;
 			
 			ARC::Vector3SignedInt spawnPosition ;
 		
-			ARC::List <ARC::SharedPointer <Tortuga::Chunk>> chunks ;
+			ARC::List <Tortuga::Chunk> chunks ;
 	
 			ARC::List <Tortuga::Player *> players ;
 	
 		public :
-			World ( Tortuga::WorldManager & worldManager , const Tortuga::Dimension::Type dimension = Tortuga::Dimension::Normal , const Tortuga::Difficulty::Type difficulty = Tortuga::Difficulty::Normal , const ARC::Vector3SignedInt & spawnPosition = ARC::Vector3SignedInt ( ) ) ;
+			World ( Tortuga::WorldManager & worldManager , const Tortuga::Gamemode::Type gamemode = Tortuga::Gamemode::Creative , const Tortuga::Dimension::Type dimension = Tortuga::Dimension::Normal , const Tortuga::Difficulty::Type difficulty = Tortuga::Difficulty::Normal , const ARC::Vector3SignedInt & spawnPosition = ARC::Vector3SignedInt ( ) ) ;
 			
 			Tortuga::WorldManager & getWorldManager ( ) ;
 			const Tortuga::WorldManager & getWorldManager ( ) const ;
+			
+			ARC::Void setGamemode ( const Tortuga::Gamemode::Type gamemode ) ;
+			Tortuga::Gamemode::Type getGamemode ( ) const ;
 			
 			ARC::Void setDimension ( const Tortuga::Dimension::Type dimension ) ;
 			Tortuga::Dimension::Type getDimension ( ) const ;
@@ -39,6 +45,9 @@ namespace Tortuga
 			
 			ARC::Void setSpawnPosition ( const ARC::Vector3SignedInt & spawnPosition ) ;
 			const ARC::Vector3SignedInt & getSpawnPosition ( ) const ;
+			
+			ARC::List <Tortuga::Chunk> & getChunks ( ) ;
+			const ARC::List <Tortuga::Chunk> & getChunks ( ) const ;
 			
 			ARC::List <Tortuga::Player *> & getPlayers ( ) ;
 			const ARC::List <Tortuga::Player *> & getPlayers ( ) const ;

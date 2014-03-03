@@ -1,7 +1,8 @@
 #include <Tortuga/World/World.hpp>
-#include "Chunk.hpp"
-Tortuga::World::World ( Tortuga::WorldManager & worldManager , const Tortuga::Dimension::Type dimension , const Tortuga::Difficulty::Type difficulty , const ARC::Vector3SignedInt & spawnPosition ) :
+
+Tortuga::World::World ( Tortuga::WorldManager & worldManager , const Tortuga::Gamemode::Type gamemode , const Tortuga::Dimension::Type dimension , const Tortuga::Difficulty::Type difficulty , const ARC::Vector3SignedInt & spawnPosition ) :
 	worldManager ( worldManager ) ,
+	gamemode ( gamemode ) ,
 	dimension ( dimension ) ,
 	difficulty ( difficulty ) ,
 	spawnPosition ( spawnPosition )
@@ -15,6 +16,15 @@ Tortuga::WorldManager & Tortuga::World::getWorldManager ( )
 const Tortuga::WorldManager & Tortuga::World::getWorldManager ( ) const
 {
 	return this->worldManager ;
+}
+
+ARC::Void Tortuga::World::setGamemode ( const Tortuga::Gamemode::Type gamemode )
+{
+	this->gamemode = gamemode ;
+}
+Tortuga::Gamemode::Type Tortuga::World::getGamemode ( ) const
+{
+	return this->gamemode ;
 }
 
 ARC::Void Tortuga::World::setDimension ( const Tortuga::Dimension::Type dimension )
@@ -44,6 +54,15 @@ const ARC::Vector3SignedInt & Tortuga::World::getSpawnPosition ( ) const
 	return this->spawnPosition ;
 }
 
+ARC::List <Tortuga::Chunk> & Tortuga::World::getChunks ( )
+{
+	return this->chunks ;
+}
+const ARC::List <Tortuga::Chunk> & Tortuga::World::getChunks ( ) const
+{
+	return this->chunks ;
+}
+
 ARC::List <Tortuga::Player *> & Tortuga::World::getPlayers ( )
 {
 	return this->players ;
@@ -57,7 +76,7 @@ Tortuga::World Tortuga::World::getTestWorld ( Tortuga::World world )
 {
 	for ( ARC::UnsignedShort x = -10 ; x <= 10 ; ++x )
 		for ( ARC::UnsignedShort y = -10 ; y <= 10 ; ++y )
-			world.chunks.push_back ( ARC::SharedPointer <Tortuga::Chunk> ( new Tortuga::Chunk ( Tortuga::Chunk::getTestChunk ( ) ) ) ) ;
+			world.chunks.push_back ( Tortuga::Chunk ( Tortuga::Chunk::getTestChunk ( ) ) ) ;
 			
 	return world ;
 }
