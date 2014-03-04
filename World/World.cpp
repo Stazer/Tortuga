@@ -91,7 +91,6 @@ const ARC::List <Tortuga::Player *> & Tortuga::World::getPlayers ( ) const
 {
 	return this->players ;
 }
-#include <iostream>
 
 ARC::Void Tortuga::World::update ( )
 {
@@ -104,11 +103,11 @@ ARC::Void Tortuga::World::update ( )
 
 Tortuga::World Tortuga::World::getTestWorld ( Tortuga::World world )
 {
-	for ( ARC::SignedInt x = -10 ; x <= 10 ; ++x )
-		for ( ARC::SignedInt y = -10 ; y <= 10 ; ++y )
+	for ( ARC::SignedInt x = -5 ; x <= 5 ; ++x )
+		for ( ARC::SignedInt y = -5 ; y <= 5 ; ++y )
 			world.chunks.push_back ( Tortuga::Chunk::getTestChunk ( Tortuga::Chunk ( ARC::Vector2SignedInt ( x , y ) ) ) ) ;
 
-	world.setSpawnPosition ( ARC::Vector3SignedInt ( 0 , 70 , 0 ) ) ;
+	world.setSpawnPosition ( ARC::Vector3SignedInt ( 0 , 7 , 0 ) ) ;
 
 	return world ;
 }

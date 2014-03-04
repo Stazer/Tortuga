@@ -14,7 +14,8 @@ namespace Tortuga
 				Grass = 2 ,
 				Dirt = 3 ,
 				Cobblestone = 4 ,
-				WoodPlanks = 5
+				WoodPlanks = 5 ,
+				Bedrock = 7
 			} ;
 			
 			enum Metadata
