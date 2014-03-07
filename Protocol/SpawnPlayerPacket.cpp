@@ -4,7 +4,7 @@
 
 ARC::Void Tortuga::SpawnPlayerPacket::read ( Tortuga::PacketReader & packetReader )
 {
-    this->entityIdentification = packetReader.readInt ( ) ;
+    this->entityIdentification = packetReader.readVariableInt ( ) ;
     this->uuid = packetReader.readString ( ) ;
     this->name = packetReader.readString ( ) ;
     this->location.getPosition ( ).setX ( packetReader.readDouble ( ) ) ;
@@ -13,33 +13,34 @@ ARC::Void Tortuga::SpawnPlayerPacket::read ( Tortuga::PacketReader & packetReade
     this->location.getOrientation ( ).setX ( packetReader.readFloat ( ) ) ;
     this->location.getOrientation ( ).setY ( packetReader.readFloat ( ) ) ;
     this->item = packetReader.readShort ( ) ;
-    // TODO metadata
+    this->entityMetadata.read ( packetReader ) ;
 }
 ARC::Void Tortuga::SpawnPlayerPacket::write ( Tortuga::PacketWriter & packetWriter ) const
 {
 	packetWriter.writeVariableInt ( Tortuga::Packet::SpawnPlayer ) ;
-	packetWriter.writeInt ( this->entityIdentification ) ;
+	packetWriter.writeVariableInt ( this->entityIdentification ) ;
 	packetWriter.writeString ( this->uuid ) ;
 	packetWriter.writeString ( this->name ) ;
-	packetWriter.writeDouble ( this->location.getPosition ( ).getX ( ) ) ;
-	packetWriter.writeDouble ( this->location.getPosition ( ).getY ( ) ) ;
-	packetWriter.writeDouble ( this->location.getPosition ( ).getZ ( ) ) ;
-	packetWriter.writeFloat ( this->location.getOrientation ( ).getX ( ) ) ;
-	packetWriter.writeFloat ( this->location.getOrientation ( ).getY ( ) ) ;
+	packetWriter.writeInt ( this->location.getPosition ( ).getX ( ) * 32 ) ;
+	packetWriter.writeInt ( this->location.getPosition ( ).getY ( ) * 32 ) ;
+	packetWriter.writeInt ( this->location.getPosition ( ).getZ ( ) * 32 ) ;
+	packetWriter.writeChar ( static_cast <ARC::UnsignedChar> ( std::fmod ( std::floor ( this->location.getOrientation ( ).getX ( ) ) , 360 ) / 360 * 256 ) ) ;
+	packetWriter.writeChar ( static_cast <ARC::UnsignedChar> ( std::fmod ( std::floor ( this->location.getOrientation ( ).getY ( ) ) , 360 ) / 360 * 256 ) ) ;
 	packetWriter.writeShort ( this->item ) ;
-	// TODO metadata
+	this->entityMetadata.write ( packetWriter ) ;
 }
 
 Tortuga::SpawnPlayerPacket::SpawnPlayerPacket ( Tortuga::PacketReader & packetReader )
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::SpawnPlayerPacket::SpawnPlayerPacket ( const ARC::UnsignedInt entityIdentification , const ARC::String & uuid , const ARC::String & name , const Tortuga::Location & location , const ARC::UnsignedShort item ) :
+Tortuga::SpawnPlayerPacket::SpawnPlayerPacket ( const ARC::UnsignedInt entityIdentification , const ARC::String & uuid , const ARC::String & name , const Tortuga::Location & location , const ARC::UnsignedShort item , const Tortuga::EntityMetadata & entityMetadata ) :
     entityIdentification ( entityIdentification ) ,
     uuid ( uuid ) ,
     name ( name ) ,
     location ( location ) ,
-    item ( item )
+    item ( item ) ,
+    entityMetadata ( entityMetadata )
 {
 }
 
@@ -90,4 +91,17 @@ ARC::Void Tortuga::SpawnPlayerPacket::setItem ( const ARC::UnsignedShort item )
 const ARC::UnsignedShort Tortuga::SpawnPlayerPacket::getItem ( ) const
 {
     return this->item ;
+}
+
+ARC::Void Tortuga::SpawnPlayerPacket::setEntityMetadata ( const Tortuga::EntityMetadata & entityMetadata )
+{
+    this->entityMetadata = entityMetadata ;
+}
+Tortuga::EntityMetadata & Tortuga::SpawnPlayerPacket::getEntityMetadata ( )
+{
+    return this->entityMetadata ;
+}
+const Tortuga::EntityMetadata & Tortuga::SpawnPlayerPacket::getEntityMetadata ( ) const
+{
+    return this->entityMetadata ;
 }
