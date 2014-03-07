@@ -53,7 +53,6 @@ namespace Tortuga
 				PlayerOnGround = 0x03 ,
 				PlayerPosition = 0x04 ,
 				PlayerLook = 0x05
-
 			} ;
 	} ;
 }

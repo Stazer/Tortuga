@@ -107,11 +107,6 @@ ARC::Void Tortuga::EntityMetadata::read ( Tortuga::PacketReader & packetReader )
 }
 ARC::Void Tortuga::EntityMetadata::write ( Tortuga::PacketWriter & packetWriter ) const
 {
-
-	/*packetWriter.writeChar ( ( 3 << 5 ) | 6 ) ;
-	packetWriter.writeFloat ( 55.0f ) ;
-    packetWriter.writeChar ( 0x7F ) ;*/
-
     for ( auto & record : this->records )
     {
         packetWriter.writeChar ( ( static_cast <ARC::UnsignedChar> ( record.second.getType ( ) ) << 5 ) | record.first ) ;
