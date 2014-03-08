@@ -46,6 +46,8 @@ namespace Tortuga
 				WorldChunk = 0x21 ,
 
 				SpawnPlayer = 0x0C ,
+				SpawnObject = 0x0E ,
+				SpawnMob = 0x0F ,
 
 				PlayerPositionAndLookFromServer = 0x08 ,
 				PlayerPositionAndLookToServer = 0x06 ,
