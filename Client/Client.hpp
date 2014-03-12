@@ -36,8 +36,6 @@ namespace Tortuga
 			Tortuga::ChatUser * chatUser ;
 			Tortuga::PlayerEntity * playerEntity ;
 
-			ARC::List <Tortuga::Entity *> spawnedEntities ;
-
 			ARC::String locale ;
 			ARC::UnsignedChar viewDistance ;
 			ARC::UnsignedChar chatFlags ;
@@ -60,9 +58,6 @@ namespace Tortuga
 
 			Tortuga::PlayerEntity * getPlayerEntity ( ) ;
 			const Tortuga::PlayerEntity * getPlayerEntity ( ) const ;
-
-			ARC::List <Tortuga::Entity *> & getSpawnedEntities ( ) ;
-			const ARC::List <Tortuga::Entity *> & getSpawnedEntities ( ) const ;
 
 			const ARC::String & getLocale ( ) const ;
 			ARC::UnsignedChar getViewDistance ( ) const ;

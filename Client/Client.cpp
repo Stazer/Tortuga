@@ -88,15 +88,6 @@ const Tortuga::PlayerEntity * Tortuga::Client::getPlayerEntity ( ) const
 	return this->playerEntity ;
 }
 
-ARC::List <Tortuga::Entity *> & Tortuga::Client::getSpawnedEntities ( )
-{
-    return this->spawnedEntities ;
-}
-const ARC::List <Tortuga::Entity *> & Tortuga::Client::getSpawnedEntities ( ) const
-{
-    return this->spawnedEntities ;
-}
-
 const ARC::String & Tortuga::Client::getLocale ( ) const
 {
 	return this->locale ;

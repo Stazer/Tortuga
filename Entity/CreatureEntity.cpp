@@ -9,8 +9,6 @@
 #include <Tortuga/Client/ClientManager.hpp>
 #include <Tortuga/Server/Server.hpp>
 
-#include <iostream>
-
 Tortuga::CreatureEntity::CreatureEntity ( EntityManager & entityManager , Tortuga::Entity::Type type , const Tortuga::Location & location ) :
     Tortuga::Entity ( entityManager , type , location )
 {
@@ -18,4 +16,5 @@ Tortuga::CreatureEntity::CreatureEntity ( EntityManager & entityManager , Tortug
 
 ARC::Void Tortuga::CreatureEntity::update ( )
 {
+
 }

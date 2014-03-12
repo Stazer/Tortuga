@@ -6,6 +6,7 @@
 namespace Tortuga
 {
     class EntityManager ;
+    class Client ;
 
     class Entity
     {
