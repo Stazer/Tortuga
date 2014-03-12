@@ -20,12 +20,6 @@ ARC::Void Tortuga::CreatureEntity::update ( )
 {
     for ( auto client : this->getEntityManager ( ).getWorld ( ).getWorldManager ( ).getServer ( ).getClientManager ( ).getClients ( ) )
     {
-        if ( client->getPlayerEntity ( ) && & client->getPlayerEntity ( )->getEntityManager ( ).getWorld ( ) == & this->getEntityManager ( ).getWorld ( ) )
-        {
-            //Tortuga::EntityMetadata entityMetadata ;
 
-            //entityMetadata.getRecords ( ) [ Tortuga::EntityMetadata::Health ] = 55.0f ;
-            //Tortuga::SpawnMobPacket ( this->getIdentification ( ) , this->getType ( ) , this->getLocation ( ) , 0 , entityMetadata ) ;
-        }
     }
 }
