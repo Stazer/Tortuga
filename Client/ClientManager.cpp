@@ -16,11 +16,11 @@ const Tortuga::Server & Tortuga::ClientManager::getServer ( ) const
 	return this->server ;
 }
 
-ARC::List <ARC::SharedPointer <Tortuga::Client>> & Tortuga::ClientManager::getClients ( )
+ARC::List <Tortuga::Client> & Tortuga::ClientManager::getClients ( )
 {
 	return this->clients ;
 }
-const ARC::List <ARC::SharedPointer <Tortuga::Client>> & Tortuga::ClientManager::getClients ( ) const
+const ARC::List <Tortuga::Client> & Tortuga::ClientManager::getClients ( ) const
 {
 	return this->clients ;
 }
@@ -36,11 +36,11 @@ ARC::Void Tortuga::ClientManager::update ( )
 	{
 		if ( this->selector.update ( this->server ) )
 		{
-			ARC::SharedPointer <Tortuga::Client> client ( new Tortuga::Client ( * this ) ) ;
+            Tortuga::Client client ( * this ) ;
 
-			if ( this->server.accept ( * client ) == ARC::Socket::Done )
+			if ( this->server.accept ( client ) == ARC::Socket::Done )
 			{
-				this->selector.add ( * client ) ;
+				this->selector.add ( client ) ;
 				this->clients.push_back ( client ) ;
 			}
 		}
@@ -48,11 +48,11 @@ ARC::Void Tortuga::ClientManager::update ( )
 		{
 			for ( auto client = this->clients.begin ( ) ; client != this->clients.end ( ) ; ++client )
 			{
-				if ( this->selector.update ( ( ** client ) ) )
+				if ( this->selector.update ( ( * client ) ) )
 				{
-					if ( ! ( * client )->update ( ) )
+					if ( ! client->update ( ) )
 					{
-						this->selector.remove ( ** client ) ;
+						this->selector.remove ( * client ) ;
 						client = this->clients.erase ( client ) ;
 					}
 				}
