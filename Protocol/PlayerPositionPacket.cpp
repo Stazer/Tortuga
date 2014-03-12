@@ -24,7 +24,7 @@ Tortuga::PlayerPositionPacket::PlayerPositionPacket ( Tortuga::PacketReader & pa
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::PlayerPositionPacket::PlayerPositionPacket ( const Tortuga::Position & position , const ARC::Bool onGround ) :
+Tortuga::PlayerPositionPacket::PlayerPositionPacket ( const Tortuga::Position & position , ARC::Bool onGround ) :
 	position ( position ) ,
 	onGround ( onGround )
 {
@@ -42,8 +42,8 @@ const Tortuga::Position & Tortuga::PlayerPositionPacket::getPosition ( ) const
 {
 	return this->position ;
 }
-		
-ARC::Void Tortuga::PlayerPositionPacket::setOnGround ( const ARC::Bool onGround )
+
+ARC::Void Tortuga::PlayerPositionPacket::setOnGround ( ARC::Bool onGround )
 {
 	this->onGround = onGround ;
 }

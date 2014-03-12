@@ -20,7 +20,7 @@ Tortuga::LoginStartPacket::LoginStartPacket ( const ARC::String & name ) :
 	name ( name )
 {
 }
-	
+
 ARC::Void Tortuga::LoginStartPacket::setName ( const ARC::String & name )
 {
 	this->name = name ;

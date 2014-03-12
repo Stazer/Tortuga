@@ -22,9 +22,9 @@ namespace Tortuga
 
 		public :
 			SpawnPlayerPacket ( Tortuga::PacketReader & packetReader ) ;
-			SpawnPlayerPacket ( const ARC::UnsignedInt entityIdentification , const ARC::String & uuid , const ARC::String & name , const Tortuga::Location & location , const ARC::UnsignedShort item , const Tortuga::EntityMetadata & entityMetadata ) ;
+			SpawnPlayerPacket ( ARC::UnsignedInt entityIdentification , const ARC::String & uuid , const ARC::String & name , const Tortuga::Location & location , ARC::UnsignedShort item , const Tortuga::EntityMetadata & entityMetadata ) ;
 
-            ARC::Void setEntityIdentification ( const ARC::UnsignedInt entityIdentification ) ;
+            ARC::Void setEntityIdentification ( ARC::UnsignedInt entityIdentification ) ;
             ARC::UnsignedInt getEntityIdentification ( ) const ;
 
             ARC::Void setUUID ( const ARC::String & uuid ) ;
@@ -37,8 +37,8 @@ namespace Tortuga
             Tortuga::Location & getLocation ( ) ;
             const Tortuga::Location & getLocation ( ) const ;
 
-            ARC::Void setItem ( const ARC::UnsignedShort item ) ;
-            const ARC::UnsignedShort getItem ( ) const ;
+            ARC::Void setItem ( ARC::UnsignedShort item ) ;
+            ARC::UnsignedShort getItem ( ) const ;
 
             ARC::Void setEntityMetadata ( const Tortuga::EntityMetadata & entityMetadata ) ;
             Tortuga::EntityMetadata & getEntityMetadata ( ) ;

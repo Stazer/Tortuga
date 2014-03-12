@@ -34,7 +34,7 @@ Tortuga::SpawnPlayerPacket::SpawnPlayerPacket ( Tortuga::PacketReader & packetRe
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::SpawnPlayerPacket::SpawnPlayerPacket ( const ARC::UnsignedInt entityIdentification , const ARC::String & uuid , const ARC::String & name , const Tortuga::Location & location , const ARC::UnsignedShort item , const Tortuga::EntityMetadata & entityMetadata ) :
+Tortuga::SpawnPlayerPacket::SpawnPlayerPacket ( ARC::UnsignedInt entityIdentification , const ARC::String & uuid , const ARC::String & name , const Tortuga::Location & location , ARC::UnsignedShort item , const Tortuga::EntityMetadata & entityMetadata ) :
     entityIdentification ( entityIdentification ) ,
     uuid ( uuid ) ,
     name ( name ) ,
@@ -44,7 +44,7 @@ Tortuga::SpawnPlayerPacket::SpawnPlayerPacket ( const ARC::UnsignedInt entityIde
 {
 }
 
-ARC::Void Tortuga::SpawnPlayerPacket::setEntityIdentification ( const ARC::UnsignedInt entityIdentification )
+ARC::Void Tortuga::SpawnPlayerPacket::setEntityIdentification ( ARC::UnsignedInt entityIdentification )
 {
     this->entityIdentification = entityIdentification ;
 }
@@ -84,11 +84,11 @@ const Tortuga::Location & Tortuga::SpawnPlayerPacket::getLocation ( ) const
     return this->location ;
 }
 
-ARC::Void Tortuga::SpawnPlayerPacket::setItem ( const ARC::UnsignedShort item )
+ARC::Void Tortuga::SpawnPlayerPacket::setItem ( ARC::UnsignedShort item )
 {
     this->item = item ;
 }
-const ARC::UnsignedShort Tortuga::SpawnPlayerPacket::getItem ( ) const
+ARC::UnsignedShort Tortuga::SpawnPlayerPacket::getItem ( ) const
 {
     return this->item ;
 }

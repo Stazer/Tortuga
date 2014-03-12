@@ -11,15 +11,11 @@
 
 #include <iostream>
 
-Tortuga::CreatureEntity::CreatureEntity ( EntityManager & entityManager , const Tortuga::Entity::Type type , const Tortuga::Location & location ) :
+Tortuga::CreatureEntity::CreatureEntity ( EntityManager & entityManager , Tortuga::Entity::Type type , const Tortuga::Location & location ) :
     Tortuga::Entity ( entityManager , type , location )
 {
 }
 
 ARC::Void Tortuga::CreatureEntity::update ( )
 {
-    for ( auto client : this->getEntityManager ( ).getWorld ( ).getWorldManager ( ).getServer ( ).getClientManager ( ).getClients ( ) )
-    {
-
-    }
 }

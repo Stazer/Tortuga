@@ -20,7 +20,7 @@ Tortuga::PlayerLookPacket::PlayerLookPacket ( Tortuga::PacketReader & packetRead
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::PlayerLookPacket::PlayerLookPacket ( const Tortuga::Orientation & orientation , const ARC::Bool onGround ) :
+Tortuga::PlayerLookPacket::PlayerLookPacket ( const Tortuga::Orientation & orientation , ARC::Bool onGround ) :
 	orientation ( orientation ) ,
 	onGround ( onGround )
 {
@@ -38,8 +38,8 @@ const Tortuga::Orientation & Tortuga::PlayerLookPacket::getOrientation ( ) const
 {
 	return this->orientation ;
 }
-			
-ARC::Void Tortuga::PlayerLookPacket::setOnGround ( const ARC::Bool onGround )
+
+ARC::Void Tortuga::PlayerLookPacket::setOnGround ( ARC::Bool onGround )
 {
 	this->onGround = onGround ;
 }

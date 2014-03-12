@@ -22,19 +22,19 @@ namespace Tortuga
 
 		public :
 			SpawnMobPacket ( Tortuga::PacketReader & packetReader ) ;
-			SpawnMobPacket ( const ARC::UnsignedInt entityIdentification , const ARC::UnsignedChar type , const Tortuga::Location & location , const ARC::Float headPitch , const ARC::Vector3SignedShort & velocity , const Tortuga::EntityMetadata & entityMetadata ) ;
+			SpawnMobPacket ( ARC::UnsignedInt entityIdentification , ARC::UnsignedChar type , const Tortuga::Location & location , ARC::Float headPitch , const ARC::Vector3SignedShort & velocity , const Tortuga::EntityMetadata & entityMetadata ) ;
 
-			ARC::Void setEntityIdentification ( const ARC::UnsignedInt entityIdentification ) ;
+			ARC::Void setEntityIdentification ( ARC::UnsignedInt entityIdentification ) ;
 			ARC::UnsignedInt getEntityIdentification ( ) const ;
 
-			ARC::Void setType ( const ARC::UnsignedChar type ) ;
+			ARC::Void setType ( ARC::UnsignedChar type ) ;
 			ARC::UnsignedChar getType ( ) const ;
 
 			ARC::Void setLocation ( const Tortuga::Location & location ) ;
 			Tortuga::Location & getLocation ( ) ;
 			const Tortuga::Location & getLocation ( ) const ;
 
-			ARC::Void setHeadPitch ( const ARC::Float headPitch ) ;
+			ARC::Void setHeadPitch ( ARC::Float headPitch ) ;
 			ARC::Float getHeadPitch ( ) const ;
 
 			ARC::Void setVelocity ( const ARC::Vector3SignedShort & velocity ) ;

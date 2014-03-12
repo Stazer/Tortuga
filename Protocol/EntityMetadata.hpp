@@ -43,24 +43,24 @@ namespace Tortuga
                     } ;
 
                     Record ( ) ;
-                    Record ( const ARC::SignedChar charValue ) ;
-                    Record ( const ARC::SignedShort shortValue ) ;
-                    Record ( const ARC::SignedInt intValue ) ;
-                    Record ( const ARC::Float floatValue ) ;
-                    Record ( const ARC::String stringValue ) ;
+                    Record ( ARC::SignedChar charValue ) ;
+                    Record ( ARC::SignedShort shortValue ) ;
+                    Record ( ARC::SignedInt intValue ) ;
+                    Record ( ARC::Float floatValue ) ;
+                    Record ( ARC::String stringValue ) ;
 
-                    const Tortuga::EntityMetadata::Record::Type getType ( ) const ;
+                    Tortuga::EntityMetadata::Record::Type getType ( ) const ;
 
-                    ARC::Void setCharValue ( const ARC::SignedChar charValue ) ;
+                    ARC::Void setCharValue ( ARC::SignedChar charValue ) ;
                     ARC::SignedChar getCharValue ( ) const ;
 
-                    ARC::Void setShortValue ( const ARC::SignedShort shortValue ) ;
+                    ARC::Void setShortValue ( ARC::SignedShort shortValue ) ;
                     ARC::SignedShort getShortValue ( ) const ;
 
-                    ARC::Void setIntValue ( const ARC::SignedInt intValue ) ;
+                    ARC::Void setIntValue ( ARC::SignedInt intValue ) ;
                     ARC::SignedInt getIntValue ( ) const ;
 
-                    ARC::Void setFloatValue ( const ARC::Float floatValue ) ;
+                    ARC::Void setFloatValue ( ARC::Float floatValue ) ;
                     ARC::Float getFloatValue ( ) const ;
 
                     ARC::Void setStringValue ( const ARC::String & stringValue ) ;

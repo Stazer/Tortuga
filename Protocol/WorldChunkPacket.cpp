@@ -9,9 +9,9 @@ ARC::Void Tortuga::WorldChunkPacket::read ( Tortuga::PacketReader & packetReader
 	this->groundUpContinuous = packetReader.readBool ( ) ;
 	this->primaryBitmask = packetReader.readShort ( ) ;
 	this->addBitmask = packetReader.readShort ( ) ;
-	
+
 	ARC::UnsignedInt size = packetReader.readInt ( ) ;
-	
+
 	for ( ARC::UnsignedInt element = 0 ; element < size ; ++element )
 		this->data.push_back ( packetReader.readChar ( ) ) ;
 }
@@ -23,9 +23,9 @@ ARC::Void Tortuga::WorldChunkPacket::write ( Tortuga::PacketWriter & packetWrite
 	packetWriter.writeBool ( this->groundUpContinuous ) ;
 	packetWriter.writeShort ( this->primaryBitmask ) ;
 	packetWriter.writeShort ( this->addBitmask ) ;
-	
+
 	packetWriter.writeInt ( this->data.size ( ) ) ;
-		
+
 	for ( auto element : this->data )
 		packetWriter.writeChar ( element ) ;
 }
@@ -34,7 +34,7 @@ Tortuga::WorldChunkPacket::WorldChunkPacket ( Tortuga::PacketReader & packetRead
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::WorldChunkPacket::WorldChunkPacket ( const ARC::Vector2SignedInt & position , const ARC::Bool groundUpContinuous , const ARC::UnsignedShort primaryBitmask , const ARC::UnsignedShort addBitmask , const ARC::Buffer & data ) :
+Tortuga::WorldChunkPacket::WorldChunkPacket ( const ARC::Vector2SignedInt & position , ARC::Bool groundUpContinuous , ARC::UnsignedShort primaryBitmask , ARC::UnsignedShort addBitmask , const ARC::Buffer & data ) :
 	position ( position ) ,
 	groundUpContinuous ( groundUpContinuous ) ,
 	primaryBitmask ( primaryBitmask ) ,
@@ -55,8 +55,8 @@ const ARC::Vector2SignedInt & Tortuga::WorldChunkPacket::getPosition ( ) const
 {
 	return this->position ;
 }
-			
-ARC::Void Tortuga::WorldChunkPacket::setGroundUpContinuous ( const ARC::Bool groundUpContinuous )
+
+ARC::Void Tortuga::WorldChunkPacket::setGroundUpContinuous ( ARC::Bool groundUpContinuous )
 {
 	this->groundUpContinuous = groundUpContinuous ;
 }
@@ -64,8 +64,8 @@ ARC::Bool Tortuga::WorldChunkPacket::getGroundUpContinuous ( ) const
 {
 	return this->groundUpContinuous ;
 }
-			
-ARC::Void Tortuga::WorldChunkPacket::setPrimaryBitmask ( const ARC::UnsignedShort primaryBitmask )
+
+ARC::Void Tortuga::WorldChunkPacket::setPrimaryBitmask ( ARC::UnsignedShort primaryBitmask )
 {
 	this->primaryBitmask = primaryBitmask ;
 }
@@ -73,8 +73,8 @@ ARC::UnsignedShort Tortuga::WorldChunkPacket::getPrimaryBitmask ( ) const
 {
 	return this->primaryBitmask ;
 }
-			
-ARC::Void Tortuga::WorldChunkPacket::setAddBitmask ( const ARC::UnsignedShort addBitmask )
+
+ARC::Void Tortuga::WorldChunkPacket::setAddBitmask ( ARC::UnsignedShort addBitmask )
 {
 	this->addBitmask = addBitmask ;
 }
@@ -82,7 +82,7 @@ ARC::UnsignedShort Tortuga::WorldChunkPacket::getAddBitmask ( ) const
 {
 	return this->addBitmask ;
 }
-			
+
 ARC::Void Tortuga::WorldChunkPacket::setData ( const ARC::Buffer & data )
 {
 	this->data = data ;

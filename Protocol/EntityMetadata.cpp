@@ -6,38 +6,38 @@ Tortuga::EntityMetadata::Record::Record ( ) :
     type ( Tortuga::EntityMetadata::Record::None )
 {
 }
-Tortuga::EntityMetadata::Record::Record ( const ARC::SignedChar charValue ) :
+Tortuga::EntityMetadata::Record::Record ( ARC::SignedChar charValue ) :
     type ( Tortuga::EntityMetadata::Record::Char ) ,
     value ( new ARC::SignedChar ( charValue ) )
 {
 }
-Tortuga::EntityMetadata::Record::Record ( const ARC::SignedShort shortValue ) :
+Tortuga::EntityMetadata::Record::Record ( ARC::SignedShort shortValue ) :
     type ( Tortuga::EntityMetadata::Record::Short ) ,
     value ( new ARC::SignedShort ( shortValue ) )
 {
 }
-Tortuga::EntityMetadata::Record::Record ( const ARC::SignedInt intValue ) :
+Tortuga::EntityMetadata::Record::Record ( ARC::SignedInt intValue ) :
     type ( Tortuga::EntityMetadata::Record::Int ) ,
     value ( new ARC::SignedInt ( intValue ) )
 {
 }
-Tortuga::EntityMetadata::Record::Record ( const ARC::Float floatValue ) :
+Tortuga::EntityMetadata::Record::Record ( ARC::Float floatValue ) :
     type ( Tortuga::EntityMetadata::Record::Float ) ,
     value ( new ARC::Float ( floatValue ) )
 {
 }
-Tortuga::EntityMetadata::Record::Record ( const ARC::String stringValue ) :
+Tortuga::EntityMetadata::Record::Record ( ARC::String stringValue ) :
     type ( Tortuga::EntityMetadata::Record::String ) ,
     value ( new ARC::String ( stringValue ) )
 {
 }
 
-const Tortuga::EntityMetadata::Record::Type Tortuga::EntityMetadata::Record::getType ( ) const
+Tortuga::EntityMetadata::Record::Type Tortuga::EntityMetadata::Record::getType ( ) const
 {
     return static_cast <Tortuga::EntityMetadata::Record::Type> ( this->type ) ;
 }
 
-ARC::Void Tortuga::EntityMetadata::Record::setCharValue ( const ARC::SignedChar charValue )
+ARC::Void Tortuga::EntityMetadata::Record::setCharValue ( ARC::SignedChar charValue )
 {
     if ( this->type == Tortuga::EntityMetadata::Record::Char )
         this->value = ARC::SharedPointer <ARC::Void> ( new ARC::SignedChar ( charValue ) ) ;
@@ -47,7 +47,7 @@ ARC::SignedChar Tortuga::EntityMetadata::Record::getCharValue ( ) const
     return ( this->type == Tortuga::EntityMetadata::Record::Char ) ? * reinterpret_cast <ARC::SignedChar *> ( this->value.get ( ) ) : 0 ;
 }
 
-ARC::Void Tortuga::EntityMetadata::Record::setShortValue ( const ARC::SignedShort shortValue )
+ARC::Void Tortuga::EntityMetadata::Record::setShortValue ( ARC::SignedShort shortValue )
 {
     if ( this->type == Tortuga::EntityMetadata::Record::Short )
         this->value = ARC::SharedPointer <ARC::Void> ( new ARC::SignedShort ( shortValue ) ) ;
@@ -57,7 +57,7 @@ ARC::SignedShort Tortuga::EntityMetadata::Record::getShortValue ( ) const
     return ( this->type == Tortuga::EntityMetadata::Record::Short ) ? * reinterpret_cast <ARC::SignedShort *> ( this->value.get ( ) ) : 0 ;
 }
 
-ARC::Void Tortuga::EntityMetadata::Record::setIntValue ( const ARC::SignedInt intValue )
+ARC::Void Tortuga::EntityMetadata::Record::setIntValue ( ARC::SignedInt intValue )
 {
     if ( this->type == Tortuga::EntityMetadata::Record::Int )
         this->value = ARC::SharedPointer <ARC::Void> ( new ARC::SignedInt ( intValue ) ) ;
@@ -67,7 +67,7 @@ ARC::SignedInt Tortuga::EntityMetadata::Record::getIntValue ( ) const
     return ( this->type == Tortuga::EntityMetadata::Record::Int ) ? * reinterpret_cast <ARC::SignedInt *> ( this->value.get ( ) ) : 0 ;
 }
 
-ARC::Void Tortuga::EntityMetadata::Record::setFloatValue ( const ARC::Float floatValue )
+ARC::Void Tortuga::EntityMetadata::Record::setFloatValue ( ARC::Float floatValue )
 {
     if ( this->type == Tortuga::EntityMetadata::Record::Float )
         this->value = ARC::SharedPointer <ARC::Void> ( new ARC::Float ( floatValue ) ) ;

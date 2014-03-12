@@ -1,7 +1,7 @@
 #include <Tortuga/Entity/Entity.hpp>
 #include <Tortuga/Entity/EntityManager.hpp>
 
-Tortuga::Entity::Entity ( Tortuga::EntityManager & entityManager , const Tortuga::Entity::Type type , const Tortuga::Location & location ) :
+Tortuga::Entity::Entity ( Tortuga::EntityManager & entityManager , Tortuga::Entity::Type type , const Tortuga::Location & location ) :
     entityManager ( entityManager ) ,
     identification ( entityManager.getFreeIdentification ( ) ) ,
     type ( type ) ,

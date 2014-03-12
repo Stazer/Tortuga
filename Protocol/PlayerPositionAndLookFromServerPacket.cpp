@@ -26,7 +26,7 @@ Tortuga::PlayerPositionAndLookFromServerPacket::PlayerPositionAndLookFromServerP
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::PlayerPositionAndLookFromServerPacket::PlayerPositionAndLookFromServerPacket ( const Tortuga::Location & location , const ARC::Bool onGround ) :
+Tortuga::PlayerPositionAndLookFromServerPacket::PlayerPositionAndLookFromServerPacket ( const Tortuga::Location & location , ARC::Bool onGround ) :
 	location ( location ) ,
 	onGround ( onGround )
 {
@@ -44,8 +44,8 @@ const Tortuga::Location & Tortuga::PlayerPositionAndLookFromServerPacket::getLoc
 {
 	return this->location ;
 }
-			
-ARC::Void Tortuga::PlayerPositionAndLookFromServerPacket::setOnGround ( const ARC::Bool onGround )
+
+ARC::Void Tortuga::PlayerPositionAndLookFromServerPacket::setOnGround ( ARC::Bool onGround )
 {
 	this->onGround = onGround ;
 }

@@ -27,7 +27,7 @@ Tortuga::SpawnMobPacket::SpawnMobPacket ( Tortuga::PacketReader & packetReader )
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::SpawnMobPacket::SpawnMobPacket ( const ARC::UnsignedInt entityIdentification , const ARC::UnsignedChar type , const Tortuga::Location & location , const ARC::Float headPitch , const ARC::Vector3SignedShort & velocity , const Tortuga::EntityMetadata & entityMetadata ) :
+Tortuga::SpawnMobPacket::SpawnMobPacket ( ARC::UnsignedInt entityIdentification , ARC::UnsignedChar type , const Tortuga::Location & location , ARC::Float headPitch , const ARC::Vector3SignedShort & velocity , const Tortuga::EntityMetadata & entityMetadata ) :
 	entityIdentification ( entityIdentification ) ,
 	type ( type ) ,
 	location ( location ) ,
@@ -46,7 +46,7 @@ ARC::UnsignedInt Tortuga::SpawnMobPacket::getEntityIdentification ( ) const
 	return this->entityIdentification ;
 }
 
-ARC::Void Tortuga::SpawnMobPacket::setType ( const ARC::UnsignedChar type )
+ARC::Void Tortuga::SpawnMobPacket::setType ( ARC::UnsignedChar type )
 {
 	this->type = type ;
 }
@@ -68,7 +68,7 @@ const Tortuga::Location & Tortuga::SpawnMobPacket::getLocation ( ) const
 	return this->location ;
 }
 
-ARC::Void Tortuga::SpawnMobPacket::setHeadPitch ( const ARC::Float headPitch )
+ARC::Void Tortuga::SpawnMobPacket::setHeadPitch ( ARC::Float headPitch )
 {
 	this->headPitch = headPitch ;
 }

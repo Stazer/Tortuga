@@ -22,7 +22,7 @@ Tortuga::HandshakePacket::HandshakePacket ( Tortuga::PacketReader & packetReader
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::HandshakePacket::HandshakePacket ( const ARC::UnsignedInt protocol , const ARC::String & serverAddress , const ARC::UnsignedShort serverPort , const ARC::UnsignedInt state ) :
+Tortuga::HandshakePacket::HandshakePacket ( ARC::UnsignedInt protocol , const ARC::String & serverAddress , ARC::UnsignedShort serverPort , ARC::UnsignedInt state ) :
 	protocol ( protocol ) ,
 	serverAddress ( serverAddress ) ,
 	serverPort ( serverPort ) ,
@@ -30,7 +30,7 @@ Tortuga::HandshakePacket::HandshakePacket ( const ARC::UnsignedInt protocol , co
 {
 }
 
-ARC::Void Tortuga::HandshakePacket::setProtocol ( const ARC::UnsignedInt protocol )
+ARC::Void Tortuga::HandshakePacket::setProtocol ( ARC::UnsignedInt protocol )
 {
 	this->protocol = protocol ;
 }
@@ -38,7 +38,7 @@ ARC::UnsignedInt Tortuga::HandshakePacket::getProtocol ( ) const
 {
 	return this->protocol ;
 }
-	
+
 ARC::Void Tortuga::HandshakePacket::setServerAddress ( const ARC::String & serverAddress )
 {
 	this->serverAddress = serverAddress ;
@@ -47,8 +47,8 @@ const ARC::String & Tortuga::HandshakePacket::getServerAddress ( ) const
 {
 	return this->serverAddress ;
 }
-			
-ARC::Void Tortuga::HandshakePacket::setServerPort ( const ARC::UnsignedShort serverPort )
+
+ARC::Void Tortuga::HandshakePacket::setServerPort ( ARC::UnsignedShort serverPort )
 {
 	this->serverPort = serverPort ;
 }
@@ -56,8 +56,8 @@ ARC::UnsignedShort Tortuga::HandshakePacket::getServerPort ( ) const
 {
 	return this->serverPort ;
 }
-			
-ARC::Void Tortuga::HandshakePacket::setState ( const ARC::UnsignedInt state )
+
+ARC::Void Tortuga::HandshakePacket::setState ( ARC::UnsignedInt state )
 {
 	this->state = state ;
 }

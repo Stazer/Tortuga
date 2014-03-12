@@ -9,15 +9,15 @@ namespace Tortuga
 	{
 		private :
 			ARC::UnsignedInt identification ;
-		
+
 			ARC::Void read ( Tortuga::PacketReader & packetReader ) ;
 			ARC::Void write ( Tortuga::PacketWriter & packetWriter ) const ;
-			
+
 		public :
 			KeepAlivePacket ( Tortuga::PacketReader & packetReader ) ;
-			KeepAlivePacket ( const ARC::UnsignedInt identification ) ;
-			
-			ARC::Void setIdentification ( const ARC::UnsignedInt identification ) ;
+			KeepAlivePacket ( ARC::UnsignedInt identification ) ;
+
+			ARC::Void setIdentification ( ARC::UnsignedInt identification ) ;
 			ARC::UnsignedInt getIdentification ( ) const ;
 	} ;
 }

@@ -16,12 +16,12 @@ Tortuga::StatusKeepAlivePacket::StatusKeepAlivePacket ( Tortuga::PacketReader & 
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::StatusKeepAlivePacket::StatusKeepAlivePacket ( const ARC::UnsignedLong time ) :
+Tortuga::StatusKeepAlivePacket::StatusKeepAlivePacket ( ARC::UnsignedLong time ) :
 	time ( time )
 {
 }
 
-ARC::Void Tortuga::StatusKeepAlivePacket::setTime ( const ARC::UnsignedLong time )
+ARC::Void Tortuga::StatusKeepAlivePacket::setTime ( ARC::UnsignedLong time )
 {
 	this->time = time ;
 }

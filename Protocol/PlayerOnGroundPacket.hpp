@@ -9,15 +9,15 @@ namespace Tortuga
 	{
 		private :
 			ARC::Bool onGround ;
-		
+
 			ARC::Void read ( Tortuga::PacketReader & packetReader ) ;
 			ARC::Void write ( Tortuga::PacketWriter & packetWriter ) const ;
-			
+
 		public :
 			PlayerOnGroundPacket ( Tortuga::PacketReader & packetReader ) ;
-			PlayerOnGroundPacket ( const ARC::Bool onGround ) ;
-			
-			ARC::Void setOnGround ( const ARC::Bool onGround ) ;
+			PlayerOnGroundPacket ( ARC::Bool onGround ) ;
+
+			ARC::Void setOnGround ( ARC::Bool onGround ) ;
 			ARC::Bool getOnGround ( ) const ;
 	} ;
 }

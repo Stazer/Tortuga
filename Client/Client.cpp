@@ -280,14 +280,6 @@ ARC::Bool Tortuga::Client::update ( )
 					{
 						Tortuga::ChatMessageToServerPacket chatMessageToServerPacket ( packetReader ) ;
 
-                        if ( chatMessageToServerPacket.getMessage ( ) == "get" )
-                        {
-                            Tortuga::EntityMetadata entityMetadata ;
-
-                            entityMetadata.getRecords ( ) [ Tortuga::EntityMetadata::Health ] = 55.0f ;
-                            //this->send ( Tortuga::SpawnMobPacket ( 50 , 1 , Tortuga::Location ( Tortuga::Position ( 0 , 7 , 0 ) ) , 0 , ARC::Vector3SignedShort ( 100 , 0 , 0 ) , entityMetadata ) ) ;
-                        }
-
 						if ( this->chatUser )
 							this->chatUser->getChat ( ).send ( Tortuga::ChatMessage ( chatMessageToServerPacket.getMessage ( ) ) ) ;
 

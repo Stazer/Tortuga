@@ -26,7 +26,7 @@ Tortuga::ClientSettingsPacket::ClientSettingsPacket ( Tortuga::PacketReader & pa
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::ClientSettingsPacket::ClientSettingsPacket ( const ARC::String & locale , const ARC::UnsignedChar viewDistance , const ARC::UnsignedChar chatFlags , const ARC::Bool chatColors , const ARC::UnsignedChar difficulty , const ARC::Bool showCape ) :
+Tortuga::ClientSettingsPacket::ClientSettingsPacket ( const ARC::String & locale , ARC::UnsignedChar viewDistance , ARC::UnsignedChar chatFlags , ARC::Bool chatColors , ARC::UnsignedChar difficulty , ARC::Bool showCape ) :
 	locale ( locale ) ,
 	viewDistance ( viewDistance ) ,
 	chatFlags ( chatFlags ) ,
@@ -44,8 +44,8 @@ const ARC::String & Tortuga::ClientSettingsPacket::getLocale ( ) const
 {
 	return this->locale ;
 }
-			
-ARC::Void Tortuga::ClientSettingsPacket::setViewDistance ( const ARC::UnsignedChar viewDistance )
+
+ARC::Void Tortuga::ClientSettingsPacket::setViewDistance ( ARC::UnsignedChar viewDistance )
 {
 	this->viewDistance = viewDistance ;
 }
@@ -53,8 +53,8 @@ ARC::UnsignedChar Tortuga::ClientSettingsPacket::getViewDistance ( ) const
 {
 	return this->viewDistance ;
 }
-			
-ARC::Void Tortuga::ClientSettingsPacket::setChatFlags ( const ARC::UnsignedChar chatFlags )
+
+ARC::Void Tortuga::ClientSettingsPacket::setChatFlags ( ARC::UnsignedChar chatFlags )
 {
 	this->chatFlags = chatFlags ;
 }
@@ -62,8 +62,8 @@ ARC::UnsignedChar Tortuga::ClientSettingsPacket::getChatFlags ( ) const
 {
 	return this->chatFlags ;
 }
-			
-ARC::Void Tortuga::ClientSettingsPacket::setChatColors ( const ARC::Bool chatColors )
+
+ARC::Void Tortuga::ClientSettingsPacket::setChatColors ( ARC::Bool chatColors )
 {
 	this->chatColors = chatColors ;
 }
@@ -71,8 +71,8 @@ ARC::Bool Tortuga::ClientSettingsPacket::getChatColors ( ) const
 {
 	return this->chatColors ;
 }
-			
-ARC::Void Tortuga::ClientSettingsPacket::setDifficulty ( const ARC::UnsignedChar difficulty )
+
+ARC::Void Tortuga::ClientSettingsPacket::setDifficulty ( ARC::UnsignedChar difficulty )
 {
 	this->difficulty = difficulty ;
 }
@@ -80,8 +80,8 @@ ARC::UnsignedChar Tortuga::ClientSettingsPacket::getDifficulty ( ) const
 {
 	return this->difficulty ;
 }
-			
-ARC::Void Tortuga::ClientSettingsPacket::setShowCape ( const ARC::Bool showCape )
+
+ARC::Void Tortuga::ClientSettingsPacket::setShowCape ( ARC::Bool showCape )
 {
 	this->showCape = showCape ;
 }

@@ -27,7 +27,7 @@ namespace Tortuga
             Tortuga::Location location ;
 
         protected :
-            Entity ( Tortuga::EntityManager & entityManager , const Tortuga::Entity::Type type , const Tortuga::Location & location ) ;
+            Entity ( Tortuga::EntityManager & entityManager , Tortuga::Entity::Type type , const Tortuga::Location & location ) ;
 
         public :
             virtual ~Entity ( ) ;

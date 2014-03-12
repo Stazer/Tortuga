@@ -16,12 +16,12 @@ Tortuga::KeepAlivePacket::KeepAlivePacket ( Tortuga::PacketReader & packetReader
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::KeepAlivePacket::KeepAlivePacket ( const ARC::UnsignedInt identification ) :
+Tortuga::KeepAlivePacket::KeepAlivePacket ( ARC::UnsignedInt identification ) :
 	identification ( identification )
 {
 }
 
-ARC::Void Tortuga::KeepAlivePacket::setIdentification ( const ARC::UnsignedInt identification )
+ARC::Void Tortuga::KeepAlivePacket::setIdentification ( ARC::UnsignedInt identification )
 {
 	this->identification = identification ;
 }

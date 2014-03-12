@@ -16,12 +16,12 @@ Tortuga::PlayerOnGroundPacket::PlayerOnGroundPacket ( Tortuga::PacketReader & pa
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::PlayerOnGroundPacket::PlayerOnGroundPacket ( const ARC::Bool onGround ) :
+Tortuga::PlayerOnGroundPacket::PlayerOnGroundPacket ( ARC::Bool onGround ) :
 	onGround ( onGround )
 {
 }
 
-ARC::Void Tortuga::PlayerOnGroundPacket::setOnGround ( const ARC::Bool onGround )
+ARC::Void Tortuga::PlayerOnGroundPacket::setOnGround ( ARC::Bool onGround )
 {
 	this->onGround = onGround ;
 }

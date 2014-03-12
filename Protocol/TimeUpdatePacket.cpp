@@ -18,13 +18,13 @@ Tortuga::TimeUpdatePacket::TimeUpdatePacket ( Tortuga::PacketReader & packetRead
 {
 	this->read ( packetReader ) ;
 }
-Tortuga::TimeUpdatePacket::TimeUpdatePacket ( const ARC::UnsignedLong age , const ARC::UnsignedLong time ) :
+Tortuga::TimeUpdatePacket::TimeUpdatePacket ( ARC::UnsignedLong age , ARC::UnsignedLong time ) :
 	age ( age ) ,
 	time ( time )
 {
 }
 
-ARC::Void Tortuga::TimeUpdatePacket::setAge ( const ARC::UnsignedLong age )
+ARC::Void Tortuga::TimeUpdatePacket::setAge ( ARC::UnsignedLong age )
 {
 	this->age = age ;
 }
@@ -32,8 +32,8 @@ ARC::UnsignedLong Tortuga::TimeUpdatePacket::getAge ( ) const
 {
 	return this->age ;
 }
-			
-ARC::Void Tortuga::TimeUpdatePacket::setTime ( const ARC::UnsignedLong time )
+
+ARC::Void Tortuga::TimeUpdatePacket::setTime ( ARC::UnsignedLong time )
 {
 	this->time = time ;
 }

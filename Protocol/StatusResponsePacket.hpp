@@ -9,14 +9,14 @@ namespace Tortuga
 	{
 		private :
 			ARC::String message ;
-		
+
 			ARC::Void read ( Tortuga::PacketReader & packetReader ) ;
 			ARC::Void write ( Tortuga::PacketWriter & packetWriter ) const ;
-			
+
 		public :
 			StatusResponsePacket ( Tortuga::PacketReader & packetReader ) ;
 			StatusResponsePacket ( const ARC::String & message ) ;
-			
+
 			ARC::Void setMessage ( const ARC::String & message ) ;
 			const ARC::String & getMessage ( ) const ;
 	} ;

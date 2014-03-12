@@ -10,18 +10,18 @@ namespace Tortuga
 		private :
 			ARC::UnsignedLong age ;
 			ARC::UnsignedLong time ;
-		
+
 			ARC::Void read ( Tortuga::PacketReader & packetReader ) ;
 			ARC::Void write ( Tortuga::PacketWriter & packetWriter ) const ;
-			
+
 		public :
 			TimeUpdatePacket ( Tortuga::PacketReader & packetReader ) ;
-			TimeUpdatePacket ( const ARC::UnsignedLong age , const ARC::UnsignedLong time ) ;
-			
-			ARC::Void setAge ( const ARC::UnsignedLong age ) ;
+			TimeUpdatePacket ( ARC::UnsignedLong age , ARC::UnsignedLong time ) ;
+
+			ARC::Void setAge ( ARC::UnsignedLong age ) ;
 			ARC::UnsignedLong getAge ( ) const ;
-			
-			ARC::Void setTime ( const ARC::UnsignedLong time ) ;
+
+			ARC::Void setTime ( ARC::UnsignedLong time ) ;
 			ARC::UnsignedLong getTime ( ) const ;
 	} ;
 }

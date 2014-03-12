@@ -31,7 +31,7 @@ namespace Tortuga
 			Tortuga::WorldManager & getWorldManager ( ) ;
 			const Tortuga::WorldManager & getWorldManager ( ) const ;
 
-			ARC::Void setRunning ( const ARC::Bool running ) ;
+			ARC::Void setRunning ( ARC::Bool running ) ;
 			ARC::Bool getRunning ( ) const ;
 
 			ARC::Return main ( const ARC::Vector <ARC::String> & arguments ) ;

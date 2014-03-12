@@ -12,7 +12,7 @@ namespace Tortuga
         private :
 
         public :
-            CreatureEntity ( EntityManager & entityManager , const Tortuga::Entity::Type type , const Tortuga::Location & location ) ;
+            CreatureEntity ( EntityManager & entityManager , Tortuga::Entity::Type type , const Tortuga::Location & location ) ;
 
             ARC::Void update ( ) ;
     } ;
