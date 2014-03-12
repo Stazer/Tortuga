@@ -60,7 +60,7 @@ ARC::Bool Tortuga::Server::getRunning ( ) const
 ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments )
 {
 	ARC::Return returnValue = ARC::Ok ;
-	                       
+
 	std::cout << " __ __|          |\n" ;
 	std::cout << "    |  _ \\   __| __| |   |  _` |  _` |\n" ;
 	std::cout << "    | (   | |    |   |   | (   | (   |\n" ;
@@ -80,24 +80,25 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 	std::cout << "              `._,\\/ ._\\\n" ;
 	std::cout << "                `._// ./`-._\n" ;
 	std::cout << "                  `-._-_-_.-'\n" ;
-	
+
 	while ( this->listen ( 25565 ) != ARC::Socket::Done ) ;
-	
+
 	this->getClientManager ( ).initialize ( ) ;
-	
+
 	this->threadHandle.launch ( ) ;
-	
+
 	std::cout << "Server started\n" ;
-	
+
 	while ( this->running )
 	{
 		ARC::String command ;
-	
+
 		std::cin >> command ;
-		
+
 		if ( command == "status" )
 		{
 			std::cout << this->clientManager.getClients ( ).size ( ) << " client(s)\n" ;
+			std::cout << this->chat.getChatUsers ( ).size ( ) << " chatuser(s)\n" ;
 			std::cout << this->worldManager.getWorlds ( ).size ( ) << " world(s)\n" ;
 		}
 		else if ( command == "shutdown" || command == "stop" )
@@ -108,10 +109,10 @@ ARC::Return Tortuga::Server::main ( const ARC::Vector <ARC::String> & arguments 
 			returnValue = ARC::Restart ;
 		}
 	}
-	
+
 	this->threadHandle.wait ( ) ;
-	
+
 	std::cout << "Server stopped\n" ;
-	
+
 	return returnValue ;
 }

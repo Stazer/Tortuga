@@ -16,22 +16,22 @@ const Tortuga::Server & Tortuga::Chat::getServer ( ) const
 	return this->server ;
 }
 
-ARC::List <Tortuga::ChatUser *> & Tortuga::Chat::getChatUsers ( )
+ARC::List <Tortuga::ChatUser> & Tortuga::Chat::getChatUsers ( )
 {
 	return this->chatUsers ;
 }
-const ARC::List <Tortuga::ChatUser *> & Tortuga::Chat::getChatUsers ( ) const
+const ARC::List <Tortuga::ChatUser> & Tortuga::Chat::getChatUsers ( ) const
 {
 	return this->chatUsers ;
 }
-			
+
 ARC::Void Tortuga::Chat::broadcast ( const Tortuga::ChatMessage & message )
 {
 	for ( auto chatUser : this->chatUsers )
-		chatUser->send ( message ) ;
+		chatUser.send ( message ) ;
 }
 ARC::Void Tortuga::Chat::send ( const Tortuga::ChatMessage & message )
 {
 	for ( auto chatUser : this->chatUsers )
-		chatUser->send ( message ) ;
+		chatUser.send ( message ) ;
 }

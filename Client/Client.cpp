@@ -3,8 +3,10 @@
 #include <Tortuga/World/WorldManager.hpp>
 #include <Tortuga/Server/Server.hpp>
 #include <Tortuga/Chat/ChatMessage.hpp>
+#include <Tortuga/Chat/ChatUser.hpp>
 #include <Tortuga/Status/Status.hpp>
-#include <Tortuga/Player.hpp>
+#include <Tortuga/Entity/PlayerEntity.hpp>
+#include <Tortuga/Entity/PlayerEntity.hpp>
 #include <Tortuga/Protocol/Packet.hpp>
 #include <Tortuga/Protocol/PacketReader.hpp>
 #include <Tortuga/Protocol/PacketWriter.hpp>
@@ -17,14 +19,46 @@
 #include <Tortuga/Protocol/ChatMessageToServerPacket.hpp>
 #include <Tortuga/Protocol/ChatMessageFromServerPacket.hpp>
 #include <Tortuga/Protocol/KeepAlivePacket.hpp>
+#include <Tortuga/Protocol/SpawnPlayerPacket.hpp>
+#include <Tortuga/Protocol/SpawnMobPacket.hpp>
+#include <Tortuga/Protocol/JoinGamePacket.hpp>
+#include <Tortuga/Protocol/SpawnPositionPacket.hpp>
+#include <Tortuga/Protocol/PlayerPositionAndLookFromServerPacket.hpp>
+#include <Tortuga/Protocol/TimeUpdatePacket.hpp>
 #include <iostream>
 
 Tortuga::Client::Client ( Tortuga::ClientManager & clientManager ) :
 	clientManager ( clientManager ) ,
-	chatUser ( * this ) ,
-	player ( * this ) ,
+	chatUser ( nullptr ) ,
+	playerEntity ( nullptr ) ,
 	type ( Tortuga::Client::None )
 {
+}
+Tortuga::Client::~Client ( )
+{
+    if ( this->chatUser )
+    {
+        for ( auto chatUser = this->chatUser->getChat ( ).getChatUsers ( ).begin ( ) ; chatUser != this->chatUser->getChat ( ).getChatUsers ( ).end ( ) ; ++chatUser )
+        {
+            if ( & * chatUser == this->chatUser )
+            {
+                this->chatUser->getChat ( ).getChatUsers ( ).erase ( chatUser ) ;
+                break ;
+            }
+        }
+    }
+
+    if ( this->playerEntity )
+    {
+        for ( auto playerEntity = this->playerEntity->getEntityManager ( ).getEntities ( ).begin ( ) ; playerEntity != this->playerEntity->getEntityManager ( ).getEntities ( ).end ( ) ; ++playerEntity )
+        {
+            if ( & * playerEntity == this->playerEntity )
+            {
+                this->playerEntity->getEntityManager ( ).getEntities ( ).erase ( playerEntity ) ;
+                break ;
+            }
+        }
+    }
 }
 
 Tortuga::ClientManager & Tortuga::Client::getClientManager ( )
@@ -36,35 +70,31 @@ const Tortuga::ClientManager & Tortuga::Client::getClientManager ( ) const
 	return this->clientManager ;
 }
 
-ARC::Void Tortuga::Client::setBuffer ( const ARC::Buffer & buffer )
-{
-	this->buffer = buffer ;
-}
-ARC::Buffer & Tortuga::Client::getBuffer ( )
-{
-	return this->buffer ;
-}
-const ARC::Buffer & Tortuga::Client::getBuffer ( ) const
-{
-	return this->buffer ;
-}
-
-Tortuga::ChatUser & Tortuga::Client::getChatUser ( )
+Tortuga::ChatUser * Tortuga::Client::getChatUser ( )
 {
 	return this->chatUser ;
 }
-const Tortuga::ChatUser & Tortuga::Client::getChatUser ( ) const
+const Tortuga::ChatUser * Tortuga::Client::getChatUser ( ) const
 {
 	return this->chatUser ;
 }
 
-Tortuga::Player & Tortuga::Client::getPlayer ( )
+Tortuga::PlayerEntity * Tortuga::Client::getPlayerEntity ( )
 {
-	return this->player ;
+	return this->playerEntity ;
 }
-const Tortuga::Player & Tortuga::Client::getPlayer ( ) const
+const Tortuga::PlayerEntity * Tortuga::Client::getPlayerEntity ( ) const
 {
-	return this->player ;
+	return this->playerEntity ;
+}
+
+ARC::List <Tortuga::Entity *> & Tortuga::Client::getSpawnedEntities ( )
+{
+    return this->spawnedEntities ;
+}
+const ARC::List <Tortuga::Entity *> & Tortuga::Client::getSpawnedEntities ( ) const
+{
+    return this->spawnedEntities ;
 }
 
 const ARC::String & Tortuga::Client::getLocale ( ) const
@@ -92,48 +122,70 @@ ARC::Bool Tortuga::Client::getShowCape ( ) const
 	return this->showCape ;
 }
 
+ARC::Void Tortuga::Client::joinWorld ( Tortuga::World & world )
+{
+    if ( this->playerEntity )
+    {
+        for ( auto playerEntity = this->playerEntity->getEntityManager ( ).getEntities ( ).begin ( ) ; playerEntity != this->playerEntity->getEntityManager ( ).getEntities ( ).end ( ) ; ++playerEntity )
+        {
+            if ( & * playerEntity == this->playerEntity )
+            {
+                this->playerEntity->getEntityManager ( ).getEntities ( ).erase ( playerEntity ) ;
+                break ;
+            }
+        }
+    }
+
+    world.getEntityManager ( ).getEntities ( ).push_back ( Tortuga::PlayerEntity ( * this , world.getEntityManager ( ) , Tortuga::Location ( Tortuga::Position ( static_cast <ARC::Double> ( world.getSpawnPosition ( ).getX ( ) ) , static_cast <ARC::Double> ( world.getSpawnPosition ( ).getY ( ) ) , static_cast <ARC::Double> ( world.getSpawnPosition ( ).getZ ( ) ) ) ) , "" ) ) ;
+    this->playerEntity = reinterpret_cast <Tortuga::PlayerEntity *> ( & world.getEntityManager ( ).getEntities ( ).back ( ) ) ;
+
+    this->send ( Tortuga::JoinGamePacket ( this->playerEntity->getIdentification ( ) , world.getGamemode ( ) , world.getDimension ( ) , world.getDifficulty ( ) , "default" ) ) ;
+	this->send ( Tortuga::SpawnPositionPacket ( world.getSpawnPosition ( ) ) ) ;
+	this->send ( Tortuga::PlayerPositionAndLookFromServerPacket ( this->playerEntity->getLocation ( ) , true ) ) ;
+	this->send ( Tortuga::TimeUpdatePacket ( world.getAge ( ) , world.getTime ( ) ) ) ;
+
+	for ( auto chunk : world.getChunks ( ) )
+		this->send ( chunk ) ;
+}
+
 ARC::Bool Tortuga::Client::update ( )
 {
 	if ( this->type == Tortuga::Client::Player && this->keepAliveTimer.getElapsedTime ( ) >= ARC::seconds ( 5.0f ) )
 	{
 		this->send ( Tortuga::KeepAlivePacket ( static_cast <ARC::UnsignedInt> ( ARC::Randomizer::getNumber ( 0 , 100 ) ) ) ) ;
-			
+
 		this->keepAliveTimer.restart ( ) ;
 	}
 
-	const ARC::UnsignedLong maximalSize = 1024 ;
+    if ( this->playerEntity )
+    {
+        for ( auto entity = this->playerEntity->getEntityManager ( ).getEntities ( ).begin ( ) ; entity != this->playerEntity->getEntityManager ( ).getEntities ( ).end ( ) ; ++entity )
+        {
+            if ( & * entity == this->playerEntity )
+                break ;
 
-	ARC::UnsignedChar * receivedData = new ARC::UnsignedChar [ maximalSize ] ;
-	ARC::UnsignedLong receivedSize = 0 ;
-		
-	ARC::Socket::Status status = sf::TcpSocket::receive ( receivedData , maximalSize , receivedSize ) ;
-	
-	ARC::Buffer newBuffer ;
-	
-	for ( ARC::UnsignedLong element = 0 ; element < receivedSize ; ++element )
+                Tortuga::EntityMetadata entityMetadata ;
+
+                entityMetadata.getRecords ( ) [ Tortuga::EntityMetadata::Health ] = 55.0f ;
+                this->send ( Tortuga::SpawnPlayerPacket ( entity->getIdentification ( ) , "" , "Player" , entity->getLocation ( ) , 0 , entityMetadata ) ) ;
+        }
+    }
+
+	if ( this->receive ( ) == ARC::Socket::Done )
 	{
-		newBuffer.push_back ( receivedData [ element ] ) ;
-	}
-	
-	delete receivedData ;
-	
-	if ( status == ARC::Socket::Done )
-	{
-		this->buffer.insert ( this->buffer.end ( ) , newBuffer.begin ( ) , newBuffer.end ( ) ) ;
-			
 		do
 		{
 			Tortuga::PacketReader packetReader ;
-			
+
 			packetReader.read ( this->getBuffer ( ) ) ;
-			
+
 			if ( this->getBuffer ( ).size ( ) == 0 || packetReader.getBuffer ( ).size ( ) == 0 || this->getBuffer ( ).size ( ) < packetReader.getBuffer ( ).size ( ) )
 				break ;
-			
+
 			this->getBuffer ( ).erase ( this->getBuffer ( ).begin ( ) , this->getBuffer ( ).begin ( ) + packetReader.getBuffer ( ).size ( ) ) ;
 
 			const ARC::UnsignedInt packetOpcode = packetReader.readVariableInt ( ) ;
-			
+
 			if ( this->type == Tortuga::Client::None )
 			{
 				switch ( packetOpcode )
@@ -178,14 +230,14 @@ ARC::Bool Tortuga::Client::update ( )
 					case Tortuga::Packet::LoginStart :
 					{
 						Tortuga::LoginStartPacket loginStartPacket ( packetReader ) ;
-					
+
 						this->send ( Tortuga::LoginSuccessPacket ( "" , loginStartPacket.getName ( ) ) ) ;
-						
-						this->chatUser.setChat ( & this->clientManager.getServer ( ).getChat ( ) ) ;
-						this->chatUser.setName ( loginStartPacket.getName ( ) ) ;
-						
-						this->player.setWorld ( & this->clientManager.getServer ( ).getWorldManager ( ).getDefaultWorld ( ) ) ;
-						
+
+                        this->getClientManager ( ).getServer ( ).getChat ( ).getChatUsers ( ).push_back ( Tortuga::ChatUser ( * this , this->getClientManager ( ).getServer ( ).getChat ( ) , loginStartPacket.getName ( ) ) ) ;
+                        this->chatUser = & this->getClientManager ( ).getServer ( ).getChat ( ).getChatUsers ( ).back ( ) ;
+
+                        this->joinWorld ( this->clientManager.getServer ( ).getWorldManager ( ).getDefaultWorld ( ) ) ;
+
 						this->type = Tortuga::Client::Player ;
 						break ;
 					}
@@ -201,7 +253,7 @@ ARC::Bool Tortuga::Client::update ( )
 				switch ( packetOpcode )
 				{
 					case Tortuga::Packet::KeepAlive :
-					{			
+					{
 						break ;
 					}
 					case Tortuga::Packet::ClientSettings :
@@ -213,7 +265,7 @@ ARC::Bool Tortuga::Client::update ( )
 						break ;
 					}
 					case Tortuga::Packet::PlayerPosition :
-					{					
+					{
 						break ;
 					}
 					case Tortuga::Packet::PlayerLook :
@@ -221,16 +273,24 @@ ARC::Bool Tortuga::Client::update ( )
 						break ;
 					}
 					case Tortuga::Packet::PlayerPositionAndLookToServer :
-					{			
+					{
 						break ;
 					}
 					case Tortuga::Packet::ChatMessageToServer :
 					{
 						Tortuga::ChatMessageToServerPacket chatMessageToServerPacket ( packetReader ) ;
-										
-						if ( this->chatUser.getChat ( ) )
-							this->chatUser.getChat ( )->send ( Tortuga::ChatMessage ( chatMessageToServerPacket.getMessage ( ) ) ) ;
-							
+
+                        if ( chatMessageToServerPacket.getMessage ( ) == "get" )
+                        {
+                            Tortuga::EntityMetadata entityMetadata ;
+
+                            entityMetadata.getRecords ( ) [ Tortuga::EntityMetadata::Health ] = 55.0f ;
+                            //this->send ( Tortuga::SpawnMobPacket ( 50 , 1 , Tortuga::Location ( Tortuga::Position ( 0 , 7 , 0 ) ) , 0 , ARC::Vector3SignedShort ( 100 , 0 , 0 ) , entityMetadata ) ) ;
+                        }
+
+						if ( this->chatUser )
+							this->chatUser->getChat ( ).send ( Tortuga::ChatMessage ( chatMessageToServerPacket.getMessage ( ) ) ) ;
+
 						break ;
 					}
 					default :
@@ -244,6 +304,6 @@ ARC::Bool Tortuga::Client::update ( )
 	}
 	else
 		return false ;
-		
+
 	return true ;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ARC.hpp>
+#include <Tortuga/Chat/ChatUser.hpp>
 
 namespace Tortuga
 {
@@ -12,18 +13,18 @@ namespace Tortuga
 	{
 		private :
 			Tortuga::Server & server ;
-			
-			ARC::List <Tortuga::ChatUser *> chatUsers ;
-			
+
+			ARC::List <Tortuga::ChatUser> chatUsers ;
+
 		public :
 			Chat ( Tortuga::Server & server ) ;
-			
+
 			Tortuga::Server & getServer ( ) ;
 			const Tortuga::Server & getServer ( ) const ;
-			
-			ARC::List <Tortuga::ChatUser *> & getChatUsers ( ) ;
-			const ARC::List <Tortuga::ChatUser *> & getChatUsers ( ) const ;
-	
+
+			ARC::List <Tortuga::ChatUser> & getChatUsers ( ) ;
+			const ARC::List <Tortuga::ChatUser> & getChatUsers ( ) const ;
+
 			ARC::Void broadcast ( const Tortuga::ChatMessage & message ) ;
 			ARC::Void send ( const Tortuga::ChatMessage & message ) ;
 	} ;

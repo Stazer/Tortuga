@@ -1,7 +1,10 @@
 #include <Tortuga/World/World.hpp>
+#include <Tortuga/Entity/CreatureEntity.hpp>
+#include <Tortuga/Entity/EntityManager.hpp>
 
 Tortuga::World::World ( Tortuga::WorldManager & worldManager , const Tortuga::Gamemode::Type gamemode , const Tortuga::Dimension::Type dimension , const Tortuga::Difficulty::Type difficulty , const ARC::Vector3SignedInt & spawnPosition , const ARC::UnsignedLong age , const ARC::UnsignedLong time ) :
 	worldManager ( worldManager ) ,
+	entityManager ( * this ) ,
 	gamemode ( gamemode ) ,
 	dimension ( dimension ) ,
 	difficulty ( difficulty ) ,
@@ -18,6 +21,15 @@ Tortuga::WorldManager & Tortuga::World::getWorldManager ( )
 const Tortuga::WorldManager & Tortuga::World::getWorldManager ( ) const
 {
 	return this->worldManager ;
+}
+
+Tortuga::EntityManager & Tortuga::World::getEntityManager ( )
+{
+    return this->entityManager ;
+}
+const Tortuga::EntityManager & Tortuga::World::getEntityManager ( ) const
+{
+    return this->entityManager ;
 }
 
 ARC::Void Tortuga::World::setGamemode ( const Tortuga::Gamemode::Type gamemode )
@@ -99,6 +111,8 @@ ARC::Void Tortuga::World::update ( )
 
 	if ( this->time >= 24000 )
 		this->time = 0 ;
+
+    this->entityManager.update ( ) ;
 }
 
 Tortuga::World Tortuga::World::getTestWorld ( Tortuga::World world )
@@ -108,6 +122,9 @@ Tortuga::World Tortuga::World::getTestWorld ( Tortuga::World world )
 			world.chunks.push_back ( Tortuga::Chunk::getTestChunk ( Tortuga::Chunk ( ARC::Vector2SignedInt ( x , y ) ) ) ) ;
 
 	world.setSpawnPosition ( ARC::Vector3SignedInt ( 0 , 7 , 0 ) ) ;
+
+    world.getEntityManager ( ).getEntities ( ).push_back ( Tortuga::CreatureEntity ( world.entityManager , Tortuga::Entity::Zombie , Tortuga::Location ( Tortuga::Position ( 0 , 7 , 0 ) ) ) ) ;
+
 
 	return world ;
 }

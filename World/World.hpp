@@ -5,6 +5,7 @@
 #include <Tortuga/World/Chunk.hpp>
 #include <Tortuga/Difficulty.hpp>
 #include <Tortuga/Gamemode.hpp>
+#include <Tortuga/Entity/EntityManager.hpp>
 
 namespace Tortuga
 {
@@ -16,6 +17,7 @@ namespace Tortuga
 	{
 		private :
 			Tortuga::WorldManager & worldManager ;
+            Tortuga::EntityManager entityManager ;
 
 			Tortuga::Gamemode::Type gamemode ;
 			Tortuga::Dimension::Type dimension ;
@@ -35,6 +37,9 @@ namespace Tortuga
 
 			Tortuga::WorldManager & getWorldManager ( ) ;
 			const Tortuga::WorldManager & getWorldManager ( ) const ;
+
+            Tortuga::EntityManager & getEntityManager ( ) ;
+			const Tortuga::EntityManager & getEntityManager ( ) const ;
 
 			ARC::Void setGamemode ( const Tortuga::Gamemode::Type gamemode ) ;
 			Tortuga::Gamemode::Type getGamemode ( ) const ;

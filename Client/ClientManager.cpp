@@ -34,10 +34,10 @@ ARC::Void Tortuga::ClientManager::update ( )
 {
 	if ( this->selector.wait ( ARC::milliseconds ( 20 ) ) )
 	{
-		if ( this->selector.isReady ( this->server ) )
+		if ( this->selector.update ( this->server ) )
 		{
 			ARC::SharedPointer <Tortuga::Client> client ( new Tortuga::Client ( * this ) ) ;
-			
+
 			if ( this->server.accept ( * client ) == ARC::Socket::Done )
 			{
 				this->selector.add ( * client ) ;
@@ -48,10 +48,10 @@ ARC::Void Tortuga::ClientManager::update ( )
 		{
 			for ( auto client = this->clients.begin ( ) ; client != this->clients.end ( ) ; ++client )
 			{
-				if ( this->selector.isReady ( ( ** client ) ) )
+				if ( this->selector.update ( ( ** client ) ) )
 				{
 					if ( ! ( * client )->update ( ) )
-					{					
+					{
 						this->selector.remove ( ** client ) ;
 						client = this->clients.erase ( client ) ;
 					}
