@@ -123,8 +123,5 @@ Tortuga::World Tortuga::World::getTestWorld ( Tortuga::World world )
 
 	world.setSpawnPosition ( ARC::Vector3SignedInt ( 0 , 7 , 0 ) ) ;
 
-    world.getEntityManager ( ).getEntities ( ).push_back ( Tortuga::CreatureEntity ( world.entityManager , Tortuga::Entity::Zombie , Tortuga::Location ( Tortuga::Position ( 0 , 7 , 0 ) ) ) ) ;
-
-
 	return world ;
 }

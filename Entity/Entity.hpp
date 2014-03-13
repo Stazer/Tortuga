@@ -28,6 +28,8 @@ namespace Tortuga
             Tortuga::Location location ;
 
         protected :
+            ARC::List <Tortuga::Client *> clients ;
+
             Entity ( Tortuga::EntityManager & entityManager , Tortuga::Entity::Type type , const Tortuga::Location & location ) ;
 
         public :

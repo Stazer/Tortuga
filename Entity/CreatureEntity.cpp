@@ -14,7 +14,36 @@ Tortuga::CreatureEntity::CreatureEntity ( EntityManager & entityManager , Tortug
 {
 }
 
+#include <iostream>
+
 ARC::Void Tortuga::CreatureEntity::update ( )
 {
+    std::cout << "Hello World" ;
 
+    /*// spawn entity for new clients
+    for ( auto & client : this->getEntityManager ( ).getWorld ( ).getWorldManager ( ).getServer ( ).getClientManager ( ).getClients ( ) )
+    {
+        ARC::Bool spawned = false ;
+/
+        for ( auto & savedClient : this->clients )
+        {
+            if ( client == savedClient )
+            {
+                spawned = true ;
+                break ;
+            }
+        }
+*
+        if ( ! spawned )
+        {
+            Tortuga::EntityMetadata entityMetadata ;
+            entityMetadata.getRecords ( ) [ Tortuga::EntityMetadata::Health ] = 10.0f ;
+
+            client.send ( Tortuga::SpawnMobPacket ( this->getIdentification ( ) , this->getType ( ) , this->getLocation ( ) , 0 , ARC::Vector3SignedShort ( ) , entityMetadata ) ) ;
+
+         //   this->clients.push_back ( & client ) ;
+        }
+    }*/
+
+    // test movement ;)
 }

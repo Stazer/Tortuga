@@ -48,7 +48,7 @@ ARC::Void Tortuga::ClientManager::update ( )
 		{
 			for ( auto client = this->clients.begin ( ) ; client != this->clients.end ( ) ; ++client )
 			{
-				if ( this->selector.update ( ( * client ) ) )
+				if ( this->selector.update ( * client ) )
 				{
 					if ( ! client->update ( ) )
 					{

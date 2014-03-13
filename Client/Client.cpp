@@ -42,7 +42,7 @@ Tortuga::Client::~Client ( )
         {
             if ( & * chatUser == this->chatUser )
             {
-                this->chatUser->getChat ( ).getChatUsers ( ).erase ( chatUser ) ;
+                chatUser = this->chatUser->getChat ( ).getChatUsers ( ).erase ( chatUser ) ;
                 break ;
             }
         }
@@ -148,20 +148,6 @@ ARC::Bool Tortuga::Client::update ( )
 		this->keepAliveTimer.restart ( ) ;
 	}
 
-    if ( this->playerEntity )
-    {
-        for ( auto entity = this->playerEntity->getEntityManager ( ).getEntities ( ).begin ( ) ; entity != this->playerEntity->getEntityManager ( ).getEntities ( ).end ( ) ; ++entity )
-        {
-            if ( & * entity == this->playerEntity )
-                break ;
-
-                Tortuga::EntityMetadata entityMetadata ;
-
-                entityMetadata.getRecords ( ) [ Tortuga::EntityMetadata::Health ] = 55.0f ;
-                this->send ( Tortuga::SpawnPlayerPacket ( entity->getIdentification ( ) , "" , "Player" , entity->getLocation ( ) , 0 , entityMetadata ) ) ;
-        }
-    }
-
 	if ( this->receive ( ) == ARC::Socket::Done )
 	{
 		do
@@ -227,7 +213,7 @@ ARC::Bool Tortuga::Client::update ( )
                         this->getClientManager ( ).getServer ( ).getChat ( ).getChatUsers ( ).push_back ( Tortuga::ChatUser ( * this , this->getClientManager ( ).getServer ( ).getChat ( ) , loginStartPacket.getName ( ) ) ) ;
                         this->chatUser = & this->getClientManager ( ).getServer ( ).getChat ( ).getChatUsers ( ).back ( ) ;
 
-                        this->joinWorld ( this->clientManager.getServer ( ).getWorldManager ( ).getDefaultWorld ( ) ) ;
+                        this->joinWorld ( * this->clientManager.getServer ( ).getWorldManager ( ).getDefaultWorld ( ) ) ;
 
 						this->type = Tortuga::Client::Player ;
 						break ;
